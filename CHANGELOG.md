@@ -8,6 +8,4 @@
 - Separate private brand/resource configuration; provide neutral setup and installation instructions.
 - Credit method references and retain licenses for adapted tools. Technical checks do not imply audiovisual quality approval.
 
-## Candidate baseline
-
-The manifest version is a local pre-release baseline for the release tool; no public tag or release has been issued at this stage.
+The initial development manifests used a local 0.1.0 baseline before the first formal release; it was not a published tag.
