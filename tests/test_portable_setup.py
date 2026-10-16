@@ -39,6 +39,14 @@ class PortableSetupTests(unittest.TestCase):
             with self.assertRaises(OSError):
                 setup.profile(tmp)
 
+    def test_retired_library_paths_are_not_exposed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            (Path(tmp)/"profile.json").write_text(json.dumps({"asset_roots":["/old/library"],"cold_storage_root":"/old/cloud","brand":{"name":"Current"}}))
+            config = setup.profile(tmp)["configuration"]
+            self.assertNotIn("asset_roots", config)
+            self.assertNotIn("cold_storage_root", config)
+            self.assertEqual(config["brand"]["name"], "Current")
+
     def test_disabled_browser_checks_are_not_reported(self):
         with tempfile.TemporaryDirectory() as tmp, patch.object(setup, "ROOT", Path(tmp)), patch.dict(os.environ, {}, clear=True), patch("shutil.which", return_value=None):
             result = setup.check()

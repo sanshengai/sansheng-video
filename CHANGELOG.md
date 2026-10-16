@@ -2,11 +2,15 @@
 
 ## [未发布]
 
+- Retire local/cloud library profile pointers and central-library fallback instructions while preserving current-project assets and independent document retrieval.
+- Add optional pinned VoxCPM2/Kokoro local narration adapters with real chunk evidence; add bounded Pexels search, same-source browser fallback and selected-media receipts.
+- Integrate Lemo-Opuscar style/film grammar discovery and hash-verified selected-source retrieval without its installer, second director or bundled demo media.
+
 - Integrate pinned Motion Prompt search/spec/kit retrieval with the existing shot-design workflow, with a cached upstream MIT CLI and no second production skill.
 - Add bounded cached Openverse search and selected-audio download, including browser-exported JSON input, media probing and source receipts; provenance review and listening remain explicit.
 - Add a reproducible time-driven ripple/click composition example with seek checks and real MP4 assembly. These additive capabilities target a future MINOR release; no release/tag is created by this change.
 
-- Add an Openverse-first workflow for new sound effects, from scene intent and source/license checks to project-local assets, explicit cues and final listening review. Existing project audio remains reusable; local libraries and cloud archives are optional fallbacks.
+- Add an Openverse-first workflow for new sound effects, from scene intent and source/license checks to project-local assets, explicit cues and final listening review. Existing project audio remains reusable; retired local/cloud libraries are no longer fallbacks.
 - Document bounded API searches, unavailable-service handling and integration with the existing SFX consumer. No new account, paid service or library migration is required.
 - Verify one real CC0 click sample through browser API search, source verification, download, exported cues and a decoded FFmpeg demo; document the browser API fallback for terminal Cloudflare rejection. Subjective listening remains separate.
 

@@ -1,0 +1,10 @@
+{
+  "engine": "kokoro",
+  "device": "mps",
+  "language": "a",
+  "voice": "af_heart",
+  "seed": 42,
+  "blocks": [
+    "Good morning. Let us begin."
+  ]
+}

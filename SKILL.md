@@ -32,17 +32,20 @@ metadata:
 
 | 工作 | 读取／调用 |
 |---|---|
+| 新作定风格、寻找绘制／镜头实现 | [Lemo 风格与实现](references/lemo-opuscar.md)：51 种风格本地有界搜索，选中才取代码；电影语法另按需检索 |
 | 镜头、空间、材质与运动 | [视觉机制](references/visual-craft.md) |
 | 新 HTML 镜头和渲染 | [HyperFrames 执行](references/hyperframes.md)，依项目锁核实实际 CLI help |
 | 音画统一、字幕与真实旁白锚点 | [生产事件与工具](references/events-and-tools.md) |
 | 角色表演、生成镜头及连续片段 | [生成镜头](references/generated-shots.md) |
 | 裁剪、分段装配、原声与响度 | [媒体编辑](references/media-editing.md) |
 | 按需查动效、取代码与配声音 | [动效与音效](references/motion-and-sound.md)：镜头设计时触发，Motion Prompt 检索／缓存与 Openverse 下载接入原时间线 |
-| 素材、精品库、品牌与许可 | [资源配置](references/assets-and-profile.md) |
+| 项目素材、品牌与许可 | [资源配置](references/assets-and-profile.md) |
 | 按镜头找音效、下载与入片 | [Openverse 音效](references/openverse-sfx.md)：新音效默认在线按需检索，再走现有素材锁与声音事件 |
+| 需要新增配音 | [TTS 选型与制作](references/tts.md)：VoxCPM2 主候选，Kokoro 轻量备用；先定声音再用实际时长驱动时间线 |
+| 通用真实 B-roll 缺件 | [在线画面素材](references/stock-footage.md)：Pexels 主源、Pixabay 备用，按镜头最多 3 个候选 |
 | 发布包的能力边界和借鉴来源 | [来源与采用](references/sources.md) |
 
-工具不自动安装 latest、不调用付费生成服务、不上传文件。生成图像、TTS、搜索等使用当前宿主已有且获授权的工具；本包不伪装已提供这些 API。缺组件明确指出缺什么，不偷偷改供应商或降为静态卡片来冒充完成。
+工具不自动安装 latest、不调用付费生成服务、不上传文件。生成图像、TTS、搜索等使用当前宿主已有且获授权的工具；本包的本地 TTS 与素材检索能力按对应手册调用；其他 API 不伪装已提供。缺组件明确指出缺什么，不偷偷改供应商或降为静态卡片来冒充完成。
 
 ## 交付与证据
 

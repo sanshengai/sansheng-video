@@ -12,7 +12,7 @@
 
 Xilo 等参考的制作方法已整合进内部流程，不用同时安装一排导演技能。品牌、内容规则和素材由项目或可选私有配置提供，公开核心没有固定作者水印。
 
-需要新音效时，默认按镜头动作与情绪从 Openverse 在线检索，核对来源与许可、试听选用后下载到工程，接入同一时间线并听最终成片。具体步骤见 [Openverse 音效](references/openverse-sfx.md)；本地库与网盘作为可选补充。
+需要新音效时，默认按镜头动作与情绪从 Openverse 在线检索，核对来源与许可、试听选用后下载到工程，接入同一时间线并听最终成片。具体步骤见 [Openverse 音效](references/openverse-sfx.md)；旧本机集中库和网盘素材库已退出视频流。
 
 需要新动效时，按镜头目的查 Motion Prompt 的术语、参数与代码，优先动态图形和镜头转场，取回后适配现有引擎。配合缓存和音效下载工具，仍由一条时间线控制。见 [动效与音效流程](references/motion-and-sound.md)。
 
@@ -83,7 +83,7 @@ python3 setup.py --check --runtime /path/to/project/node_modules/hyperframes --b
 
 | 配置 | 能做什么／需要提供什么 | 不启用会怎样／如何启用 |
 |---|---|---|
-| 私有品牌与精品库 | 使用自己的 Logo、颜色、内容规则与素材目录 | 使用项目已有或中性配置；运行 `python3 setup.py` 指定私有 profile，或设置 `SANSHENG_VIDEO_PROFILE_DIR` |
+| 私有品牌 | 使用自己的 Logo、颜色与内容规则 | 使用项目已有或中性配置；运行 `python3 setup.py` 指定私有 profile，或设置 `SANSHENG_VIDEO_PROFILE_DIR` |
 | 浏览器确定性检查 | 比较顺序、逆序、冷启动帧；需要 Playwright | 不加载该检查器，不影响核心编辑；需要时安装 `playwright==1.62.0`，使用 `setup.py --check --browser-checks` |
 | 既有本机调度 | 把编码命令交给已有本机资源队列 | 默认直接运行；高级使用者设置 `SANSHENG_VIDEO_COMMAND_PREFIX` 为 JSON argv 前缀 |
 
@@ -124,3 +124,7 @@ Deliverables include editable sources, project dependencies, adopted-asset prove
 ## License
 
 Original code: MIT. Adapted Apache-2.0 portions retain their upstream terms; see THIRD_PARTY_NOTICES.md.
+
+### 按需资源入口
+
+新作缺风格或实现时查 [Lemo 参考](references/lemo-opuscar.md)；需要新配音时查 [TTS](references/tts.md)；通用真实画面缺件时查 [在线素材](references/stock-footage.md)。与 Motion Prompt、Openverse 共用现有项目时间线与素材来源记录，不恢复中央素材库。

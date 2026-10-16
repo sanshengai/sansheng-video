@@ -23,6 +23,9 @@ def profile(path=None):
         logo = (root / data["brand"]["logo"]).resolve()
         if not logo.is_file():
             raise ValueError("brand logo missing")
+    # Accept old profiles, but never expose retired library pointers to agents.
+    for key in ("asset_roots", "cold_storage_root"):
+        data.pop(key, None)
     return {"root": str(root), "configuration": data}
 
 def check(runtime=None, browser=None, browser_checks=False):

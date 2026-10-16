@@ -6,7 +6,7 @@
 |---|---|---|
 | [showheyohtaki/motion-prompt](https://github.com/showheyohtaki/motion-prompt) | 动效／镜头术语、spec、纯时间 Canvas 代码和按需检索 | 原 CLI 最小捆绑，固定 770eefb7091cc725ab0eb6d4ef5cbf28b28e282c；MIT，目录和选中条目按需获取，保留单一制作入口 |
 | [Kianzzz/xilo-opus-video](https://github.com/Kianzzz/xilo-opus-video) | 制作说明、动态验证、连续镜头、时间驱动、音画事件、混音、局部迭代与交付 | 方法适配；参考提交 f2cd828e2692e7186186408ee01a936707c2c38d，不捆绑原版导演 |
-| [lemomo-ai/lemo-opuscar](https://github.com/lemomo-ai/lemo-opuscar) | 空间连续性、手绘推理、印刷材质和风格一致性 | 方法转述，不复制 43 风格库或安装器 |
+| [lemomo-ai/lemo-opuscar](https://github.com/lemomo-ai/lemo-opuscar) | 51 种风格、98 条电影语法、绘制与镜头实现 | 固定 d33bdea74eeecde3922b0fbad227f0d3dc7afe75；本地索引、有界检索，选中源码按 SHA256 缓存；不安装第二生产总控 |
 | [Vincentwei1021/mg-styles-15](https://github.com/Vincentwei1021/mg-styles-15) | 图形变化、节奏与音画 cue | 方法转述 |
 | [chuspeeism/dashi-animationstyle](https://github.com/chuspeeism/dashi-animationstyle) | 中文词句锚点和字幕／动作关系 | 方法转述，不把估时包装成对齐 |
 | [alchaincyf/huashu-art-motion](https://github.com/alchaincyf/huashu-art-motion) | 大场景、构图和合成思路 | 方法转述，不承诺未验证的透明渲染 |
@@ -19,4 +19,4 @@
 
 HyperFrames 作为独立安装的运行依赖，不捆绑其包和字体、音乐等素材。实际版本和许可见依赖清单。`validate_edl.py` 衍生自 guigulaoshi/music-video-director-skill（MIT）；`normalize_loudness.py` 和 `check_merge_compat.py` 的借鉴来源及修改记录保留在文件头。完整许可见仓根第三方说明。
 
-本包提供编导工作法和真实工具，不是任意内容一键大片生成器。确定性检查仅覆盖抽样时刻；工程检查不替代视听判断。没有自带付费 TTS、生成视频、复杂 3D 或自动上传实现。使用宿主额外工具时按其实际授权和输入输出验证，不因提示词写了能力就宣称已完成。
+本包提供编导工作法和真实工具，不是任意内容一键大片生成器。确定性检查仅覆盖抽样时刻；工程检查不替代视听判断。本地 TTS 是可选依赖，付费服务、生成视频、复杂 3D 与上传仍需额外工具与实际授权。使用宿主额外工具时按其实际授权和输入输出验证，不因提示词写了能力就宣称已完成。

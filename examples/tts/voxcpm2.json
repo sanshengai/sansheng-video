@@ -1,0 +1,10 @@
+{
+  "engine": "voxcpm2",
+  "device": "mps",
+  "seed": 42,
+  "control": "成年女性，温暖清晰，自然讲解",
+  "blocks": [
+    "画面先讲清楚内容，声音再帮助理解。",
+    "Good morning. Let us begin."
+  ]
+}
