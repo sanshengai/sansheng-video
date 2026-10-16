@@ -1,0 +1,33 @@
+{
+  "engine": "Playwright Canvas frames + FFmpeg; not HyperFrames",
+  "fps": 30,
+  "duration": 4.8,
+  "cue_times": [
+    0.7,
+    2.9
+  ],
+  "audio_correlations": [
+    0.9999272964958996,
+    0.9999125437401112
+  ],
+  "seek_frame_hashes": {
+    "0": "12c444de4fd00a198b3520b3a43f42fc395ed487fcd2496773ccb1f2c3494202",
+    "0.7333333333": "04daa3f8a588c06e557f90d37b68d03fc8d5f44e21a325e1e7a24188d8c56b22",
+    "1": "f8a58fb5fca87ba48a498d70829392a9e4ba59fe1f90174db23b0eb186259606",
+    "2.9333333333": "4d64a419089217a29e94d990f24b3c7a607182e991b902fa99c244603d2ef2ee",
+    "3.5": "8046fe4cfb327a1c5c28d62adefe36b211da9b7e019d92927aecd1b9bfd88d5f"
+  },
+  "seek_order": "direct / reverse / cold reload match",
+  "full_decode": "passed",
+  "output_sha256": "9978a76a97171d8cfcad32c25cd00d28a7e01ed3431f81ac9fb0210634d3c7d7",
+  "source_sha256": {
+    "index.html": "91db859d1bd089076e29203877c6e59aa7a840896240a4014baac59745ce6fb2",
+    "timeline.json": "1b2ecfb3fa392725efe17dfc96ff3ae08681971b8473a2ffb4e6584a3c679a51",
+    "ripple.js": "eb58737dd991149ae29af5569c88b8081f638df12d2e5e5e145acc2f8812e9e8",
+    "kit-lp.js": "0212cfdebe4980eaa1f81bab725894f0d96ebaa596b958392fbfab9677fe85e1",
+    "assets/click.wav": "766fbefa892d329ca0bf12928487a9892ad48c84931066b2ef250fc914aaede6",
+    "assets.lock.json": "8b242689420a01e8495b665308fe10a103b89d41bfec9a6c34a8f850fe6b3f71"
+  },
+  "listening_status": "pending",
+  "visual_review": "Sample frame at 0.9 s reviewed: Chinese text, ripple and composition visible; full playback not reviewed"
+}

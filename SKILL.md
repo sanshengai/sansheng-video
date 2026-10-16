@@ -37,6 +37,7 @@ metadata:
 | 音画统一、字幕与真实旁白锚点 | [生产事件与工具](references/events-and-tools.md) |
 | 角色表演、生成镜头及连续片段 | [生成镜头](references/generated-shots.md) |
 | 裁剪、分段装配、原声与响度 | [媒体编辑](references/media-editing.md) |
+| 按需查动效、取代码与配声音 | [动效与音效](references/motion-and-sound.md)：镜头设计时触发，Motion Prompt 检索／缓存与 Openverse 下载接入原时间线 |
 | 素材、精品库、品牌与许可 | [资源配置](references/assets-and-profile.md) |
 | 按镜头找音效、下载与入片 | [Openverse 音效](references/openverse-sfx.md)：新音效默认在线按需检索，再走现有素材锁与声音事件 |
 | 发布包的能力边界和借鉴来源 | [来源与采用](references/sources.md) |

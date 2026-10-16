@@ -4,6 +4,7 @@
 
 | 参考 | 采用内容 | 处理 |
 |---|---|---|
+| [showheyohtaki/motion-prompt](https://github.com/showheyohtaki/motion-prompt) | 动效／镜头术语、spec、纯时间 Canvas 代码和按需检索 | 原 CLI 最小捆绑，固定 770eefb7091cc725ab0eb6d4ef5cbf28b28e282c；MIT，目录和选中条目按需获取，保留单一制作入口 |
 | [Kianzzz/xilo-opus-video](https://github.com/Kianzzz/xilo-opus-video) | 制作说明、动态验证、连续镜头、时间驱动、音画事件、混音、局部迭代与交付 | 方法适配；参考提交 f2cd828e2692e7186186408ee01a936707c2c38d，不捆绑原版导演 |
 | [lemomo-ai/lemo-opuscar](https://github.com/lemomo-ai/lemo-opuscar) | 空间连续性、手绘推理、印刷材质和风格一致性 | 方法转述，不复制 43 风格库或安装器 |
 | [Vincentwei1021/mg-styles-15](https://github.com/Vincentwei1021/mg-styles-15) | 图形变化、节奏与音画 cue | 方法转述 |

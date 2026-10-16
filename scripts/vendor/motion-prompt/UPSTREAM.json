@@ -1,0 +1,7 @@
+{
+  "repository": "https://github.com/showheyohtaki/motion-prompt",
+  "commit": "770eefb7091cc725ab0eb6d4ef5cbf28b28e282c",
+  "source_path": "skills/motion-prompt/scripts/motion-prompt.mjs",
+  "sha256": "60e25a2b1b671e1eebaed473ac87c27b4eda7e193f458415dc066626913d8b6b",
+  "modifications": "none; pinned data source supplied by parent wrapper"
+}

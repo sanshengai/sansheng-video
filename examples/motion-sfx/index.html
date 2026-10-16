@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>动效与音效组合验证</title>
+<style>html,body{margin:0;background:#131b2b}#main{width:1280px;height:720px}canvas{display:block;width:1280px;height:720px}</style></head><body>
+<div id="main" data-composition-id="main" data-width="1280" data-height="720" data-duration="4.8"><canvas id="canvas" width="1280" height="720"></canvas></div>
+<script src="derived/events.js"></script><script src="kit-lp.js"></script><script src="ripple.js"></script>
+<script>
+// Deterministic Canvas/FFmpeg example; HF adaptation follows references/hyperframes.md.
+C.acc = '#3B64E8'; C.accL = '#E1E8FF';
+const canvas = document.querySelector('canvas'), ctx = canvas.getContext('2d');
+window.renderFrame = t => {
+  ctx.reset(); ctx.fillStyle = '#131b2b'; ctx.fillRect(0,0,1280,720);
+  ctx.font = '600 36px system-ui'; ctx.textAlign = 'center'; ctx.fillStyle = '#fff';
+  ctx.fillText('点击发生，声音与波纹同时回应',640,100);
+  ctx.save(); ctx.translate(101,152); ctx.scale(2,2);
+  CELLS[12](ctx,CW,CH,Math.min(Math.max(t,0),CYC-1e-6)); ctx.restore();
+  ctx.fillStyle = '#B2BED4'; ctx.font = '22px system-ui';
+  ctx.fillText('Motion Prompt #085 · Openverse CC0 · 共同时间线',640,640);
+};
+window.renderFrame(0);
+</script></body></html>

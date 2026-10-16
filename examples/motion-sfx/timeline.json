@@ -1,0 +1,59 @@
+{
+  "fps": 30,
+  "duration": 4.8,
+  "canvas": [
+    1280,
+    720
+  ],
+  "requires_audio": true,
+  "shots": [
+    {
+      "id": "ripple",
+      "start": 0,
+      "end": 4.8,
+      "reading_windows": []
+    }
+  ],
+  "events": [
+    {
+      "id": "tap-1",
+      "scene_id": "ripple",
+      "start": 0.7,
+      "end": 1.5,
+      "timing_basis": "authored",
+      "visual": {
+        "motion_prompt_id": "085",
+        "click_position": [
+          165,
+          110
+        ]
+      },
+      "sound": {
+        "asset_id": "openverse-click-excerpt",
+        "revision": "766fbefa892d329c",
+        "duration": 0.2,
+        "volume": 0.8
+      }
+    },
+    {
+      "id": "tap-2",
+      "scene_id": "ripple",
+      "start": 2.9,
+      "end": 3.7,
+      "timing_basis": "authored",
+      "visual": {
+        "motion_prompt_id": "085",
+        "click_position": [
+          345,
+          100
+        ]
+      },
+      "sound": {
+        "asset_id": "openverse-click-excerpt",
+        "revision": "766fbefa892d329c",
+        "duration": 0.2,
+        "volume": 0.8
+      }
+    }
+  ]
+}

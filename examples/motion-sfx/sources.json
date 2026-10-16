@@ -1,0 +1,37 @@
+{
+  "motion": {
+    "repository": "https://github.com/showheyohtaki/motion-prompt",
+    "commit": "770eefb7091cc725ab0eb6d4ef5cbf28b28e282c",
+    "element": "085",
+    "license": "MIT",
+    "license_file": "../../scripts/vendor/motion-prompt/LICENSE",
+    "original_element_sha256": "aad0514b2deeac819483d9ad7b097cc26e62326663aa4952936c5f74b5cff0c1",
+    "adopted_element_sha256": "eb58737dd991149ae29af5569c88b8081f638df12d2e5e5e145acc2f8812e9e8",
+    "kit_sha256": "0212cfdebe4980eaa1f81bab725894f0d96ebaa596b958392fbfab9677fe85e1",
+    "modifications": "Chinese labels, timeline-driven click times/positions; palette overridden in index.html"
+  },
+  "audio": {
+    "id": "3849018d-0ac8-4f6b-b44d-5ec26a4b32af",
+    "title": "Mouse click sounds",
+    "creator": "Masgame",
+    "creator_url": "https://freesound.org/people/Masgame/",
+    "foreign_landing_url": "https://freesound.org/people/Masgame/sounds/347544/",
+    "url": "https://cdn.freesound.org/previews/347/347544_5662401-hq.mp3",
+    "license": "cc0",
+    "license_version": "1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "retrieved_at": "2026-10-16T20:16:07.799727+00:00",
+    "project_path": "assets/click.wav",
+    "sha256": "766fbefa892d329ca0bf12928487a9892ad48c84931066b2ef250fc914aaede6",
+    "download_variant": "Openverse url: Freesound HQ MP3 preview, not the login-only original",
+    "search": {
+      "url": "https://api.openverse.org/v1/audio/?q=click&license=cc0,by&page_size=3",
+      "result_count": 240,
+      "access": "Chrome browser API navigation; Python HTTP received Cloudflare 1010"
+    },
+    "source_check": "Freesound source page confirms CC0 1.0 and 2.310-second duration",
+    "listening_status": "pending; technical verification only",
+    "modifications": "Extract source 0.93–1.13 seconds after measuring click onset near 0.931 s; 2 ms entrance and 5 ms exit fade; WAV 44.1 kHz stereo",
+    "downloaded_sha256": "56d38ee4ebc49bbf796c250b2ce95b7a72fc3b654e5bee6af60bee7e222d1681"
+  }
+}
