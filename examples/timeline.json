@@ -1,0 +1,29 @@
+{
+  "fps": 30,
+  "duration": 2,
+  "canvas": [
+    1280,
+    720
+  ],
+  "requires_audio": false,
+  "shots": [
+    {
+      "id": "relation",
+      "start": 0,
+      "end": 2,
+      "reading_windows": []
+    }
+  ],
+  "events": [
+    {
+      "id": "connect",
+      "scene_id": "relation",
+      "start": 0,
+      "end": 2,
+      "timing_basis": "authored",
+      "visual": {
+        "type": "connection"
+      }
+    }
+  ]
+}

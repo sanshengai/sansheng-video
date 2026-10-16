@@ -1,0 +1,15 @@
+{
+  "name": "sansheng-video-marketplace",
+  "owner": {
+    "name": "叁笙 (sansheng)",
+    "email": "sandypoli@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "sansheng-video",
+      "source": "./",
+      "version": "0.1.0",
+      "description": "One video production entry: direction, HyperFrames animation, real-media editing, audio and editable delivery."
+    }
+  ]
+}

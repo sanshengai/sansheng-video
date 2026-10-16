@@ -1,0 +1,6 @@
+#!/bin/sh
+set -eu
+python3 .githooks/redact_guard.py
+if [ -x .githooks/pre-commit.local ]; then
+  .githooks/pre-commit.local
+fi

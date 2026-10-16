@@ -1,0 +1,2 @@
+# Core scripts use Python standard library.
+# Browser seek checks only: install with python3 -m pip install playwright==1.62.0

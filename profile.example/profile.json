@@ -1,0 +1,14 @@
+{
+  "brand": {
+    "name": "Example Studio",
+    "colors": {
+      "primary": "#215E70"
+    },
+    "logo": null,
+    "fonts": []
+  },
+  "content_rules": [],
+  "output_root": null,
+  "asset_roots": [],
+  "legacy_root": null
+}

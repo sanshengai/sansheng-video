@@ -1,0 +1,15 @@
+{
+  "metadata": {
+    "fps": 30,
+    "total_duration": 2
+  },
+  "scenes": [
+    {
+      "source": "assets/input.mp4",
+      "source_in": 0.2,
+      "source_out": 2.2,
+      "timeline_start": 0,
+      "timeline_end": 2
+    }
+  ]
+}

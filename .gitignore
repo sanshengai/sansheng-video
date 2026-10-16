@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+.env.*
+!.env.example
+.githooks/pre-commit.local
+.local/
+node_modules/
+profile
+.DS_Store
