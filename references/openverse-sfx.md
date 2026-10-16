@@ -24,7 +24,7 @@ curl --fail --show-error --silent --get --max-time 30 \
 
 Openverse 是索引，检索命中不等于文件一定可下。读取结果的 `id`、`title`、`creator`、`creator_url`、`license`、`license_version`、`license_url`、`foreign_landing_url` 和媒体 `url`；缺失字段如实留空，不推断作者或许可证。返回字段以实际响应为准。候选链接是来源证据，媒体地址才用于取文件。
 
-403／超时先记录具体失败，可改走 Openverse 网页；429 按响应的 `Retry-After` 等待，没给则稍后再试，不连续重试。原媒体链接失效时查来源页的合法下载入口或换候选，不以 HTML 页面冒充音频。在线入口仍不可用时，才使用项目已有或用户授权的本地／网盘素材；也可保留无音效候选，交付时说明。API 文档核对通过不等于当前机器已下载成功。
+403／超时先记录具体失败，可用宿主浏览器直接打开相同 API URL，或改走 Openverse 网页。2026-10-17 实测终端收到 Cloudflare 1010 时，Chrome 直接访问 API 能返回真实 JSON；网页应用资源报错不等于 API 也不可用。不得绕过安全警告或验证码。429 按响应的 `Retry-After` 等待，没给则稍后再试，不连续重试。原媒体链接失效时查来源页的合法下载入口或换候选，不以 HTML 页面冒充音频。在线入口仍不可用时，才使用项目已有或用户授权的本地／网盘素材；也可保留无音效候选，交付时说明。API 文档核对通过不等于当前机器已下载成功。
 
 ## 3. 核来源，试听后选定
 
@@ -76,4 +76,6 @@ python3 "$SKILL/scripts/generate_sfx_tags.py" "$PROJECT/hf/index.html" \
 
 ## 接口依据与验证边界
 
-接口字段与音频端点可核对 [官方音频视图](https://github.com/WordPress/openverse/blob/main/api/api/views/audio_views.py)、[音频序列化器](https://github.com/WordPress/openverse/blob/main/api/api/serializers/audio_serializers.py) 和[通用媒体序列化器](https://github.com/WordPress/openverse/blob/main/api/api/serializers/media_serializers.py)。2026-10-17 核对时官方源代码可读取，本次环境的 API 直连出现 403／超时，未完成真实搜索、下载、试听和成片验证；实际制作时须逐项取得证据，不能继承本页为链路已通过的回执。
+接口字段与音频端点可核对 [官方音频视图](https://github.com/WordPress/openverse/blob/main/api/api/views/audio_views.py)、[音频序列化器](https://github.com/WordPress/openverse/blob/main/api/api/serializers/audio_serializers.py) 和[通用媒体序列化器](https://github.com/WordPress/openverse/blob/main/api/api/serializers/media_serializers.py)。
+
+2026-10-17 的[真实点击音示例](../examples/openverse-click/README.md)已用 Chrome 搜索 API、核原始许可、下载媒体 `url` 返回的 MP3、导出时间线 cue 并接入 FFmpeg 测试片。最终文件完整解码通过，解码音轨在指定时间与源音相关系数约 0.998，证明真实声音已入片。示例使用公开 HQ MP3 预览，原站原件下载需登录，两者不能混称；主观试听仍待验。此证据只覆盖该样本与当时入口，不保证所有检索结果可下载，也不代替实际作品的试听。

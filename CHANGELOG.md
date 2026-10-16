@@ -4,6 +4,7 @@
 
 - Add an Openverse-first workflow for new sound effects, from scene intent and source/license checks to project-local assets, explicit cues and final listening review. Existing project audio remains reusable; local libraries and cloud archives are optional fallbacks.
 - Document bounded API searches, unavailable-service handling and integration with the existing SFX consumer. No new account, paid service or library migration is required.
+- Verify one real CC0 click sample through browser API search, source verification, download, exported cues and a decoded FFmpeg demo; document the browser API fallback for terminal Cloudflare rejection. Subjective listening remains separate.
 
 ## [1.0.0] -- 2026-10-16
 

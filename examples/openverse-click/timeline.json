@@ -1,0 +1,32 @@
+{
+  "fps": 30,
+  "duration": 5,
+  "canvas": [
+    640,
+    360
+  ],
+  "requires_audio": true,
+  "shots": [
+    {
+      "id": "click-test",
+      "start": 0,
+      "end": 5,
+      "reading_windows": []
+    }
+  ],
+  "events": [
+    {
+      "id": "mouse-click",
+      "scene_id": "click-test",
+      "start": 1,
+      "end": 3.310385,
+      "timing_basis": "authored",
+      "sound": {
+        "asset_id": "openverse-3849018d-0ac8-4f6b-b44d-5ec26a4b32af",
+        "revision": "56d38ee4ebc49bbf",
+        "duration": 2.310385,
+        "volume": 0.5
+      }
+    }
+  ]
+}

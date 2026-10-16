@@ -1,0 +1,35 @@
+{
+  "status": "technical_checks_passed",
+  "source_sha256": "56d38ee4ebc49bbf796c250b2ce95b7a72fc3b654e5bee6af60bee7e222d1681",
+  "video_sha256": "3db705aecda0f6317e67f0495a36e449215865c9987437e98e1c43c4b69b7a60",
+  "cue_seconds": 1,
+  "source_duration_seconds": 2.310385,
+  "video_probe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "codec_type": "video",
+        "width": 640,
+        "height": 360
+      },
+      {
+        "codec_name": "aac",
+        "codec_type": "audio",
+        "sample_rate": "44100",
+        "channels": 2
+      }
+    ],
+    "format": {
+      "duration": "5.000000",
+      "size": "60233"
+    }
+  },
+  "complete_decode": "passed",
+  "decoded_audio_correlation_at_cue": 0.997926,
+  "peak_before_cue": 0.0,
+  "peak_in_cue": 0.8437697887420654,
+  "listening_review": "pending; no claim of subjective listening approval",
+  "render_path": "FFmpeg consumes sound-cues.json; HTML SFX consumer also validated/applied"
+}
