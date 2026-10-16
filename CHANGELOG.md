@@ -2,6 +2,8 @@
 
 ## [未发布]
 
+## [1.0.0] -- 2026-10-16
+
 - Consolidate video direction, visual mechanisms and audio/media editing into one production entry.
 - Add portable, explicit HyperFrames execution, shared production events and source-bound rendering/review evidence.
 - Preserve source audio, reject stale artifacts, support explicit narration/music ducking and editable project delivery.
