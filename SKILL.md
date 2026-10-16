@@ -38,6 +38,7 @@ metadata:
 | 角色表演、生成镜头及连续片段 | [生成镜头](references/generated-shots.md) |
 | 裁剪、分段装配、原声与响度 | [媒体编辑](references/media-editing.md) |
 | 素材、精品库、品牌与许可 | [资源配置](references/assets-and-profile.md) |
+| 按镜头找音效、下载与入片 | [Openverse 音效](references/openverse-sfx.md)：新音效默认在线按需检索，再走现有素材锁与声音事件 |
 | 发布包的能力边界和借鉴来源 | [来源与采用](references/sources.md) |
 
 工具不自动安装 latest、不调用付费生成服务、不上传文件。生成图像、TTS、搜索等使用当前宿主已有且获授权的工具；本包不伪装已提供这些 API。缺组件明确指出缺什么，不偷偷改供应商或降为静态卡片来冒充完成。
