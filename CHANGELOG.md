@@ -2,6 +2,8 @@
 
 ## [未发布]
 
+## [1.1.0] -- 2026-10-18
+
 - Add generated-scene audiovisual direction: shape character lighting in scene keyframes, tie camera and action to intent, preserve useful native sound, and mix dialogue, ambience, foley and music on the existing timeline.
 - Add targeted diagnosis and bounded comparisons for generated clips, with separate evidence for technical checks, viewing, listening and approval.
 
