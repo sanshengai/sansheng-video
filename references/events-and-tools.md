@@ -16,7 +16,7 @@ python3 "$SKILL/scripts/production_timeline.py" check "$PROJECT/derived/producti
 
 ## 显式音效接线
 
-新音效的搜索、许可与下载先执行 [Openverse 音效](openverse-sfx.md)。在线结果必须先成为项目内真实音频与素材锁条目，再由下述工具消费；远程链接不直接挂入最终工程。
+新音效按 [资源配置](assets-and-profile.md) 保留适用的项目声音、查询显式启用的精选库；在线缺件的搜索、许可与下载执行 [Openverse 音效](openverse-sfx.md)。采用的声音必须先成为项目内真实音频与素材锁条目，再由下述工具消费；远程链接不直接挂入最终工程。
 
 使用 `generate_sfx_tags.py index.html --manifest assets.lock.json --cues derived/sound-cues.json` 先只读检查；明确加 `--apply` 才修改自动标记区域，不覆盖手写音轨。最小素材锁的 items 条目包含 id、revision、scene_id、project_path 和实际 sha256，路径相对锁文件，必须能在工程内安全引用。每个 cue 显式给实际素材身份、全片秒值和时长；工具核对字节与真实音频长度，不会只凭素材同名就自动配声。
 

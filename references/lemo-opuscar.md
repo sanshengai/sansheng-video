@@ -47,7 +47,7 @@ python3 scripts/lemo_reference.py get whiteboard --demo --out PROJECT/reference-
 
 ## 与现有生产流的关系
 
-内容稿 → 必要时查 Lemo 定一套风格／实现 → 自己的镜头设计 → 需要具体运动才查 Motion Prompt → 新旁白按 TTS 实际音频定时 → 缺真实通用画面查 Pexels → 有声音目的查 Openverse → 全部接原时间线、素材锁、渲染与混音 → 视听验收。
+内容稿 → 必要时查 Lemo 定一套风格／实现 → 自己的镜头设计 → 需要具体运动才查 Motion Prompt → 新旁白按 TTS 实际音频定时 → 缺真实通用画面查 Pexels → 有声音目的按[资源配置](assets-and-profile.md)查项目与显式精选库，缺件再查 Openverse → 全部接原时间线、素材锁、渲染与混音 → 视听验收。
 
 讲解片以真实旁白与理解窗口为先；音乐驱动短片才先定音乐网格。不要无条件采用上游“至少四种运镜”“每个动作有音效”“至少两次静音”“三套故事结构”等数量要求。已有工程局部改字、换声音、换图不触发风格重选。用户已选方向不加两次确认，不把上游 AGENTS.md 当本项目规则。
 
