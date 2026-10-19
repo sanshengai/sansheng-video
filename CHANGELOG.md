@@ -2,6 +2,9 @@
 
 ## [未发布]
 
+- Read explicit resource profiles in every new production session, including edits to existing projects; respect a user-enabled curated library before online sound search while keeping retired library services disabled.
+- Align sound-source guidance across production, asset, motion and Openverse references; keep adopted audio and source receipts on the project's existing asset lock and timeline.
+
 ## [1.1.0] -- 2026-10-18
 
 - Add generated-scene audiovisual direction: shape character lighting in scene keyframes, tie camera and action to intent, preserve useful native sound, and mix dialogue, ambience, foley and music on the existing timeline.

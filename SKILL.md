@@ -18,7 +18,7 @@ metadata:
 - **新作或整体重做**：读取 [制作流程](references/production.md)，确定观众要理解什么，再组织镜头和声音。
 - **只处理素材、声音或字幕**：只读制作流程中对应部分，不启动全链。
 
-主入口不承担内容产品的事实裁决。已有文章可直接转视频；课程、角色和栏目规范由输入方提供，不把写长文当作所有视频的前置。新项目先运行 `python3 setup.py --show-profile`；返回配置时读取其中 `context_file` 和当前业务对应的规则。品牌从项目配置、显式 `SANSHENG_VIDEO_PROFILE_DIR` 或用户建立的本地 `profile/` 获取；无配置时使用项目自选的中性视觉，不套作者品牌。已有工程局部修改优先沿用已载入的项目约定。
+主入口不承担内容产品的事实裁决。已有文章可直接转视频；课程、角色和栏目规范由输入方提供，不把写长文当作所有视频的前置。每个新会话首次处理视频制作、剪辑、声音或素材任务时，都先运行 `python3 setup.py --show-profile`；接手旧工程和局部修改同样执行。返回配置时读取其中 `context_file` 和当前业务对应的规则；涉及素材且显式配置了 `media_library` 时，再读它的 `usage`，依其根目录、工具与取用约定处理。品牌从项目配置、显式 `SANSHENG_VIDEO_PROFILE_DIR` 或用户建立的本地 `profile/` 获取；无配置时使用项目自选的中性视觉，不套作者品牌。已有工程局部修改仍沿用其引擎、内容和项目约定。
 
 ## 固定责任链
 
@@ -41,7 +41,7 @@ metadata:
 | 裁剪、分段装配、原声与响度 | [媒体编辑](references/media-editing.md) |
 | 按需查动效、取代码与配声音 | [动效与音效](references/motion-and-sound.md)：镜头设计时触发，Motion Prompt 检索／缓存与 Openverse 下载接入原时间线 |
 | 项目素材、品牌与许可 | [资源配置](references/assets-and-profile.md) |
-| 按镜头找音效、下载与入片 | [Openverse 音效](references/openverse-sfx.md)：新音效默认在线按需检索，再走现有素材锁与声音事件 |
+| 按镜头找音效、下载与入片 | [资源配置](references/assets-and-profile.md) 决定来源顺序；项目与显式精选库缺件后走 [Openverse 音效](references/openverse-sfx.md)，接入现有素材锁与声音事件 |
 | 需要新增配音 | [TTS 选型与制作](references/tts.md)：VoxCPM2 主候选，Kokoro 轻量备用；先定声音再用实际时长驱动时间线 |
 | 通用真实 B-roll 缺件 | [在线画面素材](references/stock-footage.md)：Pexels 主源、Pixabay 备用，按镜头最多 3 个候选 |
 | 发布包的能力边界和借鉴来源 | [来源与采用](references/sources.md) |
