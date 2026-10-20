@@ -2,6 +2,8 @@
 
 ## [未发布]
 
+- Correct crop-based dialogue coverage guidance: retain useful native compositions, assess real detail and adjacent shot scale before reframing, and withdraw edits that create abrupt enlargement or viewing discomfort.
+
 - Preserve exact frame clocks through MOV/PCM assembly intermediates; add a real 24 fps fractional-cut regression without loosening final frame/audio checks.
 
 - Add conditional dialogue-performance guidance: verify audio-driving support before choosing fixed-audio coverage or native audiovisual generation; preserve speaker/listener roles, spatial continuity and the existing timeline without requiring a fixed camera count or provider.
