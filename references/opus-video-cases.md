@@ -13,7 +13,7 @@
 
 ## 命令
 
-在 Skill 根运行；`PROJECT` 是当前工程。
+每次调用都显式以实际 Skill 根为工作目录，不依赖上次终端的 `cd`；`PROJECT` 是当前工程。
 
 ```sh
 python3 scripts/video_case_reference.py info
