@@ -5,6 +5,7 @@
 - Add an optional product-launch method that connects real product evidence, information structure, a visible central action, music and version-bound feedback without imposing another engine or approval stage.
 - Add source-backed creative summaries for all 51 Lemo styles, bounded bilingual intent search and detailed inspection. Keep existing pinned retrieval and verify research revisions, source fingerprints and reference line ranges; exclude negative guidance from recommendation ranking.
 - Scope reusable production lessons by evidence and context, and distinguish frame inspection, technical verification, listening and user approval.
+- Verify retained source audio through the actual processing and encoding stages; distinguish picture/audio tails and independently encoded references without weakening missing-word, stale-source or empty-window rejection.
 
 - Integrate action feasibility into storyboard and first-frame review, with checks derived from the existing review rather than another approval stage.
 - Separate observed defects and verified workflow gaps from causal hypotheses, and reuse project diagnostics when improving the relevant production step.
