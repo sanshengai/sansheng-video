@@ -2,6 +2,10 @@
 
 ## [未发布]
 
+- Preserve exact frame clocks through MOV/PCM assembly intermediates; add a real 24 fps fractional-cut regression without loosening final frame/audio checks.
+
+- Add conditional dialogue-performance guidance: verify audio-driving support before choosing fixed-audio coverage or native audiovisual generation; preserve speaker/listener roles, spatial continuity and the existing timeline without requiring a fixed camera count or provider.
+
 - Add optional offline discovery of eight curated, pinned video-case summaries with Chinese intent tags, suitability boundaries and separate source/viewing/listening/reproduction states. Retrieve selected reference text only, verify SHA256/Git blobs and project receipts, support offline caches, and reject corrupt sources or existing output folders.
 - Route case reference through the existing production entry after independent shot design; retain creative choice, project engines, sound-source precedence and the existing timeline/asset/render consumers. Editorial reference updates are not runtime dependencies.
 - Align README sound-source precedence with explicit curated-library profiles; preserve retired full-library boundaries.

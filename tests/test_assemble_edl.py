@@ -109,6 +109,20 @@ class RealAssemblyTests(unittest.TestCase):
             pixel=ff('-ss',t,'-i',out,'-vf','scale=1:1','-frames:v','1','-f','rawvideo','-pix_fmt','rgb24','-')
             self.assertEqual(max(range(3),key=lambda c:pixel[c]),channel)
 
+    def test_24fps_fractional_second_cuts_keep_exact_frame_clock(self):
+        # Millisecond intermediate timestamps cannot represent 1/24 seconds.
+        # These cuts exercise the consumer's final exact-FPS/frame-count gate.
+        out=a.assemble(self.edl([('blue.mp4',.125,.125+31/24),
+                                ('red.mp4',.125,.125+28/24)]),
+                       output_path=self.output(),audio_mode='source',fps=24)
+        video=a._one_stream(a._probe(out,True),'video')
+        self.assertEqual(video['avg_frame_rate'],'24/1')
+        self.assertEqual(int(video['nb_read_frames']),59)
+        self.assertAlmostEqual(a._duration(video),59/24,delta=1e-6)
+        sound=self.samples(out)
+        self.tone(sound,.2,660);self.tone(sound,1.5,440)
+        self.continuous(sound,59/24)
+
     def test_silent_intent_removes_audio_keeps_original_canvas(self):
         out=a.assemble(self.edl(),output_path=self.output(),audio_mode='silent')
         self.assertEqual(a._streams(a._probe(out),'audio'),[])

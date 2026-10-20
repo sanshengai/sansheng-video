@@ -329,7 +329,10 @@ def _extract_segments(scenes, edl_path, tmpdir, fps, frames, width, height, audi
     segments = []
     for i, (scene, count) in enumerate(zip(scenes, frames)):
         duration = count / fps
-        target = str(Path(tmpdir) / f"seg_{i:05d}.mkv")
+        # MOV retains a frame-representable video clock plus PCM. Matroska's
+        # millisecond clock rounds 24fps cuts and makes stream-copy concat
+        # publish a non-CFR average even when all segment frame counts match.
+        target = str(Path(tmpdir) / f"seg_{i:05d}.mov")
         command = ["ffmpeg", "-v", "error", "-nostdin", "-y", "-i",
                    _resolve(_scene_source(scene), edl_path), "-ss", str(scene["source_in"]),
                    "-t", f"{duration:.12f}", "-map", "0:v:0", "-vf", scale,
@@ -351,7 +354,7 @@ def _concat_segments(segments, tmpdir):
     concat_txt = Path(tmpdir) / "concat.txt"
     # Intermediates have fixed safe basenames; avoid platform-dependent escaping.
     concat_txt.write_text("".join(f"file '{Path(p).name}'\n" for p in segments), encoding="utf-8")
-    assembled = str(Path(tmpdir) / "assembled.mkv")
+    assembled = str(Path(tmpdir) / "assembled.mov")
     _run(["ffmpeg", "-v", "error", "-nostdin", "-y", "-f", "concat", "-safe", "1",
           "-i", str(concat_txt), "-map", "0", "-c", "copy", assembled])
     return assembled
