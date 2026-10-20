@@ -2,6 +2,9 @@
 
 ## [未发布]
 
+- Integrate action feasibility into storyboard and first-frame review, with checks derived from the existing review rather than another approval stage.
+- Separate observed defects and verified workflow gaps from causal hypotheses, and reuse project diagnostics when improving the relevant production step.
+
 ## [1.2.0] -- 2026-10-20
 
 - Review each generated action against its actual starting frame and final submitted prompt, including visible actor roles, object support and the intended end state. Coordinate actions around one story beat rather than restricting every shot to one person's gesture.
