@@ -16,6 +16,7 @@ import subprocess
 
 from runtime_support import locate_renderer, managed_command, verify_clip
 from production_timeline import check, digest, encoded
+from production_sound import preflight as sound_preflight
 
 
 def runtime_roots(runtime, browser):
@@ -48,7 +49,8 @@ def inventory(roots):
 def runtime_files(runtime, browser):
     package = Path(runtime).resolve()
     files = inventory(runtime_roots(runtime, browser))
-    fixed = [Path(__file__).resolve(), Path(__file__).with_name('runtime_support.py').resolve()]
+    fixed = [Path(__file__).resolve(), *[Path(__file__).with_name(name).resolve() for name in
+             ('runtime_support.py', 'production_sound.py', 'generate_sfx_tags.py')]]
     for name in ('node', 'ffmpeg', 'ffprobe'):
         binary = shutil.which(name)
         if not binary:
@@ -122,6 +124,7 @@ def render(project, source, runtime, browser, output, refresh=False, quality='dr
         raise ValueError('render output would overwrite a source dependency')
     if output.is_symlink() or (output.exists() and not refresh):
         raise ValueError('output exists or is a symlink; use a new output or explicit --refresh')
+    sound = sound_preflight(project, data, metadata)
     browser = Path(browser).resolve()
     if not browser.is_file():
         raise ValueError('explicit local browser missing; no automatic download')
@@ -139,6 +142,8 @@ def render(project, source, runtime, browser, output, refresh=False, quality='dr
     check(build)
     if digest(build) != build_hash or runtime_files(runtime, browser) != inputs:
         raise ValueError('inputs changed while rendering; output cannot be accepted')
+    if sound_preflight(project, data, metadata) != sound:
+        raise ValueError('sound wiring changed while rendering')
     probe = verify_clip(output, {'width': data['canvas'][0], 'height': data['canvas'][1], 'duration': data['duration']})
     streams = json.loads(subprocess.run(['ffprobe', '-v', 'error', '-show_streams', '-of', 'json', str(output)],
                                        capture_output=True, text=True, check=True).stdout)['streams']
@@ -148,7 +153,8 @@ def render(project, source, runtime, browser, output, refresh=False, quality='dr
     receipt = {'kind': 'production-render/1', 'status': 'rendered_not_reviewed', 'output': str(output),
                'output_sha256': digest(output), 'build_path': str(build), 'build_sha256': build_hash,
                'runtime_files': inputs, 'runtime_roots': runtime_roots(runtime, browser), 'host': {'system': platform.system(), 'release': platform.release(), 'machine': platform.machine()},
-               'command': command, 'browser': str(browser), 'verification': {**probe, 'has_audio': has_audio}}
+               'command': command, 'browser': str(browser), 'verification': {**probe, 'has_audio': has_audio,
+                                                                             'sound_wiring': sound}}
     receipt_path = output.with_suffix('.render.json')
     receipt_path.write_text(encoded(receipt))
     return {'status': receipt['status'], 'receipt': str(receipt_path), 'output': str(output)}

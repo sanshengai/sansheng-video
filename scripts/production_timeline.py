@@ -14,6 +14,7 @@ from pathlib import Path
 
 from motion_review_schedule import schedule
 import production_narration
+from production_sound import decisions as sound_decisions
 
 
 def digest(path):
@@ -131,6 +132,7 @@ def validate(timeline, narration=None):
     ordered = sorted(captions)
     if any(a[1] > b[0] for a, b in zip(ordered, ordered[1:])):
         raise ValueError("caption intervals overlap")
+    sound_decisions(timeline)
     return review
 
 
@@ -183,6 +185,7 @@ def export(source, destination, dependencies=(), refresh=False):
         narration, narration_inputs = production_narration.verified_inputs(source.parent / evidence)
     outputs = products(timeline, narration) if narration is not None else products(timeline)
     inputs = {source, Path(__file__).resolve(), Path(__file__).with_name("motion_review_schedule.py").resolve()}
+    inputs.add(Path(__file__).with_name("production_sound.py").resolve())
     inputs.update(Path(p).resolve() for p in dependencies)
     inputs.update(Path(p) for p in narration_inputs)
     fingerprints = {}

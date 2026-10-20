@@ -6,6 +6,9 @@
     720
   ],
   "requires_audio": false,
+  "sound_design": [
+    {"scene_ids": ["relation"], "mode": "quiet", "reason": "This silent motion example explains the relationship visually."}
+  ],
   "shots": [
     {
       "id": "relation",

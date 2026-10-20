@@ -16,6 +16,24 @@ python3 "$SKILL/scripts/production_timeline.py" check "$PROJECT/derived/producti
 
 案例采用记在原制作说明，原文与来源回执留在 references。实际改写的代码、字体和媒体才进入运行依赖；未执行的提示词、检索索引不绑定影片渲染。只改推荐标签不应使旧片过期；实际时间源、采用素材或实现字节变化则必须重建对应消费者与证据。
 
+## 场景声音决定与旧工程迁移
+
+在原 timeline 的 `sound_design` 中按既有镜头 ID 记录决定。每个镜头恰好覆盖一次，相同决定可合并 `scene_ids`，时间仍只取 shots/events，不另写一份。以下是字段示意，填入当前工程真实 ID 后使用：
+
+```json
+"sound_design": [
+  {"scene_ids": ["seaside"], "mode": "source", "reason": "原声海浪与脚步已能交代空间，保留它们。", "source_elements": ["native-seaside"]},
+  {"scene_ids": ["explanation"], "mode": "supplement", "reason": "为讲解补一条平稳底乐，讲话时避让。"},
+  {"scene_ids": ["answer"], "mode": "quiet", "reason": "只留对白，让观众听清这句答案。"}
+]
+```
+
+`source` 需真实 `<audio>`／`<video>` 元素 ID，文件在项目内且列入构建依赖；元素明确 `data-start`、`data-duration`，有效音量大于零、未 muted，并实际覆盖相应镜头。已有剪裁用 `data-media-start`／`data-playback-start`；这个检查适配器不接受原声变速，先生成有来源记录的派生媒体。`supplement` 每个所列镜头需有原 events 中的正音量 `sound` 事件，可保留 `source_elements`；它们由下一节接线。`quiet` 指有意不加这些场景声音，允许对白继续；整个作品无声才设 `requires_audio: false`。不要为过检查把未决场景批量写成 quiet。
+
+兼容边界：旧事件文件仍可 export/check；**有声 HTML 工程重新运行 `render_production.py render` 前必须补此决定**。空数组、漏镜头、虚假的补音或缺原声元素均拒绝。旧无声作品仍支持 `requires_audio: false`。这是渲染前置契约变化，迁移时由 Agent 依据原声与制作说明补决定，不能自动推断“只有对白就已设计好”。
+
+HTML 渲染器在启动编码前和编码后调用 `production_sound.preflight`，复核当前 cue 与实际自动音轨、锁定字节、有效增益及原声依赖，结果记入原 render receipt 的 `verification.sound_wiring`，状态仅为 `wired_not_listened`。原生片段、Remotion、自有 FFmpeg/EDL 装配器在其真实消费者实现等价核对，保留现有字段与引擎；本 HTML 检查不替它们宣称通过，也不将检查 JSON 当成最终音频听审。
+
 ## 显式音效接线
 
 新音效按 [资源配置](assets-and-profile.md) 保留适用的项目声音、查询显式启用的精选库；在线缺件的搜索、许可与下载执行 [Openverse 音效](openverse-sfx.md)。采用的声音必须先成为项目内真实音频与素材锁条目，再由下述工具消费；远程链接不直接挂入最终工程。
@@ -26,7 +44,7 @@ cue 仅接受 `id`、`asset_id`、`revision`、`scene_id`、`time`、`duration`�
 
 内部声音标记在源文件第 `m` 秒、裁切入点为 `a`、速度倍率为 `r` 时，其新位置为 `(m-a)/r`；要对齐画面第 `T` 秒，cue 起点为 `T-(m-a)/r`。标记必须在保留源区间内，起点不得为负，尾音仍须落在镜头许可范围。标记的含义要有实际依据，信号峰值不自动等于听到的起音；连续环境音不硬填冲击标记。
 
-应用后将修改过的 HTML 和音频纳入 dependency，重新导出构建再渲染。旁白／背景音乐是单独的真实媒体，不能拿音效 cue 代替完整声音制作。
+应用后将修改过的 HTML、`assets.lock.json` 和实际音频纳入 dependency，重新导出构建再渲染。计划 cue 未接入、被改时点/音量/轨道、缺文件、错版本或未绑定依赖时，通用渲染入口会在编码前拒绝；只运行 take 或导出 cue 不算入片。旁白／背景音乐是单独的真实媒体，不能拿一个提示音代替完整声音制作。
 
 ## 真实旁白
 
@@ -50,6 +68,8 @@ python3 "$SKILL/scripts/mix_production_audio.py" \
 ```
 
 真实讲话区间不得冒称逐词发声检测。最终试听和必要响度处理见媒体编辑。
+
+后续 FFmpeg 混音才加入的声音，以该步骤的实际命令、源区间、EDL 和回执为准，不假填成 HTML 已入轨。最终消费者须核对计划声部是否真的被混入、原声是否保留及各声部电平；仅探测到一个音频流或整片 LUFS 达标不能证明配乐/环境声存在。素材批准、接线检查和最终混音试听分别记录。
 
 ## 确定性与审查绑定
 

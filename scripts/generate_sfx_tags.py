@@ -73,6 +73,8 @@ class Composition(HTMLParser):
         self.close_at = None
         self.ids = set()
         self.tracks = set()
+        self.media = {}
+        self.media_elements = []
         self.feed(text)
         self.close()
         if self.root is None or self.close_at is None:
@@ -81,8 +83,14 @@ class Composition(HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         data = dict(attrs)
+        if tag in {"audio", "video"}:
+            self.media_elements.append((tag, data, any(root for _, root in self.stack)))
         if data.get("id"):
+            if data["id"] in self.ids:
+                raise ValueError("重复 HTML id：" + data["id"])
             self.ids.add(data["id"])
+            if tag in {"audio", "video"}:
+                self.media[data["id"]] = (tag, data, any(root for _, root in self.stack))
         track = data.get("data-track-index")
         if track is not None:
             try:
