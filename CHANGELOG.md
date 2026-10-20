@@ -6,6 +6,7 @@
 - Add source-backed creative summaries for all 51 Lemo styles, bounded bilingual intent search and detailed inspection. Keep existing pinned retrieval and verify research revisions, source fingerprints and reference line ranges; exclude negative guidance from recommendation ranking.
 - Scope reusable production lessons by evidence and context, and distinguish frame inspection, technical verification, listening and user approval.
 - Verify retained source audio through the actual processing and encoding stages; distinguish picture/audio tails and independently encoded references without weakening missing-word, stale-source or empty-window rejection.
+- Reject unsupported SFX cue fields instead of silently ignoring trim, playback-rate or misspelled timing requests; document source-marker alignment through explicitly staged derived audio.
 
 - Integrate action feasibility into storyboard and first-frame review, with checks derived from the existing review rather than another approval stage.
 - Separate observed defects and verified workflow gaps from causal hypotheses, and reuse project diagnostics when improving the relevant production step.

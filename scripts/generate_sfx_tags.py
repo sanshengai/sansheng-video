@@ -22,6 +22,7 @@ from html.parser import HTMLParser
 BEGIN = "<!-- SFX-AUTO BEGIN -->"
 END = "<!-- SFX-AUTO END -->"
 VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
+CUE_FIELDS = {"id", "asset_id", "revision", "scene_id", "time", "duration", "volume", "track"}
 
 
 def number(value, name, *, positive=False):
@@ -169,6 +170,10 @@ def plan(index, manifest, cue_path=None):
     for item, cue in selected_cues(items, cue_path):
         if not isinstance(cue, dict):
             raise ValueError("cue 必须为对象")
+        unsupported = set(cue) - CUE_FIELDS
+        if unsupported:
+            raise ValueError("不支持的 cue 字段：" + ", ".join(sorted(unsupported)) +
+                             "；裁切或变速须先生成项目内派生音频，更新素材锁后再接线")
         for key in ("id", "revision", "sha256", "project_path", "scene_id"):
             if not isinstance(item.get(key), str) or not item[key]:
                 raise ValueError(f"锁定素材缺 {key}")

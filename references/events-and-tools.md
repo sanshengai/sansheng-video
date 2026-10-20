@@ -22,6 +22,10 @@ python3 "$SKILL/scripts/production_timeline.py" check "$PROJECT/derived/producti
 
 使用 `generate_sfx_tags.py index.html --manifest assets.lock.json --cues derived/sound-cues.json` 先只读检查；明确加 `--apply` 才修改自动标记区域，不覆盖手写音轨。最小素材锁的 items 条目包含 id、revision、scene_id、project_path 和实际 sha256，路径相对锁文件，必须能在工程内安全引用。每个 cue 显式给实际素材身份、全片秒值和时长；工具核对字节与真实音频长度，不会只凭素材同名就自动配声。
 
+cue 仅接受 `id`、`asset_id`、`revision`、`scene_id`、`time`、`duration`、`volume`、`track`；未知字段会报错，不能假定 `media_start` 或 `playback_rate` 已被执行。`time` 是音频文件开始播放的全片时间，不一定是文件内动作点。需裁切或变速时先在项目内生成派生音频，保存父素材 hash、处理命令及来源回执，实测新时长并更新素材锁；原批准试听不自动覆盖改过的音色。
+
+内部声音标记在源文件第 `m` 秒、裁切入点为 `a`、速度倍率为 `r` 时，其新位置为 `(m-a)/r`；要对齐画面第 `T` 秒，cue 起点为 `T-(m-a)/r`。标记必须在保留源区间内，起点不得为负，尾音仍须落在镜头许可范围。标记的含义要有实际依据，信号峰值不自动等于听到的起音；连续环境音不硬填冲击标记。
+
 应用后将修改过的 HTML 和音频纳入 dependency，重新导出构建再渲染。旁白／背景音乐是单独的真实媒体，不能拿音效 cue 代替完整声音制作。
 
 ## 真实旁白

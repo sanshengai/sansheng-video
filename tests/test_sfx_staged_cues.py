@@ -49,6 +49,26 @@ class StagedCues(unittest.TestCase):
         self.assertFalse(list(self.index.parent.glob("*.bak")))
         return err
 
+    def test_unsupported_cue_timing_is_never_silently_ignored(self):
+        original = dict(self.item["cues"][0])
+        fields = {"media_start": 0.1, "source_start": 0.1, "source_in": 0.1,
+                  "playback_rate": 2, "source_anchor": 0.2,
+                  "action_time": 3.5, "duraton": 0.25}
+        for external in (False, True):
+            for field, value in fields.items():
+                with self.subTest(external=external, field=field):
+                    cue = dict(original, **{field: value})
+                    self.item["cues"] = [cue]
+                    self.save()
+                    args = []
+                    if external:
+                        path = self.project / "explicit-cues.json"
+                        path.write_text(json.dumps([dict(cue, asset_id=self.item["id"])]))
+                        args = ["--cues", str(path)]
+                    err = self.assert_rejected_without_mutation(*args)
+                    self.assertIn("不支持的 cue 字段", err)
+                    self.assertIn(field, err)
+
     def test_readonly_then_apply_subcomp_absolute_cue_and_idempotency(self):
         files = set(self.project.rglob("*"))
         before = self.index.read_bytes()
