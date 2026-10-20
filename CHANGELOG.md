@@ -2,6 +2,8 @@
 
 ## [未发布]
 
+- Distinguish native framing from shot continuity; diagnose repeated wide/close alternation at generation time and select transitions or camera movement only when motivated by the scene.
+
 - Correct crop-based dialogue coverage guidance: retain useful native compositions, assess real detail and adjacent shot scale before reframing, and withdraw edits that create abrupt enlargement or viewing discomfort.
 
 - Preserve exact frame clocks through MOV/PCM assembly intermediates; add a real 24 fps fractional-cut regression without loosening final frame/audio checks.
