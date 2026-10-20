@@ -4,6 +4,7 @@ Original project code and instructions are MIT. The following adapted portions r
 
 | File | Upstream | Locked commit | Terms |
 |---|---|---|---|
+| scripts/vendor/opus-video-cases/catalog.json | yihui-dev/awesome-opus5-5-videos (selected source metadata; original Chinese summaries) | 92aee2f586ac0715cb3cbcb6384834f98a33383d | Repository MIT notice retained in scripts/vendor/opus-video-cases/LICENSE. Full third-party prompts and videos are not bundled. Upstream README reserves creators' video/prompt rights; this notice does not license their media, fonts or music. See references/opus-video-cases.md |
 | scripts/vendor/lemo-opuscar/catalog.json | lemomo-ai/lemo-opuscar (style catalog + OPUSCAR 98) | d33bdea74eeecde3922b0fbad227f0d3dc7afe75 | Pinned LICENSE/README state MIT (full text alongside catalog); original author article states CC BY 4.0 for style documents/films. Retain Lemomo / LemoLab attribution, source link and modifications; see references/lemo-opuscar.md |
 | scripts/vendor/motion-prompt/cli.mjs; examples/motion-sfx/kit-lp.js and ripple.js | showheyohtaki/motion-prompt | 770eefb7091cc725ab0eb6d4ef5cbf28b28e282c | MIT, full copyright/license in scripts/vendor/motion-prompt/LICENSE; CLI unchanged, example adapted with modifications in its README |
 | scripts/validate_edl.py and tests/test_edl_validation.py | guigulaoshi/music-video-director-skill, mvd/validate.py | 06abf674e936eefd69f053759f673e3c72f71e2e | MIT, full copyright/license in LICENSES/music-video-director-MIT.txt |

@@ -1,0 +1,901 @@
+{
+  "schema_version": 1,
+  "catalog_version": "2026-10-20.2",
+  "repository": "https://github.com/yihui-dev/awesome-opus5-5-videos",
+  "revision": "92aee2f586ac0715cb3cbcb6384834f98a33383d",
+  "license": {
+    "path": "LICENSE",
+    "bytes": 1066,
+    "sha256": "0adca04960d4c36b2524d26a400b790c28e583ce019635ab2d3a9ba3dc9dda7f",
+    "git_blob": "1301a3ca1e892ff02809ba4f418ea63bc042bb01",
+    "scope": "Repository MIT notice; third-party creators retain their video/prompt/media rights."
+  },
+  "query_vocabulary": {
+    "teaching": [
+      "教学",
+      "讲解",
+      "解释",
+      "教育",
+      "explainer"
+    ],
+    "spatial": [
+      "空间关系",
+      "方位",
+      "on under between"
+    ],
+    "continuity": [
+      "连续移动",
+      "连续形变",
+      "对象连续",
+      "衔接",
+      "连续",
+      "continuity",
+      "morph"
+    ],
+    "steps": [
+      "步骤",
+      "过程",
+      "教程",
+      "recipe"
+    ],
+    "concept": [
+      "概念",
+      "因果",
+      "原理",
+      "模拟",
+      "simulation"
+    ],
+    "ui": [
+      "功能演示",
+      "操作演示",
+      "界面",
+      "UI",
+      "product demo"
+    ],
+    "intro": [
+      "开场",
+      "片头",
+      "launch"
+    ],
+    "sound": [
+      "音效",
+      "声音",
+      "声音点缀",
+      "sound",
+      "sfx"
+    ],
+    "layout": [
+      "布局",
+      "图文",
+      "layout"
+    ],
+    "beat": [
+      "节拍",
+      "动作点",
+      "beat"
+    ],
+    "whiteboard": [
+      "白板",
+      "whiteboard"
+    ],
+    "deterministic": [
+      "时间函数",
+      "纯时间",
+      "乱序取帧",
+      "deterministic"
+    ]
+  },
+  "cases": [
+    {
+      "id": "astrothewizard-618782",
+      "slug": "astrothewizard-618782",
+      "title_zh": "有主角的概念讲解",
+      "search": {
+        "video_kinds": [
+          "教学",
+          "explainer"
+        ],
+        "narrative_use": [
+          "teaching",
+          "concept",
+          "概念叙事",
+          "旁白配乐"
+        ],
+        "motion_mechanisms": [
+          "因果模拟",
+          "视角变化"
+        ],
+        "aliases": [
+          "教学",
+          "讲解",
+          "光子",
+          "storybook",
+          "声音分层"
+        ]
+      },
+      "suitable_for": [
+        "复杂概念需要一个可追踪对象",
+        "旁白主导且有稳定阅读窗口"
+      ],
+      "avoid_when": [
+        "照搬每次弹跳都加音效的密度",
+        "将原文要求合成配乐当成音源"
+      ],
+      "complexity": {
+        "estimated": "high",
+        "basis": "根据已核对提示词中的实现要求估计；未计时",
+        "measured": null
+      },
+      "mechanisms": {
+        "visual": "同一主角串起抽象因果过程；比喻与事实分别核验。",
+        "transition": "沿主角经历换空间，让转场承接叙事。",
+        "sound": "原文提出分场音乐、动作音和旁白避让；这是设计要求，尚未听审。"
+      },
+      "content_kind": "shared_prompt",
+      "prompt_partial": false,
+      "code": {
+        "provided": false,
+        "source": null,
+        "note": "固定仓库包含提示词与元数据，没有动画工程；在线复刻与技术标签不证明源码公开。"
+      },
+      "source": {
+        "path": "prompts/astrothewizard-618782.md",
+        "bytes": 2918,
+        "sha256": "6fc8a7f0e6aa1364b729761e3747e1f636cb9683100780d9e183370c7bb72bf9",
+        "git_blob": "4efed6c41d0896ef79896d3654cce3cca73efc7c",
+        "author": "AstroTheWizard",
+        "post_url": "https://x.com/AstroTheWizard/status/2103629247751618782",
+        "case_url": "https://skillry.dev/ai-videos/opus-5-5/astrothewizard-618782",
+        "repository_url": "https://github.com/yihui-dev/awesome-opus5-5-videos/blob/92aee2f586ac0715cb3cbcb6384834f98a33383d/prompts/astrothewizard-618782.md",
+        "has_online_remake": true,
+        "upstream_tech_tags": [
+          "canvas"
+        ]
+      },
+      "review": {
+        "source": {
+          "status": "reviewed",
+          "evidence": [
+            "https://github.com/yihui-dev/awesome-opus5-5-videos/blob/92aee2f586ac0715cb3cbcb6384834f98a33383d/prompts/astrothewizard-618782.md"
+          ],
+          "note": "已读全文，核对固定Git blob和SHA256。原文明确要求科学准确与不确定性；60秒和每次动作配音不移植为全局配额。"
+        },
+        "visual": {
+          "status": "not_reviewed",
+          "evidence": []
+        },
+        "audio": {
+          "status": "not_reviewed",
+          "evidence": []
+        },
+        "local_reproduction": {
+          "status": "not_run",
+          "evidence": []
+        },
+        "user_adoption": {
+          "status": "not_requested",
+          "evidence": []
+        }
+      },
+      "maintenance": {
+        "created_utc": "2026-10-20T01:30:02.226248+00:00",
+        "updated_utc": "2026-10-20T01:30:02.226248+00:00",
+        "reason": "首批精选；将原文描述与实际视听、复现分离。"
+      }
+    },
+    {
+      "id": "ror-fly-880547",
+      "slug": "ror-fly-880547",
+      "title_zh": "逐步积累的过程演示",
+      "search": {
+        "video_kinds": [
+          "教学",
+          "教程",
+          "explainer"
+        ],
+        "narrative_use": [
+          "teaching",
+          "steps",
+          "步骤",
+          "过程演示"
+        ],
+        "motion_mechanisms": [
+          "逐层加入",
+          "状态累积"
+        ],
+        "aliases": [
+          "步骤",
+          "配方",
+          "教程",
+          "过程",
+          "recipe"
+        ]
+      },
+      "suitable_for": [
+        "制作流程、材料加入和状态变化",
+        "同一物体承接前后步骤"
+      ],
+      "avoid_when": [
+        "仅凭短提示词推断具体镜头和声音",
+        "挪用鸡尾酒内容到学生课程"
+      ],
+      "complexity": {
+        "estimated": "medium",
+        "basis": "根据已核对提示词中的实现要求估计；未计时",
+        "measured": null
+      },
+      "mechanisms": {
+        "visual": "从空容器到完成品；每个成分在进入时标注名称与数量。",
+        "transition": "同一容器保留已完成状态，用积累表现推进。",
+        "sound": "原文没有提供声音制作细节；需独立设计并选真实音源。"
+      },
+      "content_kind": "shared_prompt",
+      "prompt_partial": false,
+      "code": {
+        "provided": false,
+        "source": null,
+        "note": "固定仓库包含提示词与元数据，没有动画工程；在线复刻与技术标签不证明源码公开。"
+      },
+      "source": {
+        "path": "prompts/ror-fly-880547.md",
+        "bytes": 780,
+        "sha256": "7687540e80593be4bdc46f8fde0f95b66f22cab0f3d954d395d02ee70341df67",
+        "git_blob": "ddddec34d43de46471a6443973836420da637e6f",
+        "author": "Ror_Fly",
+        "post_url": "https://x.com/Ror_Fly/status/2102853258582880547",
+        "case_url": "https://skillry.dev/ai-videos/opus-5-5/ror-fly-880547",
+        "repository_url": "https://github.com/yihui-dev/awesome-opus5-5-videos/blob/92aee2f586ac0715cb3cbcb6384834f98a33383d/prompts/ror-fly-880547.md",
+        "has_online_remake": true,
+        "upstream_tech_tags": [
+          "canvas"
+        ]
+      },
+      "review": {
+        "source": {
+          "status": "reviewed",
+          "evidence": [
+            "https://github.com/yihui-dev/awesome-opus5-5-videos/blob/92aee2f586ac0715cb3cbcb6384834f98a33383d/prompts/ror-fly-880547.md"
+          ],
+          "note": "已读全文，核对固定Git blob和SHA256。仅367字符的分享提示词，不是可运行配方。"
+        },
+        "visual": {
+          "status": "not_reviewed",
+          "evidence": []
+        },
+        "audio": {
+          "status": "not_reviewed",
+          "evidence": []
+        },
+        "local_reproduction": {
+          "status": "not_run",
+          "evidence": []
+        },
+        "user_adoption": {
+          "status": "not_requested",
+          "evidence": []
+        }
+      },
+      "maintenance": {
+        "created_utc": "2026-10-20T01:30:02.226248+00:00",
+        "updated_utc": "2026-10-20T01:30:02.226248+00:00",
+        "reason": "首批精选；将原文描述与实际视听、复现分离。"
+      }
+    },
+    {
+      "id": "parkerrex-701462",
+      "slug": "parkerrex-701462",
+      "title_zh": "由时间决定状态的概念模拟",
+      "search": {
+        "video_kinds": [
+          "教学",
+          "模拟",
+          "explainer"
+        ],
+        "narrative_use": [
+          "teaching",
+          "concept",
+          "因果",
+          "原理解释"
+        ],
+        "motion_mechanisms": [
+          "deterministic",
+          "纯时间函数",
+          "状态变化"
+        ],
+        "aliases": [
+          "模拟",
+          "因果",
+          "原理",
+          "时间函数",
+          "token bucket"
+        ]
+      },
+      "suitable_for": [
+        "资源流动或数量关系的概念解释",
+        "需要乱序取帧的代码镜头"
+      ],
+      "avoid_when": [
+        "把未提供的算法与声音当成已验证",
+        "照搬技术题材与学生知识门槛"
+      ],
+      "complexity": {
+        "estimated": "medium",
+        "basis": "根据已核对提示词中的实现要求估计；未计时",
+        "measured": null
+      },
+      "mechanisms": {
+        "visual": "将限制机制变成可观察数量与流动；具体演示仍须自己设计。",
+        "transition": "共享概念对象，按绝对时间计算状态。",
+        "sound": "原文没有音频要求；声音不能从技术标签推断。"
+      },
+      "content_kind": "shared_prompt",
+      "prompt_partial": false,
+      "code": {
+        "provided": false,
+        "source": null,
+        "note": "固定仓库包含提示词与元数据，没有动画工程；在线复刻与技术标签不证明源码公开。"
+      },
+      "source": {
+        "path": "prompts/parkerrex-701462.md",
+        "bytes": 567,
+        "sha256": "a811b5037e4bedbade30310a1a6d45d316d8ac378f9d3afdfd159c6b82ac6efd",
+        "git_blob": "9e4e9005c6ca332c6befcbd0481d2360ac33dda7",
+        "author": "ParkerRex",
+        "post_url": "https://x.com/ParkerRex/status/2103206747846701462",
+        "case_url": "https://skillry.dev/ai-videos/opus-5-5/parkerrex-701462",
+        "repository_url": "https://github.com/yihui-dev/awesome-opus5-5-videos/blob/92aee2f586ac0715cb3cbcb6384834f98a33383d/prompts/parkerrex-701462.md",
+        "has_online_remake": true,
+        "upstream_tech_tags": [
+          "canvas",
+          "physics"
+        ]
+      },
+      "review": {
+        "source": {
+          "status": "reviewed",
+          "evidence": [
+            "https://github.com/yihui-dev/awesome-opus5-5-videos/blob/92aee2f586ac0715cb3cbcb6384834f98a33383d/prompts/parkerrex-701462.md"
+          ],
+          "note": "已读全文，核对固定Git blob和SHA256。只有133字符；纯时间函数是明确约束，完整实现并未随仓提供。"
+        },
+        "visual": {
+          "status": "not_reviewed",
+          "evidence": []
+        },
+        "audio": {
+          "status": "not_reviewed",
+          "evidence": []
+        },
+        "local_reproduction": {
+          "status": "not_run",
+          "evidence": []
+        },
+        "user_adoption": {
+          "status": "not_requested",
+          "evidence": []
+        }
+      },
+      "maintenance": {
+        "created_utc": "2026-10-20T01:30:02.226248+00:00",
+        "updated_utc": "2026-10-20T01:30:02.226248+00:00",
+        "reason": "首批精选；将原文描述与实际视听、复现分离。"
+      }
+    },
+    {
+      "id": "twoclipping-402193",
+      "slug": "twoclipping-402193",
+      "title_zh": "同一对象连续形变",
+      "search": {
+        "video_kinds": [
+          "功能演示",
+          "motion"
+        ],
+        "narrative_use": [
+          "ui",
+          "功能演示",
+          "continuity",
+          "空间关系"
+        ],
+        "motion_mechanisms": [
+          "continuity",
+          "连续移动",
+          "连续形变",
+          "match-position",
+          "deterministic"
+        ],
+        "aliases": [
+          "对象连续",
+          "连续",
+          "衔接",
+          "morph",
+          "方位",
+          "空间关系",
+          "球与桌子"
+        ]
+      },
+      "suitable_for": [
+        "多个状态需要保留对象身份",
+        "用连续移动解释空间关系或操作结果"
+      ],
+      "avoid_when": [
+        "跟读和记忆段照搬每拍一变",
+        "未发生点击却机械配点击声",
+        "没有留出位置关系停留时间，却要求每拍切换"
+      ],
+      "complexity": {
+        "estimated": "high",
+        "basis": "根据已核对提示词中的实现要求估计；未计时",
+        "measured": null
+      },
+      "mechanisms": {
+        "visual": "同一元素改变尺寸、圆角与内容，形变中保留对象身份；文字进出分开。 本地机制小样保留球的身份与绕行路径，并在关系落定后停留；不采用原文每拍变化的密度。",
+        "transition": "匹配位置与相机取景连续，闭式弹簧支持乱序求值。",
+        "sound": "原文要求实测音乐节拍与音效峰值对齐，不按文件开头猜动作点。 振幅峰值不等于感知起音，不能自动判定更自然；须听审最终混音。"
+      },
+      "content_kind": "shared_prompt",
+      "prompt_partial": false,
+      "code": {
+        "provided": false,
+        "source": null,
+        "note": "固定仓库包含提示词与元数据，没有动画工程；在线复刻与技术标签不证明源码公开。"
+      },
+      "source": {
+        "path": "prompts/twoclipping-402193.md",
+        "bytes": 3176,
+        "sha256": "b5ac1863da179b2c156d2b8d8b2df5ed017843567a70ecd19de18e74ccb1ade4",
+        "git_blob": "c96f68d8643504671a4fd4e5ff5c5815e017d72b",
+        "author": "twoclipping",
+        "post_url": "https://x.com/twoclipping/status/2103273003555402193",
+        "case_url": "https://skillry.dev/ai-videos/opus-5-5/twoclipping-402193",
+        "repository_url": "https://github.com/yihui-dev/awesome-opus5-5-videos/blob/92aee2f586ac0715cb3cbcb6384834f98a33383d/prompts/twoclipping-402193.md",
+        "has_online_remake": true,
+        "upstream_tech_tags": [
+          "svg"
+        ]
+      },
+      "review": {
+        "source": {
+          "status": "reviewed",
+          "evidence": [
+            "https://github.com/yihui-dev/awesome-opus5-5-videos/blob/92aee2f586ac0715cb3cbcb6384834f98a33383d/prompts/twoclipping-402193.md"
+          ],
+          "note": "已读全文，核对固定Git blob和SHA256。8–12状态、120BPM与60fps属于这个案例；新项目仍按内容与现役引擎。"
+        },
+        "visual": {
+          "status": "not_reviewed",
+          "evidence": []
+        },
+        "audio": {
+          "status": "not_reviewed",
+          "evidence": []
+        },
+        "local_reproduction": {
+          "status": "not_run",
+          "evidence": [],
+          "note": "只完成机制改写小样，不是对原片的复现。原片画面与音频仍未审；改写源见 examples/video-case-ab/README.md。"
+        },
+        "user_adoption": {
+          "status": "not_requested",
+          "evidence": []
+        }
+      },
+      "maintenance": {
+        "created_utc": "2026-10-20T01:30:02.226248+00:00",
+        "updated_utc": "2026-10-20T01:30:02.226248+00:00",
+        "reason": "首批精选；将原文描述与实际视听、复现分离。"
+      }
+    },
+    {
+      "id": "twoclipping-000267",
+      "slug": "twoclipping-000267",
+      "title_zh": "动作点与镜头推进",
+      "search": {
+        "video_kinds": [
+          "功能演示",
+          "片头",
+          "motion"
+        ],
+        "narrative_use": [
+          "ui",
+          "intro",
+          "镜头节奏",
+          "产品演示"
+        ],
+        "motion_mechanisms": [
+          "match-cut",
+          "遮罩",
+          "推镜",
+          "beat",
+          "动作衔接"
+        ],
+        "aliases": [
+          "声音",
+          "音效",
+          "sound",
+          "节拍",
+          "镜头节奏",
+          "转场",
+          "动作点",
+          "sfx"
+        ]
+      },
+      "suitable_for": [
+        "有真实操作或视觉动作的短开场",
+        "动作峰值需要与声音落点对齐"
+      ],
+      "avoid_when": [
+        "为了踩拍压缩理解时间",
+        "将示例的固定响度直接套到对白混音"
+      ],
+      "complexity": {
+        "estimated": "high",
+        "basis": "根据已核对提示词中的实现要求估计；未计时",
+        "measured": null
+      },
+      "mechanisms": {
+        "visual": "每镜一个重点，字形遮罩与匹配切换承接操作。",
+        "transition": "动作与音乐事件关联；镜头语言持续而不任意重置。",
+        "sound": "测量声音峰值、保留尾音并安排层次；原文提出的-14LUFS不是本项目默认。"
+      },
+      "content_kind": "shared_prompt",
+      "prompt_partial": false,
+      "code": {
+        "provided": false,
+        "source": null,
+        "note": "固定仓库包含提示词与元数据，没有动画工程；在线复刻与技术标签不证明源码公开。"
+      },
+      "source": {
+        "path": "prompts/twoclipping-000267.md",
+        "bytes": 2951,
+        "sha256": "0600067aed88a2a398418036336956fcaa924bfaa7b6a60e8bb5f550f0f1af2d",
+        "git_blob": "21b4bbfc7fdc2a7cfc68a9155fdb9b3aa2040f80",
+        "author": "twoclipping",
+        "post_url": "https://x.com/twoclipping/status/2102554209166000267",
+        "case_url": "https://skillry.dev/ai-videos/opus-5-5/twoclipping-000267",
+        "repository_url": "https://github.com/yihui-dev/awesome-opus5-5-videos/blob/92aee2f586ac0715cb3cbcb6384834f98a33383d/prompts/twoclipping-000267.md",
+        "has_online_remake": true,
+        "upstream_tech_tags": [
+          "svg",
+          "css"
+        ]
+      },
+      "review": {
+        "source": {
+          "status": "reviewed",
+          "evidence": [
+            "https://github.com/yihui-dev/awesome-opus5-5-videos/blob/92aee2f586ac0715cb3cbcb6384834f98a33383d/prompts/twoclipping-000267.md"
+          ],
+          "note": "已读全文，核对固定Git blob和SHA256。原文window.seek附近混有孤立http://，不可直接当代码执行。"
+        },
+        "visual": {
+          "status": "not_reviewed",
+          "evidence": []
+        },
+        "audio": {
+          "status": "not_reviewed",
+          "evidence": []
+        },
+        "local_reproduction": {
+          "status": "not_run",
+          "evidence": []
+        },
+        "user_adoption": {
+          "status": "not_requested",
+          "evidence": []
+        }
+      },
+      "maintenance": {
+        "created_utc": "2026-10-20T01:30:02.226248+00:00",
+        "updated_utc": "2026-10-20T01:30:02.226248+00:00",
+        "reason": "首批精选；将原文描述与实际视听、复现分离。"
+      }
+    },
+    {
+      "id": "brainextends-606193",
+      "slug": "brainextends-606193",
+      "title_zh": "稳定锚点串联图文布局",
+      "search": {
+        "video_kinds": [
+          "功能演示",
+          "图文",
+          "motion"
+        ],
+        "narrative_use": [
+          "ui",
+          "layout",
+          "图文布局",
+          "操作结果"
+        ],
+        "motion_mechanisms": [
+          "continuity",
+          "match-position",
+          "协同缩放",
+          "遮罩"
+        ],
+        "aliases": [
+          "布局",
+          "界面",
+          "功能",
+          "ui",
+          "声音点缀",
+          "稳定锚点",
+          "封面"
+        ]
+      },
+      "suitable_for": [
+        "搜索、选择、展开详情等功能演示",
+        "同一资源在不同版式间移动"
+      ],
+      "avoid_when": [
+        "把约一秒一换的广告节奏用于学习段",
+        "复制品牌、封面或未经许可的音乐",
+        "列表尚未退场、详情已叠入同一阅读区域"
+      ],
+      "complexity": {
+        "estimated": "high",
+        "basis": "根据已核对提示词中的实现要求估计；未计时",
+        "measured": null
+      },
+      "mechanisms": {
+        "visual": "保留主封面身份和位置关系，次级播放器维持方向感。",
+        "transition": "匹配位置、协同缩放与文字错峰进出，让视线找到下一步。 本地机制小样曾出现详情与次级卡片重叠，已改为先退次级卡片、展开足够后显示详情并裁切在卡片内。",
+        "sound": "原文提出克制电子配乐与较轻的操作音；无旁白案例不能直接指导人声混音。"
+      },
+      "content_kind": "shared_prompt",
+      "prompt_partial": false,
+      "code": {
+        "provided": false,
+        "source": null,
+        "note": "固定仓库包含提示词与元数据，没有动画工程；在线复刻与技术标签不证明源码公开。"
+      },
+      "source": {
+        "path": "prompts/brainextends-606193.md",
+        "bytes": 8751,
+        "sha256": "68bce1759b2b9838f1ddc72a5e76320d13adecf735acff9bf5ecb2a70863ae7d",
+        "git_blob": "ca75fb8aed5fbcdeb3acfec45eb6952d285843c0",
+        "author": "brainextends",
+        "post_url": "https://x.com/brainextends/status/2103801834930606193",
+        "case_url": "https://skillry.dev/ai-videos/opus-5-5/brainextends-606193",
+        "repository_url": "https://github.com/yihui-dev/awesome-opus5-5-videos/blob/92aee2f586ac0715cb3cbcb6384834f98a33383d/prompts/brainextends-606193.md",
+        "has_online_remake": true,
+        "upstream_tech_tags": [
+          "shader",
+          "svg"
+        ]
+      },
+      "review": {
+        "source": {
+          "status": "reviewed",
+          "evidence": [
+            "https://github.com/yihui-dev/awesome-opus5-5-videos/blob/92aee2f586ac0715cb3cbcb6384834f98a33383d/prompts/brainextends-606193.md"
+          ],
+          "note": "已读全文，核对固定Git blob和SHA256。详细时间表与多次采样均为原案例要求，不意味着有源码或本机复现已通过。"
+        },
+        "visual": {
+          "status": "not_reviewed",
+          "evidence": []
+        },
+        "audio": {
+          "status": "not_reviewed",
+          "evidence": []
+        },
+        "local_reproduction": {
+          "status": "not_run",
+          "evidence": [],
+          "note": "只完成机制改写与中间帧修订，不是原片复现或听感批准。源见 examples/video-case-ab/README.md。"
+        },
+        "user_adoption": {
+          "status": "not_requested",
+          "evidence": []
+        }
+      },
+      "maintenance": {
+        "created_utc": "2026-10-20T01:30:02.226248+00:00",
+        "updated_utc": "2026-10-20T01:30:02.226248+00:00",
+        "reason": "首批精选；将原文描述与实际视听、复现分离。"
+      }
+    },
+    {
+      "id": "tak3sh8-441895",
+      "slug": "tak3sh8-441895",
+      "title_zh": "白板关系图与旁白",
+      "search": {
+        "video_kinds": [
+          "教学",
+          "白板",
+          "explainer"
+        ],
+        "narrative_use": [
+          "teaching",
+          "concept",
+          "关系图",
+          "旁白"
+        ],
+        "motion_mechanisms": [
+          "手绘呈现",
+          "逐步显露"
+        ],
+        "aliases": [
+          "白板",
+          "whiteboard",
+          "关系",
+          "原理",
+          "讲解",
+          "narration"
+        ]
+      },
+      "suitable_for": [
+        "关系图需要边讲边画",
+        "对象多但要逐步聚焦"
+      ],
+      "avoid_when": [
+        "未经核验解释复杂物理概念",
+        "将Web Audio标签当成真实配音来源"
+      ],
+      "complexity": {
+        "estimated": "medium",
+        "basis": "根据已核对提示词中的实现要求估计；未计时",
+        "measured": null
+      },
+      "mechanisms": {
+        "visual": "手绘白板表达原理；实际排布和笔触节奏需自己设计。",
+        "transition": "围绕关系图逐步补充信息，不必频繁切页。",
+        "sound": "第二条短提示词要求带旁白MP4，未提供声线、音色或混音证据。"
+      },
+      "content_kind": "shared_prompt",
+      "prompt_partial": false,
+      "code": {
+        "provided": false,
+        "source": null,
+        "note": "固定仓库包含提示词与元数据，没有动画工程；在线复刻与技术标签不证明源码公开。"
+      },
+      "source": {
+        "path": "prompts/tak3sh8-441895.md",
+        "bytes": 578,
+        "sha256": "2ca8bf757f323f4d3c5ba558a58f489ab21835b6fb0c686b8a3caf5da47db3a1",
+        "git_blob": "d367a4fe5389a1a035403f9e6b8f130eb97ad6a8",
+        "author": "tak3sh8",
+        "post_url": "https://x.com/tak3sh8/status/2103667481139441895",
+        "case_url": "https://skillry.dev/ai-videos/opus-5-5/tak3sh8-441895",
+        "repository_url": "https://github.com/yihui-dev/awesome-opus5-5-videos/blob/92aee2f586ac0715cb3cbcb6384834f98a33383d/prompts/tak3sh8-441895.md",
+        "has_online_remake": true,
+        "upstream_tech_tags": [
+          "canvas",
+          "audio"
+        ]
+      },
+      "review": {
+        "source": {
+          "status": "reviewed",
+          "evidence": [
+            "https://github.com/yihui-dev/awesome-opus5-5-videos/blob/92aee2f586ac0715cb3cbcb6384834f98a33383d/prompts/tak3sh8-441895.md"
+          ],
+          "note": "已读全文，核对固定Git blob和SHA256。两条提示合计152字符，没有可执行白板工程。"
+        },
+        "visual": {
+          "status": "not_reviewed",
+          "evidence": []
+        },
+        "audio": {
+          "status": "not_reviewed",
+          "evidence": []
+        },
+        "local_reproduction": {
+          "status": "not_run",
+          "evidence": []
+        },
+        "user_adoption": {
+          "status": "not_requested",
+          "evidence": []
+        }
+      },
+      "maintenance": {
+        "created_utc": "2026-10-20T01:30:02.226248+00:00",
+        "updated_utc": "2026-10-20T01:30:02.226248+00:00",
+        "reason": "首批精选；将原文描述与实际视听、复现分离。"
+      }
+    },
+    {
+      "id": "howdevelop-733090",
+      "slug": "howdevelop-733090",
+      "title_zh": "用功能变化推动短开场",
+      "search": {
+        "video_kinds": [
+          "片头",
+          "功能演示",
+          "motion"
+        ],
+        "narrative_use": [
+          "intro",
+          "ui",
+          "开场",
+          "功能推进"
+        ],
+        "motion_mechanisms": [
+          "信号流动",
+          "分支",
+          "聚合",
+          "镜头推进"
+        ],
+        "aliases": [
+          "开场",
+          "片头",
+          "短片",
+          "launch",
+          "功能",
+          "视觉推进",
+          "声音"
+        ]
+      },
+      "suitable_for": [
+        "少量关键功能组成清晰短片",
+        "转场要直接表现功能含义"
+      ],
+      "avoid_when": [
+        "借宣传片节奏替代教程停留",
+        "将文中版本、提供商数量当作当前事实"
+      ],
+      "complexity": {
+        "estimated": "high",
+        "basis": "根据已核对提示词中的实现要求估计；未计时",
+        "measured": null
+      },
+      "mechanisms": {
+        "visual": "同一信号流展示连接、分支、恢复和汇合，文字简短且矢量可编辑。",
+        "transition": "功能变化本身形成转场，收尾留出完整阅读时间。",
+        "sound": "原文要求受控脉冲、同步转场与收束；背景声仍要按当前对白条件重配。"
+      },
+      "content_kind": "shared_prompt",
+      "prompt_partial": false,
+      "code": {
+        "provided": false,
+        "source": null,
+        "note": "固定仓库包含提示词与元数据，没有动画工程；在线复刻与技术标签不证明源码公开。"
+      },
+      "source": {
+        "path": "prompts/howdevelop-733090.md",
+        "bytes": 5961,
+        "sha256": "3ca30e013d3808ca973526192fa018d1ccb46fbbd8b980d8bf0bd01264090be3",
+        "git_blob": "cfcf009c1c68cfb7e44ac87264509ecd4f60bb62",
+        "author": "HowDevelop",
+        "post_url": "https://x.com/HowDevelop/status/2103840883812733090",
+        "case_url": "https://skillry.dev/ai-videos/opus-5-5/howdevelop-733090",
+        "repository_url": "https://github.com/yihui-dev/awesome-opus5-5-videos/blob/92aee2f586ac0715cb3cbcb6384834f98a33383d/prompts/howdevelop-733090.md",
+        "has_online_remake": true,
+        "upstream_tech_tags": [
+          "canvas"
+        ]
+      },
+      "review": {
+        "source": {
+          "status": "reviewed",
+          "evidence": [
+            "https://github.com/yihui-dev/awesome-opus5-5-videos/blob/92aee2f586ac0715cb3cbcb6384834f98a33383d/prompts/howdevelop-733090.md"
+          ],
+          "note": "已读全文，核对固定Git blob和SHA256。原文音效要求有重复行；产品事实仅属原案例输入，不移植到我们的演示。"
+        },
+        "visual": {
+          "status": "not_reviewed",
+          "evidence": []
+        },
+        "audio": {
+          "status": "not_reviewed",
+          "evidence": []
+        },
+        "local_reproduction": {
+          "status": "not_run",
+          "evidence": []
+        },
+        "user_adoption": {
+          "status": "not_requested",
+          "evidence": []
+        }
+      },
+      "maintenance": {
+        "created_utc": "2026-10-20T01:30:02.226248+00:00",
+        "updated_utc": "2026-10-20T01:30:02.226248+00:00",
+        "reason": "首批精选；将原文描述与实际视听、复现分离。"
+      }
+    }
+  ]
+}

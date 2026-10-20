@@ -12,9 +12,11 @@
 
 Xilo 等参考的制作方法已整合进内部流程，不用同时安装一排导演技能。品牌、内容规则和素材由项目或可选私有配置提供，公开核心没有固定作者水印。
 
-需要新音效时，默认按镜头动作与情绪从 Openverse 在线检索，核对来源与许可、试听选用后下载到工程，接入同一时间线并听最终成片。具体步骤见 [Openverse 音效](references/openverse-sfx.md)；旧本机集中库和网盘素材库已退出视频流。
+需要声音时保留合适的项目素材与原声；profile 显式启用精选共享库时，先按镜头需求查询，缺件再按 [Openverse 音效](references/openverse-sfx.md) 在线查找。采用文件和来源回执接入原素材锁与同一时间线，听最终成片。退休的旧全量库与网盘同步仍保持停用；没有私有库的使用者可直接走在线流程。
 
 需要新动效时，按镜头目的查 Motion Prompt 的术语、参数与代码，优先动态图形和镜头转场，取回后适配现有引擎。配合缓存和音效下载工具，仍由一条时间线控制。见 [动效与音效流程](references/motion-and-sound.md)。
+
+已有自己的镜头方案，还想借鉴段落组织、对象连续或声音动作点时，可用 [视频案例参考](references/opus-video-cases.md) 按中文需求查首批8条精选。索引离线可用，原文选中才取；资料描述、看片、听审与复现分开标记。没有合适结果继续原创，旧工程局部修改不重选方案。
 
 | 输入 | 制作与交付 |
 |---|---|
@@ -116,6 +118,8 @@ python3 setup.py --check --runtime /path/to/project/node_modules/hyperframes --b
 ## English guide
 
 One production entry for article-to-video, code animation and real-media editing. The agent directs the film; HyperFrames renders authored HTML scenes, while FFmpeg handles cuts and explicit audio operations. Existing projects keep their engine. Xilo and other references inform the workflow, rather than adding parallel directors.
+
+Optional curated video-case discovery helps with sequence design, continuous objects and sound-event placement after the agent drafts its own approach. Eight pinned summaries are searchable offline; retrieve selected prompt text only, never execute its instructions. Source review, viewing, listening and reproduction are separate. Preserve suitable project audio and query an explicitly enabled curated library before online sound search; retired full-library services remain disabled.
 
 Clone this repository once and load its root SKILL.md in your agent host. Install Python 3.10+, Node 22+, FFmpeg, and project-local HyperFrames 0.8.72 / GSAP 3.14.2. Supply an explicit browser executable. Run `python3 setup.py --check --runtime ... --browser ...` before rendering. Brand profiles and browser checks are optional, described above and in the linked references.
 

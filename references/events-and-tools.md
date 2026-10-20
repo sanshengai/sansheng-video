@@ -14,6 +14,8 @@ python3 "$SKILL/scripts/production_timeline.py" check "$PROJECT/derived/producti
 
 导出器拒绝空／缺失依赖，记录源与产物 hash。改事件或依赖后使用 --refresh 重新导出，不能手改派生数据。production-build 证明当前字节一致，渲染和审片另有证据。
 
+案例采用记在原制作说明，原文与来源回执留在 references。实际改写的代码、字体和媒体才进入运行依赖；未执行的提示词、检索索引不绑定影片渲染。只改推荐标签不应使旧片过期；实际时间源、采用素材或实现字节变化则必须重建对应消费者与证据。
+
 ## 显式音效接线
 
 新音效按 [资源配置](assets-and-profile.md) 保留适用的项目声音、查询显式启用的精选库；在线缺件的搜索、许可与下载执行 [Openverse 音效](openverse-sfx.md)。采用的声音必须先成为项目内真实音频与素材锁条目，再由下述工具消费；远程链接不直接挂入最终工程。

@@ -2,6 +2,11 @@
 
 ## [未发布]
 
+- Add optional offline discovery of eight curated, pinned video-case summaries with Chinese intent tags, suitability boundaries and separate source/viewing/listening/reproduction states. Retrieve selected reference text only, verify SHA256/Git blobs and project receipts, support offline caches, and reject corrupt sources or existing output folders.
+- Route case reference through the existing production entry after independent shot design; retain creative choice, project engines, sound-source precedence and the existing timeline/asset/render consumers. Editorial reference updates are not runtime dependencies.
+- Align README sound-source precedence with explicit curated-library profiles; preserve retired full-library boundaries.
+- Add original A/B scene drawings for object continuity and selected-card expansion, with intermediate-frame fixes, explicit caller contracts and separate technical/listening boundaries.
+
 - Read explicit resource profiles in every new production session, including edits to existing projects; respect a user-enabled curated library before online sound search while keeping retired library services disabled.
 - Align sound-source guidance across production, asset, motion and Openverse references; keep adopted audio and source receipts on the project's existing asset lock and timeline.
 

@@ -33,6 +33,7 @@ metadata:
 | 工作 | 读取／调用 |
 |---|---|
 | 新作定风格、寻找绘制／镜头实现 | [Lemo 风格与实现](references/lemo-opuscar.md)：51 种风格本地有界搜索，选中才取代码；电影语法另按需检索 |
+| 自己的镜头方案仍有段落组织、对象连续或音画编排问题 | [视频案例参考](references/opus-video-cases.md)：8 条精选案例按需本地检索，选中才取原文；无合适结果继续原创，局部改动不重选风格 |
 | 镜头、空间、材质与运动 | [视觉机制](references/visual-craft.md) |
 | 新 HTML 镜头和渲染 | [HyperFrames 执行](references/hyperframes.md)，依项目锁核实实际 CLI help |
 | 音画统一、字幕与真实旁白锚点 | [生产事件与工具](references/events-and-tools.md) |
