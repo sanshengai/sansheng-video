@@ -2,6 +2,9 @@
 
 ## [未发布]
 
+- Review each generated action against its actual starting frame and final submitted prompt, including visible actor roles, object support and the intended end state. Coordinate actions around one story beat rather than restricting every shot to one person's gesture.
+- Diagnose every revision before another paid call, distinguish media defects from recognition or execution faults, and apply reusable lessons to remaining shots and the real preparation workflow.
+
 - Distinguish native framing from shot continuity; diagnose repeated wide/close alternation at generation time and select transitions or camera movement only when motivated by the scene.
 
 - Correct crop-based dialogue coverage guidance: retain useful native compositions, assess real detail and adjacent shot scale before reframing, and withdraw edits that create abrupt enlargement or viewing discomfort.
