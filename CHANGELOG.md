@@ -2,6 +2,8 @@
 
 ## [未发布]
 
+## [1.2.0] -- 2026-10-20
+
 - Review each generated action against its actual starting frame and final submitted prompt, including visible actor roles, object support and the intended end state. Coordinate actions around one story beat rather than restricting every shot to one person's gesture.
 - Diagnose every revision before another paid call, distinguish media defects from recognition or execution faults, and apply reusable lessons to remaining shots and the real preparation workflow.
 
