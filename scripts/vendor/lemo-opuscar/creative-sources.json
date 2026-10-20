@@ -1,0 +1,723 @@
+{
+  "schema": "lemo-creative-sources/1",
+  "catalog_revision": "d33bdea74eeecde3922b0fbad227f0d3dc7afe75",
+  "research_revision": "b5e8ef93930b6d828f352055a689320f138237b1",
+  "files": {
+    "styles/archive-lighttable/DEMO.md": {
+      "sha256": "4af757c7958912a10567f4005020e3ae989f82b7f28b45f552ae5fd340269bc0",
+      "lines": 87
+    },
+    "styles/archive-lighttable/STYLE.md": {
+      "sha256": "2f18ac9a42822b7a9941866c42b0642e5417dea5431d61f141f6e11b29c1ec14",
+      "lines": 107
+    },
+    "styles/archive-lighttable/demo/film.js": {
+      "sha256": "7bbae48890418497baa15472d0fd793127f1145b55cc8769077168a0444a8ba5",
+      "lines": 729
+    },
+    "styles/archive-lighttable/demo/mix.py": {
+      "sha256": "770c6c3da3e09abe7915bb73c0826eb6e2c04c72e8adf26384bf0dcc2b57697c",
+      "lines": 188
+    },
+    "styles/art-deco/DEMO.md": {
+      "sha256": "7a13b1552b34de4232012d4f598ba758a115601bda0faca034175bb8bf74567e",
+      "lines": 135
+    },
+    "styles/art-deco/STYLE.md": {
+      "sha256": "d73b30c0fa6d153487549d32d8c6c599733cf5e7576badec862a12da6d284761",
+      "lines": 110
+    },
+    "styles/art-deco/demo/mix.py": {
+      "sha256": "f91f7f9d84df7ae5e373d2259bde3437388e675c658cda8ed07b01c025611e08",
+      "lines": 223
+    },
+    "styles/ascii-crt/DEMO.md": {
+      "sha256": "24934fb3cbfcfcf892713e6d3a4beec5b3b4f5a58af247caad70e4ff85f792b0",
+      "lines": 110
+    },
+    "styles/ascii-crt/STYLE.md": {
+      "sha256": "cbe0b8957c785a165f85ccb3b8eba61c30c0462b32983db6a16c76046a2bb333",
+      "lines": 113
+    },
+    "styles/ascii-crt/demo/main.js": {
+      "sha256": "19bee3c5cb6f2aefb45cc4b705682651b4bba1fe2a8c4ed92a36acac79285132",
+      "lines": 615
+    },
+    "styles/ascii-crt/demo/mix.py": {
+      "sha256": "dea9145f748f0232df3b12e137db54acd66c3d3fa1217e8fd492d002d3c7426c",
+      "lines": 161
+    },
+    "styles/backrooms/DEMO.md": {
+      "sha256": "517cc6bd2ec1edd1ba78b599ca911193cd65e344158dbe83af93b66f6850af6a",
+      "lines": 122
+    },
+    "styles/backrooms/STYLE.md": {
+      "sha256": "621f204f5bc4576af497a169f2442b91caffee99046989a117ba06c6c1d572a0",
+      "lines": 123
+    },
+    "styles/backrooms/demo/mix.py": {
+      "sha256": "64381359d848430eed88a5425cd9f2ffadf95cf275d719ec827f77b92d5a607f",
+      "lines": 236
+    },
+    "styles/backrooms/demo/story.js": {
+      "sha256": "6f00a842b61d4b70b1b01caab423373811a51ec70e4083afcf5016f0d8f77867",
+      "lines": 102
+    },
+    "styles/blueprint/DEMO.md": {
+      "sha256": "5ea1681271e44d4d4fe88fd5d7ef907c320b0979cf53dfb93070ab6d0edb61b4",
+      "lines": 146
+    },
+    "styles/blueprint/STYLE.md": {
+      "sha256": "de01fc7fcb38b17b58eb017c9cdbcb36b9242b029435a33587614c93088e1717",
+      "lines": 118
+    },
+    "styles/blueprint/demo/film.js": {
+      "sha256": "d97a48bb1a3994cee0f43d3251ea85e6bd765b1c60a0865cfc10c8bc784179f8",
+      "lines": 368
+    },
+    "styles/blueprint/demo/mix.py": {
+      "sha256": "0054766b9bfc27959f8e0c9a984da25bb4b6bc1d617e893f66fdab48b0bad7d5",
+      "lines": 150
+    },
+    "styles/brick-toy/DEMO.md": {
+      "sha256": "04acbfc0282b0c31177c8988f9151424f504111c007e1c789019cc64804f3d85",
+      "lines": 74
+    },
+    "styles/brick-toy/STYLE.md": {
+      "sha256": "29b23e846951856b722a698a03c9458cfc17b4fc71d044f45d773acf2a742768",
+      "lines": 112
+    },
+    "styles/brick-toy/demo/main.js": {
+      "sha256": "7801a2c0bd21dc8045f1e1ce36c6a8b4d620b2753dd5097832f223bf20fb9346",
+      "lines": 271
+    },
+    "styles/brick-toy/demo/mix.py": {
+      "sha256": "ddc3c9e47daa62b70538c04536f3e6cef7b02b60d2c18d18f2b587f10f1ce157",
+      "lines": 54
+    },
+    "styles/briefing-board/DEMO.md": {
+      "sha256": "5937681709e7ceb206a881351550d6c98932aaa82dec00f344ff4c5f38754be1",
+      "lines": 84
+    },
+    "styles/briefing-board/STYLE.md": {
+      "sha256": "44669da808da4ed37e2a4a0f6e5d2b23008775a3c4870add04641d714e9f323d",
+      "lines": 120
+    },
+    "styles/briefing-board/demo/audio/mix.py": {
+      "sha256": "deac29ce152730c1c601dd3c2a86edf19b5f8df04d466a3c8d4d8474532014ec",
+      "lines": 302
+    },
+    "styles/cel-anime-80s/DEMO.md": {
+      "sha256": "0bd17b229deac08331bdc603aba92126db7ecd2acca5cb40f954e548c23ef3ff",
+      "lines": 98
+    },
+    "styles/cel-anime-80s/STYLE.md": {
+      "sha256": "1e16f5c6f90ebf09556ec94d37434400d309c978e00ee89e9d38dec476664eaf",
+      "lines": 117
+    },
+    "styles/cel-anime-80s/demo/main.js": {
+      "sha256": "71dc5d0d1bdb32b9e231e1824abc94a904bff9cb8484c1877e9d7d6663b8c11e",
+      "lines": 75
+    },
+    "styles/cel-anime-80s/demo/mix.py": {
+      "sha256": "abc27fa36aa5afdda9eb419e069be7208bed397a1a021392657b68e62bc9c285",
+      "lines": 148
+    },
+    "styles/crayon-book/DEMO.md": {
+      "sha256": "4c5bb8aa6139e91f5317abb7bfbeee679b54b8e54fd8f38eace83ea5ac7a05d0",
+      "lines": 106
+    },
+    "styles/crayon-book/STYLE.md": {
+      "sha256": "ba558478fe519fa6777fe28fa7d1980117297c7beb6fe2e366ef6f00688aa175",
+      "lines": 107
+    },
+    "styles/crayon-book/demo/mix.py": {
+      "sha256": "2d62c42e608928afcb8d8a0500ea53afc8a34e468c7c90a8d759358a28b35e87",
+      "lines": 236
+    },
+    "styles/dark-keynote/DEMO.md": {
+      "sha256": "d0da5c1e25642b2b68269088e4fe7c7b1dbf361a9cf3590d3e2509dfb55b8bf0",
+      "lines": 153
+    },
+    "styles/dark-keynote/STYLE.md": {
+      "sha256": "b0791b5e95f56bf46c621e6064d426ebbee810c7515fb87e951b73668a2a0d24",
+      "lines": 115
+    },
+    "styles/dark-keynote/demo/mix.py": {
+      "sha256": "89a22630de6cd6af4fd88b0df29ccd99222552137b5eb35a77718409ca015f2c",
+      "lines": 202
+    },
+    "styles/dark-keynote/demo/world.js": {
+      "sha256": "64fa27ddc43df698b62e17d44a965b6cfbf13c9346d30f3a42300dcbc79c672f",
+      "lines": 168
+    },
+    "styles/data-physical/DEMO.md": {
+      "sha256": "d099bc33c4e8ece38b8a5ad8ab30ec2beef353bce75f31936db0a29038358845",
+      "lines": 82
+    },
+    "styles/data-physical/STYLE.md": {
+      "sha256": "2d2e6685b0dcf8a1e2ba2ff904ab02d51aede1f5dbb246fd2f6e81c8d146f208",
+      "lines": 117
+    },
+    "styles/data-physical/demo/mix.py": {
+      "sha256": "38ac9e3447be6714a71607bd7591b4a71c89e2aa55dc97094b591e464831dbe1",
+      "lines": 264
+    },
+    "styles/data-physical/demo/set.js": {
+      "sha256": "bbf9caf70e45e3807bd43a1e6a1a260557761bbee195ce0c17178b3758ae30ce",
+      "lines": 161
+    },
+    "styles/dataviz/DEMO.md": {
+      "sha256": "997cf8707a29ba6fee86b07db7745769e58c2c3fe23093164fb2e774cabf0d24",
+      "lines": 120
+    },
+    "styles/dataviz/STYLE.md": {
+      "sha256": "e94013d5a7c548c8844598a671ff0b49bc78770696cbca0d8d00846336f3c67f",
+      "lines": 121
+    },
+    "styles/dataviz/demo/film.js": {
+      "sha256": "f8867fdbb6e4eb0344696194e36d063682111183043f16a74e0244c73da2608e",
+      "lines": 468
+    },
+    "styles/dataviz/demo/music/score.py": {
+      "sha256": "f20d74fd2786318aab627502e52f5ed8e54848c4c07929ae50342f5681b380a0",
+      "lines": 213
+    },
+    "styles/engraving/DEMO.md": {
+      "sha256": "9e99a45fe8d3694c708ce0982407cd3c6b0628a7fc83e093c3b858e77ab5b37d",
+      "lines": 183
+    },
+    "styles/engraving/STYLE.md": {
+      "sha256": "0c6816b8b47163d158ae0ea668feecf53dcbef9d1310e27b9e797d9b9e7aac0d",
+      "lines": 121
+    },
+    "styles/engraving/demo/film.js": {
+      "sha256": "2584571f559ff168001d0e647bab568182964db7c1b6fdae98d03fc397841002",
+      "lines": 356
+    },
+    "styles/engraving/demo/mix.py": {
+      "sha256": "3cc734c6a5856a544a3c66a0bb39ec8a10222909bac5c0dd1f94348d7186fc88",
+      "lines": 156
+    },
+    "styles/game-show/DEMO.md": {
+      "sha256": "a9b89f47a3f004cdd3ecdcb0d4b598c94b948652d7c615f220ed1cef8fe2a145",
+      "lines": 196
+    },
+    "styles/game-show/STYLE.md": {
+      "sha256": "027ed83dbee6596dbd255bcaf20275db18b41b4f7b8f2f5ef72d1d3ebf06ba8f",
+      "lines": 116
+    },
+    "styles/game-show/demo/main.js": {
+      "sha256": "aebe1e70933f4a54f27838af811ba2da95b7d57a93a0222af87754d3e4c7b463",
+      "lines": 1389
+    },
+    "styles/game-show/demo/music.py": {
+      "sha256": "9bec6fa21e48713701dcd3974e7cb5214c44260e083c1f63ffb4a246edc681b7",
+      "lines": 334
+    },
+    "styles/glass-product/DEMO.md": {
+      "sha256": "8954d543678a13fc4791d05a9a72efbdeb381fd114776e5f7a1f209bf0a0798c",
+      "lines": 93
+    },
+    "styles/glass-product/STYLE.md": {
+      "sha256": "630fa80cde0930154ba64f15bce5c8ee0c8dcf48d921253f8c7e3194712c8fb5",
+      "lines": 108
+    },
+    "styles/glass-product/demo/main.js": {
+      "sha256": "18fcbf0dcaac18934c7aa1ae0861839013dbac1f4d4eaf5bb8e9b77e755d4ba0",
+      "lines": 310
+    },
+    "styles/glass-product/demo/music/score.py": {
+      "sha256": "ee6396db9b54d9d7eff41f2496627257f46f1e08f07fc963b9689feb32baee77",
+      "lines": 332
+    },
+    "styles/halftone-dossier/DEMO.md": {
+      "sha256": "55b28d98ae84bad9081f37eea7e1e09bce77ab4446fc8274a2b9d74c1581cdeb",
+      "lines": 197
+    },
+    "styles/halftone-dossier/STYLE.md": {
+      "sha256": "afe98514f065c9f924dda0a483388617122f38df99462025542d2f23d9eb7e3b",
+      "lines": 120
+    },
+    "styles/halftone-dossier/demo/index.html": {
+      "sha256": "756f873cfd70569c01650bff77e08702eeb56498b040ad98ec344e8f3f67609c",
+      "lines": 1087
+    },
+    "styles/halftone-dossier/demo/music.py": {
+      "sha256": "f3f36472dea4be8e86e301291aa2388a18189a3d869c669d20ca0b8aea0a4048",
+      "lines": 322
+    },
+    "styles/hd-2d/DEMO.md": {
+      "sha256": "f4db4208922a745719b8231547c19e9e34b22c7b24df4e2273260aa26b664d8c",
+      "lines": 228
+    },
+    "styles/hd-2d/STYLE.md": {
+      "sha256": "23c027f48b5342bb8ac5dcd3ea6e5baab901628d89f4ef6dd857764ce78c9c92",
+      "lines": 108
+    },
+    "styles/hd-2d/demo/cliff.js": {
+      "sha256": "5bc5998dc5af5a523f6745aa847b0ddddbdfcdc9d6dc0bec248c2f7c934a217d",
+      "lines": 292
+    },
+    "styles/hd-2d/demo/mix.py": {
+      "sha256": "c63db8774743755c7ed6c55e09bfdc72a537b38f38b6f772d790a614f139d197",
+      "lines": 127
+    },
+    "styles/hologram-hud/DEMO.md": {
+      "sha256": "f301d8e9e418cc268b5111043f2a3b963cc5af12302c379dffb802ff5f6cd060",
+      "lines": 178
+    },
+    "styles/hologram-hud/STYLE.md": {
+      "sha256": "81e2c6b0ede2cc211a8dd676417a1ce5efda278514f273c5249165e38ff34573",
+      "lines": 127
+    },
+    "styles/hologram-hud/demo/film.js": {
+      "sha256": "884107c911fe2ac9675414f260fdb46da9bb3f5d8f2f21a02aaa5a1e4d34c58a",
+      "lines": 439
+    },
+    "styles/hologram-hud/demo/mix.py": {
+      "sha256": "28aa511eaad01255022ef8386e07a38072de1b7a3ca6a3b8acecb692cce6cdf7",
+      "lines": 240
+    },
+    "styles/impasto/DEMO.md": {
+      "sha256": "82c202334f8edf20434a0d7c96675053cf2876835ca506471ce961950d9bab6f",
+      "lines": 123
+    },
+    "styles/impasto/STYLE.md": {
+      "sha256": "38a0dcb2808c2ff03ef721c1319b9145438b4074ed37ab7a09dcf20b7268e062",
+      "lines": 122
+    },
+    "styles/impasto/demo/engine/impasto.js": {
+      "sha256": "d7e2d33cbecd21c905615260a65cd7dc9fdf5f9dffaf9d9eeae933d30b7eae1e",
+      "lines": 344
+    },
+    "styles/impasto/demo/engine/plate.js": {
+      "sha256": "7120f53f1827481c97ea7204f4ef269c46339c0b87181c7f56603d0150964567",
+      "lines": 164
+    },
+    "styles/impasto/demo/film.js": {
+      "sha256": "622f7b960df7cc3d88ee191f932654a4cfeeb69d3b36031624a4d066a4a8c1ae",
+      "lines": 348
+    },
+    "styles/ink-wash/DEMO.md": {
+      "sha256": "4d295adcac64a6052353a5cfcd81519f41403689e06ddb2550210ca1cc1133c3",
+      "lines": 85
+    },
+    "styles/ink-wash/STYLE.md": {
+      "sha256": "5d71598f0b9cf4034c6461956b0d8bd63bd33750b4045376044f0d956b01d645",
+      "lines": 118
+    },
+    "styles/ink-wash/demo/comp.js": {
+      "sha256": "063b2d9fa079772de016acc99f19aabddd6dbeaa2445119d01ccac5053a281af",
+      "lines": 160
+    },
+    "styles/ink-wash/demo/ink.js": {
+      "sha256": "dbe6474ab0a0798193a7b49be9a8166511bc67ced90594e4390bdb2b70eef399",
+      "lines": 208
+    },
+    "styles/iso-infographic/DEMO.md": {
+      "sha256": "a5e2e425dc0c9200274262214a7523b7dea9eb4fa33e22de0347bd7d18adffe5",
+      "lines": 176
+    },
+    "styles/iso-infographic/STYLE.md": {
+      "sha256": "17fc6b78512548483d8bf21723882a4fef6f1e266e4d173c883a2b45ef9ab0d2",
+      "lines": 115
+    },
+    "styles/iso-infographic/demo/mix.py": {
+      "sha256": "7c4fc488c277a6920f8fa7b0611f95ad0cb2ff93471f0d342d590e298866c73b",
+      "lines": 227
+    },
+    "styles/iso-infographic/demo/timeline.js": {
+      "sha256": "7b96865c9cf886581353818fe7c96e0a2273117d78fbc4ac9759a9fc1b742e79",
+      "lines": 34
+    },
+    "styles/lidar-survey/DEMO.md": {
+      "sha256": "90dd5974299f395447f1a98f35da161f348fa136e73c58a9ca7d02adc5192746",
+      "lines": 86
+    },
+    "styles/lidar-survey/STYLE.md": {
+      "sha256": "d1b60fda2793932286372e7cf68d62af5723bba14c37e9a437639ea57b1a310d",
+      "lines": 116
+    },
+    "styles/lidar-survey/demo/film.js": {
+      "sha256": "ab095f184637d2c47741216daca2357df23a3da72c875bc602361bc049ba5cce",
+      "lines": 532
+    },
+    "styles/living-screencast/DEMO.md": {
+      "sha256": "414fb4c7957ff033f1155e60174d1c5650b04683c3ab3fcebaa6f76e571b5c58",
+      "lines": 106
+    },
+    "styles/living-screencast/STYLE.md": {
+      "sha256": "91e75f666a6ab5122ead52aa5c47a603f83d0578bab0b9aa223cf83b639fbb16",
+      "lines": 122
+    },
+    "styles/living-screencast/demo/main.js": {
+      "sha256": "54e39c63367d672fc34f12e8052e2aaa27c26bf7b2d411063b677052e167b88e",
+      "lines": 121
+    },
+    "styles/lowpoly-island/DEMO.md": {
+      "sha256": "8a2d0e875ffd6cae3c23a054ae2cdc02a3386b61b1ccb64858c396d92e8773ae",
+      "lines": 87
+    },
+    "styles/lowpoly-island/STYLE.md": {
+      "sha256": "d87e56fd3677841e19f273352ea3481328a237403012ffa7ccb6089c97401702",
+      "lines": 110
+    },
+    "styles/lowpoly-island/demo/music/score.py": {
+      "sha256": "2dd5bc14fff66ac86a8019c5717f67d6dc3ae8454ae7ea38b368f1fb09ed4dbb",
+      "lines": 663
+    },
+    "styles/lowpoly-island/demo/world.js": {
+      "sha256": "0be485cb3e4f4e8aea465d9737a77bc50932e5e71596cf5f43c044361c068561",
+      "lines": 496
+    },
+    "styles/microgame/DEMO.md": {
+      "sha256": "c6c170be35f96eb402c216991c478a4c54599f4b0012197dce323cf67202f716",
+      "lines": 121
+    },
+    "styles/microgame/STYLE.md": {
+      "sha256": "ce209dde1270d032436e02569857bed373cee86e45870bf853d4d8797dc719fb",
+      "lines": 120
+    },
+    "styles/microgame/demo/music/score.py": {
+      "sha256": "8020e50c0aded5f1a3fc6e2ba98836ff526e43043424b496116e11b6842bb264",
+      "lines": 459
+    },
+    "styles/microgame/demo/timeline.js": {
+      "sha256": "793c8fe6277d1f5b8831ddf540a528f0a4522d166f71205fda9757a0f4651dde",
+      "lines": 41
+    },
+    "styles/microscope/DEMO.md": {
+      "sha256": "676c76750e6414692861694d682b62f7c7fdbef8a02892e50fefc8e78905da2b",
+      "lines": 87
+    },
+    "styles/microscope/STYLE.md": {
+      "sha256": "63040631bdc28a3c7f8cf05e2e8523969becd0267741e00dd3e171c22be16e92",
+      "lines": 106
+    },
+    "styles/microscope/demo/film.js": {
+      "sha256": "d58ab02d89b5273cb3bda301d1e23ce17a504ddd45a4f2b79052f71d27ed6508",
+      "lines": 495
+    },
+    "styles/midcentury-toon/DEMO.md": {
+      "sha256": "9850c050667cc9c7af84c549db64b6f5333e657d87474bcf6d6d5dc74bdde17d",
+      "lines": 185
+    },
+    "styles/midcentury-toon/STYLE.md": {
+      "sha256": "e73614b6f9e2f2e8ee279f4909da8429235b96f6d13a12345b6e57d5823c30b8",
+      "lines": 122
+    },
+    "styles/midcentury-toon/demo/film.js": {
+      "sha256": "e2f17ee6dcd79440e3ba11e9e8d44f0121493d425359ccfb09b589362e276971",
+      "lines": 889
+    },
+    "styles/one-line/DEMO.md": {
+      "sha256": "eb86f839b5a726434acfadc12e589419e8ee9d9c1961ccacd772d8e04bc974ae",
+      "lines": 124
+    },
+    "styles/one-line/STYLE.md": {
+      "sha256": "69d26cb06f48ab6b03c12a76c2390d0945cdaddc38bc109b7d5e292b9af1399b",
+      "lines": 112
+    },
+    "styles/one-line/demo/geom.js": {
+      "sha256": "2ce3a4d03ac83f099d6bae0b579d7dc65153f3dbabf1e098b7e6f3fb0dae9ab2",
+      "lines": 129
+    },
+    "styles/one-line/demo/mix.py": {
+      "sha256": "452d3319a4a3591c50519157e93828390feffd849fea45d6bb5d88ce17a152de",
+      "lines": 105
+    },
+    "styles/paper-lantern/DEMO.md": {
+      "sha256": "81fb7c9f7794096ea96bcb224e98505fa8797fde2271db1b29ff0c8da941452c",
+      "lines": 216
+    },
+    "styles/paper-lantern/STYLE.md": {
+      "sha256": "6f3001ad45657262384b3012f441883ef5ac9c558b82d23e503d14e2f672ac91",
+      "lines": 114
+    },
+    "styles/paper-lantern/demo/src/paper.js": {
+      "sha256": "d63f0efdefe46604046bf202a86f8483928536c877af4687f441d8b8f637e17e",
+      "lines": 205
+    },
+    "styles/paper-popup/DEMO.md": {
+      "sha256": "26ed2348f5dfd8c357781988d8f926cb99a981b7dcb548df1c6eaba6826b8dc4",
+      "lines": 229
+    },
+    "styles/paper-popup/STYLE.md": {
+      "sha256": "8e5c0ca430fd96b75c4d9c2af92a87c84d4d1af8cda64280a189c51279e1ee9b",
+      "lines": 117
+    },
+    "styles/paper-popup/demo/book.js": {
+      "sha256": "55ab51807010a3bff6dddeceb9d4a97c2a06fb710ec407df8a58782a3e7a1121",
+      "lines": 133
+    },
+    "styles/paper-popup/demo/main.js": {
+      "sha256": "81f29a147abfa410e69594a59bb63cd5fe5942acd5a451bfb43ff26e9c1eae8f",
+      "lines": 553
+    },
+    "styles/paper-popup/demo/mix.py": {
+      "sha256": "8ca2fd8c167b052842c9268da0a19e9c5458eacea40f8502bb93cc017f29dbe4",
+      "lines": 223
+    },
+    "styles/paper-popup/demo/post.js": {
+      "sha256": "47cbcf1357dba796d9aa35795f11b1b764c585f712b66a4a2fc67e9a13d880f5",
+      "lines": 83
+    },
+    "styles/papercut-red/DEMO.md": {
+      "sha256": "ab4cad26edebaafcd24ebcd47668bc58f0c89536a340e007dbc2b5179e8473ee",
+      "lines": 122
+    },
+    "styles/papercut-red/STYLE.md": {
+      "sha256": "65e317d83335e0cb34696b643e31ad9e46fb0bb93fd748c2e21d74358aea61ec",
+      "lines": 108
+    },
+    "styles/papercut-red/demo/fold.js": {
+      "sha256": "de1d65271bb7bf5286a1cf957599466e663a494d9c57f1a4c79a046da71be9f1",
+      "lines": 196
+    },
+    "styles/pictogram-motion/DEMO.md": {
+      "sha256": "7c02f4932210e297ae8994c2d654021eac95c2636f4d92e73a5d0c91b6df35d3",
+      "lines": 265
+    },
+    "styles/pictogram-motion/STYLE.md": {
+      "sha256": "e982606f3d7d132d320abdc1a74c226b1e0642b664a0c41582bc76fec646da1a",
+      "lines": 117
+    },
+    "styles/pictogram-motion/demo/edl.js": {
+      "sha256": "edcad84e5d02b4b4ee503dc51622ada2d8416e28cb0899145164b612a6bccb11",
+      "lines": 129
+    },
+    "styles/pixel-rpg/DEMO.md": {
+      "sha256": "606429d47141c48406a913fcb626e6cb86481c642621fbd7dd57a3e9e197daca",
+      "lines": 125
+    },
+    "styles/pixel-rpg/STYLE.md": {
+      "sha256": "a935373e444a9d28954220e3bd725d40e9048dd1ca36eb3971faede78d23b4ea",
+      "lines": 115
+    },
+    "styles/pixel-rpg/demo/mix.py": {
+      "sha256": "445adf824a559318ae9f949ade9e55fb394e4efb52ef41af6b5851c68925bd5c",
+      "lines": 178
+    },
+    "styles/pixel-rpg/demo/music/score.py": {
+      "sha256": "41c793932db0cff10dbbb0b7ad2785e23dcbff177cf85293c9f44b45f8dab585",
+      "lines": 496
+    },
+    "styles/pixel-rpg/demo/px.js": {
+      "sha256": "11d3816a6f2d97818f754fe5c8871ec44985911ae261735c8e6485f011e71443",
+      "lines": 168
+    },
+    "styles/risograph/DEMO.md": {
+      "sha256": "54604aaca90a7b74fc4273f05c4439ac6c07914a06ed9508a2ccf6337dfde39a",
+      "lines": 81
+    },
+    "styles/risograph/STYLE.md": {
+      "sha256": "c3d85c91a81b0afde091d964482749482adc66c12730afe124708f7b18b331a6",
+      "lines": 123
+    },
+    "styles/risograph/demo/mix.py": {
+      "sha256": "0c8c78773d7d23f821661f0f0e6fe470908bc203cabd5bb760c21c65185e4d63",
+      "lines": 161
+    },
+    "styles/risograph/demo/riso.js": {
+      "sha256": "33372178569914cbb0210e67901434e544db6b2fa32efcd3ac60275e9d62cbbd",
+      "lines": 154
+    },
+    "styles/rubber-hose/DEMO.md": {
+      "sha256": "614029fd591f982c3c2755541d5d8add63b1f121183243308590bbcc4aed38ba",
+      "lines": 100
+    },
+    "styles/rubber-hose/STYLE.md": {
+      "sha256": "bf850f9cd22e68b2125fed00d1b9804e91479620b44420ba7ec50e570e472a94",
+      "lines": 110
+    },
+    "styles/rubber-hose/demo/events.js": {
+      "sha256": "97215d9694c5ca6621445cdf00e41c79f0e3bfe1057ca3f8075ce1d6d1b0c030",
+      "lines": 62
+    },
+    "styles/satellite-briefing/DEMO.md": {
+      "sha256": "7363dc53341e144854a7fe1e6efaf786a6dc4bb5a0268c4ad06e5fc11af972f2",
+      "lines": 92
+    },
+    "styles/satellite-briefing/STYLE.md": {
+      "sha256": "39fec0c7fda13600de04f1a9631ca636dc8850429033c1f65bb6d3283ec2988d",
+      "lines": 114
+    },
+    "styles/satellite-briefing/demo/film.js": {
+      "sha256": "ca640caa3b9c702beb8fc7e9518ef28213581dc51e6c2fa6efca6fc7db08e433",
+      "lines": 658
+    },
+    "styles/scifi-toon/DEMO.md": {
+      "sha256": "ab784c9371d07e7718109d79e4137dc90df2c3335df7379a5104e2b182ad770f",
+      "lines": 94
+    },
+    "styles/scifi-toon/STYLE.md": {
+      "sha256": "9a720a57ce50dc554e9237e698a979cdf7311527e6e6a0dad803278dfe8ad2ce",
+      "lines": 119
+    },
+    "styles/scifi-toon/demo/mix.py": {
+      "sha256": "94d73c7d7d2f5cb1b27e1b103421f8f90edf371665db9c878cfa19cda24a1a02",
+      "lines": 154
+    },
+    "styles/shadow-puppet/DEMO.md": {
+      "sha256": "db06736b217c34c4b74e7c15083ed3eb742c10499a12a3272c479899a825b708",
+      "lines": 97
+    },
+    "styles/shadow-puppet/STYLE.md": {
+      "sha256": "8be075a8262d5a3deea9b05684d8a9abdc1e54c0d90649bf14609ecb4106c3af",
+      "lines": 122
+    },
+    "styles/shadow-puppet/demo/main.js": {
+      "sha256": "fb2028f85ae11164550453254fe3c2e507ea2d4f2b3497c211a75bd4b08ce51b",
+      "lines": 373
+    },
+    "styles/silent-film/DEMO.md": {
+      "sha256": "4fd03e56c965096e153380a95f666d74e0fc68eb373696011f9f3ef60e4e2a48",
+      "lines": 134
+    },
+    "styles/silent-film/STYLE.md": {
+      "sha256": "44633a4edd4ec6b84be809bd48b38503a75a71531112b3d28a52f27135012b20",
+      "lines": 107
+    },
+    "styles/silent-film/demo/film.js": {
+      "sha256": "9f20a81075d7b91c33fc44911049eb08a6e95325ad2bdb655fd5dff2028b470c",
+      "lines": 115
+    },
+    "styles/silkscreen-poster/DEMO.md": {
+      "sha256": "a67473de891fc9b925cbe8e90c05567e098021801d2724957dffa9bd546983cf",
+      "lines": 176
+    },
+    "styles/silkscreen-poster/STYLE.md": {
+      "sha256": "a8b3792efb1476b78493f86a033221b27f60c1927463cc435f8816e4d9eda148",
+      "lines": 138
+    },
+    "styles/silkscreen-poster/demo/engine/silk.js": {
+      "sha256": "9d73e4bcb9f400264daf638f99a3cc82b351197acda448573000c63843a2e7be",
+      "lines": 301
+    },
+    "styles/spy-titles/DEMO.md": {
+      "sha256": "d0de44ced4fdf8907293675722c4f9ebc4721a3f2af482e4455985724d019f40",
+      "lines": 103
+    },
+    "styles/spy-titles/STYLE.md": {
+      "sha256": "ea6e9e9073af43ef0bb860e368f60b16ec32a91668386115a142907d92cb1f75",
+      "lines": 114
+    },
+    "styles/spy-titles/demo/film.js": {
+      "sha256": "4cec6c6b77daf7617171bec712c3ad699073f492c155cf43b9743c8e2d7f3e98",
+      "lines": 473
+    },
+    "styles/stained-glass/DEMO.md": {
+      "sha256": "85c01813ea91c0cc331665c2dc9346e4f950a6459aa935752ce9b14d426b7cd5",
+      "lines": 113
+    },
+    "styles/stained-glass/STYLE.md": {
+      "sha256": "0f6551bd109a4127404068aa1e75f18f16b58c80b486c23480b3d193e597b060",
+      "lines": 121
+    },
+    "styles/stained-glass/demo/story.js": {
+      "sha256": "573dfa3edc9682dd04824bd866c7b8bd48a111dc93115e5d6bfffea4760aabbc",
+      "lines": 214
+    },
+    "styles/swiss-motion/DEMO.md": {
+      "sha256": "989c763362af45379b52a0a8e683fba27efad968e7aa438a3acc9d21d03d3a4e",
+      "lines": 129
+    },
+    "styles/swiss-motion/demo/film.js": {
+      "sha256": "69da97cb7f8e7d8856a282af85daf0b6f1c825d02e8fe4e369bdac55efb0d4be",
+      "lines": 532
+    },
+    "styles/swiss-motion/demo/music/score.py": {
+      "sha256": "c93b5b9a9bf585b1dd57445e8ccf5688af64ece671cbc3dd229d46591d145b26",
+      "lines": 168
+    },
+    "styles/teardown/STYLE.md": {
+      "sha256": "90df05a02a3d33add58e0dd99bef19ca20ea16b10390b3c2350d8483106922ee",
+      "lines": 125
+    },
+    "styles/teardown/demo/mix.py": {
+      "sha256": "fe85a4a9cdda8b11ecaf5206b3099dbb25a76806c1a4c3c42a4a9855fafd1ee8",
+      "lines": 211
+    },
+    "styles/teardown/demo/src/main.js": {
+      "sha256": "5bd63c407913af1b27afb4a0de4733f10b97a299082944268781ab9f6f866752",
+      "lines": 248
+    },
+    "styles/tilt-shift/DEMO.md": {
+      "sha256": "ddc35d97cb9252a2b46b82b5fc008ea5563cf9d1faf6d46d3bc76fe7eb5719f2",
+      "lines": 84
+    },
+    "styles/tilt-shift/STYLE.md": {
+      "sha256": "131ae50c6bddd30922638cbd5f2fae5c047223360a3f6924b074b0db525a5c63",
+      "lines": 105
+    },
+    "styles/tilt-shift/demo/music/score.py": {
+      "sha256": "33a66884574d750c5ae9bb0510c40d76f1d4994c220d3582e64da4bcc6275cb1",
+      "lines": 281
+    },
+    "styles/ukiyoe/DEMO.md": {
+      "sha256": "5a48496ab701b95f26e85284b9c54e53d9cf800ed72519674f075bb516fb0f64",
+      "lines": 128
+    },
+    "styles/ukiyoe/STYLE.md": {
+      "sha256": "a668f2bc5b0b74675c57819e75acc318417a77cb695fa89041b3ed78cb085655",
+      "lines": 110
+    },
+    "styles/ukiyoe/demo/print.js": {
+      "sha256": "735a23892ced5c61a5ac3378e4930a6c0b2fb21c40d79f6d1978a791d016ed68",
+      "lines": 279
+    },
+    "styles/urban-sketch/demo/audio/foley.py": {
+      "sha256": "40f860929acaaccec0b52d5aaf13ab0129cbe2348d8cc783ca493d0b28cf1491",
+      "lines": 155
+    },
+    "styles/urban-sketch/demo/film.js": {
+      "sha256": "5c0d59b2ebad8bcf3f3cf3859204581c89e3d1bfbcf46fb09900e315989aeb0e",
+      "lines": 355
+    },
+    "styles/watercolor/DEMO.md": {
+      "sha256": "04d0805e950fa5779cfea722cb5a8cc15e6f79ff2326c3c8ef5ac4c23bacbc86",
+      "lines": 200
+    },
+    "styles/watercolor/demo/engine.js": {
+      "sha256": "32ee3ae212d8f3196142f9423e795c16b09c98234fd9b6b50c852417415e3333",
+      "lines": 142
+    },
+    "styles/white-model/DEMO.md": {
+      "sha256": "81f08bf241c091701aecba4770981989c871fa0919c5e269e0900283767dce96",
+      "lines": 87
+    },
+    "styles/white-model/STYLE.md": {
+      "sha256": "02b6423a69ac5a30322997ec9523bd6b6f776b7c8cf14f249eeb996b9d21e2c2",
+      "lines": 113
+    },
+    "styles/white-model/demo/studio.js": {
+      "sha256": "25f248af8188a5239835c9dc5228abba15869c6042ade1220117c01951efc3fb",
+      "lines": 218
+    },
+    "styles/whiteboard/DEMO.md": {
+      "sha256": "0e9c6cbe48cdd97438386536ab536c3121666fa0ee77bc0e2616d66225401d08",
+      "lines": 127
+    },
+    "styles/whiteboard/demo/engine/wb.js": {
+      "sha256": "b3b0e4bb8e139aef98b5628012dfe71469474e6a59ed1e1955bcd745fbcf5aad",
+      "lines": 487
+    },
+    "styles/whiteboard/demo/mix.py": {
+      "sha256": "d8b83bb85cd64e76e07d878306267e9c57401459e458b79aa6d755c28d71c85d",
+      "lines": 198
+    },
+    "styles/woodcut/DEMO.md": {
+      "sha256": "ecd90142eee7624f8c7b49328658ed4a623d35f779825c066a75970b73738526",
+      "lines": 139
+    },
+    "styles/woodcut/STYLE.md": {
+      "sha256": "b96fda6eeac038137310cc0766d979c8d8a5f3ff6acd87bada5aa50d5136a6a0",
+      "lines": 120
+    },
+    "styles/woodcut/demo/engine/knife.js": {
+      "sha256": "4e5a29c14cf564625d5d3cad29966c289eee0aad4701cdc3f5728a960d91b431",
+      "lines": 137
+    }
+  }
+}

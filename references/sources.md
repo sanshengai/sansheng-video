@@ -8,10 +8,11 @@
 | [yihui-dev/awesome-opus5-5-videos](https://github.com/yihui-dev/awesome-opus5-5-videos) | 精选案例的段落组织、对象连续和声音编排描述 | 固定 92aee2f586ac0715cb3cbcb6384834f98a33383d；8 条自写摘要与本地检索，原文选中才取，不捆绑视频、完整提示词或第二生产入口；视听和复现分别标记 |
 | [showheyohtaki/motion-prompt](https://github.com/showheyohtaki/motion-prompt) | 动效／镜头术语、spec、纯时间 Canvas 代码和按需检索 | 原 CLI 最小捆绑，固定 770eefb7091cc725ab0eb6d4ef5cbf28b28e282c；MIT，目录和选中条目按需获取，保留单一制作入口 |
 | [Kianzzz/xilo-opus-video](https://github.com/Kianzzz/xilo-opus-video) | 制作说明、动态验证、连续镜头、时间驱动、音画事件、混音、局部迭代与交付 | 方法适配；参考提交 f2cd828e2692e7186186408ee01a936707c2c38d，不捆绑原版导演 |
-| [lemomo-ai/lemo-opuscar](https://github.com/lemomo-ai/lemo-opuscar) | 51 种风格、98 条电影语法、绘制与镜头实现 | 固定 d33bdea74eeecde3922b0fbad227f0d3dc7afe75；本地索引、有界检索，选中源码按 SHA256 缓存；不安装第二生产总控 |
+| [lemomo-ai/lemo-opuscar](https://github.com/lemomo-ai/lemo-opuscar) | 51种风格的用途/表达/音画机制、98条电影语法、绘制与镜头实现 | 源码取回固定d33bdea74eeecde3922b0fbad227f0d3dc7afe75，机制研究b5e8ef93930b6d828f352055a689320f138237b1；本地有界search/inspect，选中源码按SHA256缓存；不安装第二生产总控 |
 | [Vincentwei1021/mg-styles-15](https://github.com/Vincentwei1021/mg-styles-15) | 图形变化、节奏与音画 cue | 方法转述 |
 | [chuspeeism/dashi-animationstyle](https://github.com/chuspeeism/dashi-animationstyle) | 中文词句锚点和字幕／动作关系 | 方法转述，不把估时包装成对齐 |
-| [alchaincyf/huashu-art-motion](https://github.com/alchaincyf/huashu-art-motion) | 大场景、构图和合成思路 | 方法转述，不承诺未验证的透明渲染 |
+| [alchaincyf/huashu-motion](https://github.com/alchaincyf/huashu-motion) | 真实产品研究、信息形状、视觉性格、关键画面、原生声音/修订与经验回流 | 固定5f2608c2e12abcf518f74dde86093b19f7f88603；形成按需宣传片方法，本地原生工具实际试制；未捆绑运行器或采样，未把技术验绿当视听认可 |
+| [alchaincyf/huashu-art-motion](https://github.com/alchaincyf/huashu-art-motion) | 大场景、构图、风格语言与故事母题分离、跨场景验证和正面经验 | 固定8a0d7d72ca65fcce6f8ba82c4a6c8dfe35b8422c；方法转述，与huashu-motion分别研究；不承诺未验证的透明渲染 |
 | [WaterDJiang/Wattter_openSkills](https://github.com/WaterDJiang/Wattter_openSkills) | 工程版本、素材与渲染关联、帧检查 | 复用本项目单套机制 |
 | [Vincentwei1021/video-shotcraft](https://github.com/Vincentwei1021/video-shotcraft) | 镜头卡、构图、衔接和可编辑性 | 合并流程，不新建工作台 |
 

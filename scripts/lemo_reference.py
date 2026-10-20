@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import re
 import urllib.request
+import lemo_creative
 
 CATALOG = Path(__file__).parent / 'vendor/lemo-opuscar/catalog.json'
 
@@ -15,22 +16,35 @@ def catalog():
 
 
 def search(query, cinema=False):
-    terms = re.findall(r'[a-z0-9_-]+|[\u3400-\u9fff]+', query.lower())
-    if not terms:
+    positive = lemo_creative.positive_query(query)
+    terms = re.findall(r'[a-z0-9_-]+|[\u3400-\u9fff]+', positive)
+    if not terms and positive:
         raise ValueError('nonempty search query required')
     data = catalog()
+    note = 'Reference only; no characters, demo story or facts are licensed by selection'
+    if not cinema:
+        creative = lemo_creative.rank(data, query)
+        if creative['results'] or not positive:
+            return {'revision':data['revision'], 'kind':'style', **creative, 'note':note}
+    # Rank positive catalog metadata only. Prompts and directions also contain
+    # exclusions and demo-specific facts; neither is a positive recommendation.
+    if not terms:
+        return {'revision':data['revision'], 'kind':'cinema-grammar' if cinema else 'style',
+                'results':[], 'note':note}
     rows = data['cinema']['films'] if cinema else data['styles']
     ranked = []
     for row in rows:
         fields = {k:v for k,v in row.items() if k not in ('files', 'shots', 'refs')}
-        text = json.dumps(fields, ensure_ascii=False).lower()
+        keys = ('title','zh','style_en','style_zh','blend_en','blend_zh') if cinema else (
+            'slug','en','cn','cat','cat_en','uses')
+        text = ' '.join(str(row.get(k,'')) for k in keys).lower()
         title = ' '.join(str(row.get(k,'')) for k in ('slug','en','cn','style_en','style_zh')).lower()
         score = sum((5 if term in title else 1) for term in terms if term in text)
         if score:
             ranked.append((score,fields))
     ranked.sort(key=lambda r: -r[0])
     return {'revision': data['revision'], 'kind': 'cinema-grammar' if cinema else 'style',
-            'results': [r[1] for r in ranked[:3]], 'note': 'Reference only; no characters, demo story or facts are licensed by selection'}
+            'results': [r[1] for r in ranked[:3]], 'note':note}
 
 
 def fetch(slug, output, demo=False, cache=None):
@@ -70,6 +84,10 @@ def fetch(slug, output, demo=False, cache=None):
 if __name__ == '__main__':
     p=argparse.ArgumentParser(description=__doc__);s=p.add_subparsers(dest='command',required=True)
     q=s.add_parser('search');q.add_argument('query');q.add_argument('--cinema',action='store_true')
+    i=s.add_parser('inspect');i.add_argument('slug')
     g=s.add_parser('get');g.add_argument('slug');g.add_argument('--out',required=True);g.add_argument('--demo',action='store_true');g.add_argument('--cache')
-    a=p.parse_args();result=search(a.query,a.cinema) if a.command=='search' else fetch(a.slug,a.out,a.demo,a.cache)
+    a=p.parse_args()
+    if a.command=='search':result=search(a.query,a.cinema)
+    elif a.command=='inspect':result=lemo_creative.inspect(catalog(),a.slug)
+    else:result=fetch(a.slug,a.out,a.demo,a.cache)
     print(json.dumps(result,ensure_ascii=False,indent=2))

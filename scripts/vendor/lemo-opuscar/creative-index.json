@@ -1,0 +1,1404 @@
+{
+  "schema": "lemo-creative-index/1",
+  "source": "https://github.com/lemomo-ai/lemo-opuscar",
+  "catalog_revision": "d33bdea74eeecde3922b0fbad227f0d3dc7afe75",
+  "research_revision": "b5e8ef93930b6d828f352055a689320f138237b1",
+  "basis": "51 style/source reviews; 12 deeper traces; nine-point visual sampling of all 51 released films, not continuous viewing or listening; no universal audiovisual quality approval.",
+  "compatibility": {
+    "catalogued_text_files_compared": 1461,
+    "sha256_mismatches": 0
+  },
+  "attribution": "Lemomo / LemoLab; curated/adapted source descriptions by Sansheng. Original licensing retained with catalog.",
+  "styles": [
+    {
+      "slug": "archive-lighttable",
+      "aliases": [
+        "史料",
+        "档案",
+        "人物史",
+        "证据对比",
+        "测量",
+        "真实资料",
+        "灯台",
+        "连续对象",
+        "archive",
+        "evidence comparison",
+        "historical records"
+      ],
+      "use_for": "企业史、人物档案、史料纠错",
+      "mechanism": "先立一个说法，再用另一证据、测量与并置修正；证据对象和空间状态共同驱动变化。",
+      "visual": "真实扫描保持比例；背光、放大镜、分层照片视差；一张灯台连续摄影，运动由选取、阅读、进入、退出证据触发。",
+      "sound": "纸、镜圈、尺子拟音；尺声按真实测量进度跨100ft触发。进入照片时灯台hum交叉变为风浪，声音表达所在空间。",
+      "needs": "清晰且可追溯的档案；可读的比较；推近不超过材料清晰度。",
+      "limits": "没有真实资料却假造档案权威感",
+      "refs": [
+        "styles/archive-lighttable/STYLE.md:14",
+        "styles/archive-lighttable/DEMO.md:31",
+        "styles/archive-lighttable/demo/film.js:555",
+        "styles/archive-lighttable/demo/mix.py:112"
+      ]
+    },
+    {
+      "slug": "art-deco",
+      "aliases": [
+        "酒店",
+        "剧院",
+        "庆典",
+        "空间门槛",
+        "金属几何",
+        "喜剧",
+        "品牌故事",
+        "art deco",
+        "theatre",
+        "celebration",
+        "hotel",
+        "threshold"
+      ],
+      "use_for": "酒店、剧院、庆典、轻喜剧宣传",
+      "mechanism": "用空间门槛安排阻力，用主题音乐的延迟兑现安排高潮。",
+      "visual": "对称门廊、剖面、俯拍群舞；金属镶线、硬边体积与单色主人公；人物12fps，摄影与光24fps。",
+      "sound": "交响爵士主题先碎片后完整；钟击逐字点亮招牌；电话、收音机、扩音器与现场音乐使用不同带宽及混响。",
+      "needs": "先写空间阻力与兑现点；几何材质服务于场所和行动。",
+      "limits": "自然课堂对白与朴素事实讲解的默认模板",
+      "refs": [
+        "styles/art-deco/STYLE.md:39",
+        "styles/art-deco/DEMO.md:43",
+        "styles/art-deco/demo/mix.py:58"
+      ]
+    },
+    {
+      "slug": "ascii-crt",
+      "aliases": [
+        "代码",
+        "日志",
+        "远程交流",
+        "输入打字",
+        "字符界面",
+        "人物性格",
+        "terminal",
+        "code",
+        "typing",
+        "text communication"
+      ],
+      "use_for": "代码、日志、信件、远程交流",
+      "mechanism": "输入节律即人物；文本粒子保留语义来源，声音按事件簇而非逐粒堆叠。",
+      "visual": "真正字符密度图集与多级字符网格；字格尺度承担镜头；解析余辉、单色CRT；字母保留来源身份再迁移成图。",
+      "sound": "机器输入与人类输入节律不同；落字按1/48秒聚类生成落点声；modem、BEL与模拟合成音乐，握手阶段保留静默。",
+      "needs": "自己的文本内容与输入事件；字符变化须承载意义。",
+      "limits": "字符与图像的语义转化不等于逐粒子来源身份已验证；后者需源码和实际状态证据。",
+      "refs": [
+        "styles/ascii-crt/STYLE.md:8",
+        "styles/ascii-crt/DEMO.md:40",
+        "styles/ascii-crt/demo/main.js:283",
+        "styles/ascii-crt/demo/mix.py:99"
+      ]
+    },
+    {
+      "slug": "backrooms",
+      "aliases": [
+        "连续空间",
+        "长镜头",
+        "主观体验",
+        "空间探索",
+        "悬疑",
+        "房间",
+        "空间氛围",
+        "room tone",
+        "continuous camera",
+        "spatial exploration"
+      ],
+      "use_for": "主观体验、空间探索、悬疑",
+      "mechanism": "连续空间、停顿、时码异常与空间回返组织主观经验；roomtone按状态设计，不把连续空间冒称连续实录。",
+      "visual": "连续POV路线；恐惧改变步态、呼吸、抖动；AF/AE、VHS时间码成为叙事信息，不靠频繁剪切。",
+      "sound": "无外加配乐，隔墙muzak、灯管hum、PA、呼吸、软脚步和伺服声；灯闪改变声床，出口停声制造异常。",
+      "needs": "连续空间布局、主观行进与环境状态；悬疑情绪须合题。",
+      "limits": "温暖教育内容直接套黄绿噪点和惊吓",
+      "refs": [
+        "styles/backrooms/STYLE.md:44",
+        "styles/backrooms/DEMO.md:20",
+        "styles/backrooms/demo/story.js:1",
+        "styles/backrooms/demo/mix.py:36"
+      ]
+    },
+    {
+      "slug": "blueprint",
+      "aliases": [
+        "机械原理",
+        "流程设计",
+        "设计迭代",
+        "故障修订",
+        "工程图",
+        "结构解释",
+        "mechanism",
+        "engineering",
+        "design iteration",
+        "failure analysis"
+      ],
+      "use_for": "机械原理、流程、设计迭代",
+      "mechanism": "定义可见问题或缺失前提，补足条件、修订后展示结果；线稿过程本身承担解释。",
+      "visual": "同一蓝图平面，先中心线再轮廓、剖线、尺寸；齿轮/针表/风向标表达机器状态；仅关键符号越出纸面产生体积。",
+      "sound": "108BPM双声部机械赋格；笔尖、擒纵、链条与齿轮节奏；故障减速、停顿、提问音型后解决终止。",
+      "needs": "能观察的故障和修订；结构与状态有因果对应。",
+      "limits": "为套风格把任何软件功能硬改成机器",
+      "refs": [
+        "styles/blueprint/STYLE.md:10",
+        "styles/blueprint/DEMO.md:20",
+        "styles/blueprint/demo/film.js:85",
+        "styles/blueprint/demo/mix.py:60"
+      ]
+    },
+    {
+      "slug": "brick-toy",
+      "aliases": [
+        "儿童解释",
+        "搭建",
+        "团队协作",
+        "原型",
+        "积木",
+        "重组",
+        "失败重试",
+        "物件身份",
+        "brick building",
+        "teamwork",
+        "prototype"
+      ],
+      "use_for": "儿童解释、搭建、团队协作、原型",
+      "mechanism": "保留失败前后的物件身份；让重组有因果，用尺度揭示做收束。",
+      "visual": "ABS硬件、真实桌面尺度、宏观摄影；倒角/反光/AO；角色12fps而摄影24fps，确定性倒塌不依赖随机实时模拟。",
+      "sound": "两首许可音乐按小节与和声剪接；倒塌撤音乐，点火落重拍；塑料卡扣、碰撞、无线电音色。",
+      "needs": "保留物件身份和前后状态；重组过程有可见目的。",
+      "limits": "需要证明真实产品结构与材料的镜头",
+      "refs": [
+        "styles/brick-toy/STYLE.md:18",
+        "styles/brick-toy/DEMO.md:19",
+        "styles/brick-toy/demo/main.js:244",
+        "styles/brick-toy/demo/mix.py:9"
+      ]
+    },
+    {
+      "slug": "briefing-board",
+      "aliases": [
+        "知识比较",
+        "证据对比",
+        "商业简报",
+        "方案比较",
+        "工程简报",
+        "同尺度",
+        "阅读停留",
+        "evidence comparison",
+        "business briefing"
+      ],
+      "use_for": "工程方案、商业简报、知识比较",
+      "mechanism": "用同尺度比较与阅读停留支撑结论，声音区分摆证据和做裁决。",
+      "visual": "同一实体白板上的照片、尺、箭头、判决；终版海报先设计，镜头逐步读其局部；浅空间与共同窗光连接材料。",
+      "sound": "低音/鼓/铜管；落照片配和弦，否决改变和声；船笛J-cut，marker与实际画线事件连接。",
+      "needs": "有来源的比较对象、共同尺度及足够阅读时间。",
+      "limits": "先分清旧项保留、新项写入和当前讲解对象，再检查交接及阅读窗口；画面标注不是工程事实核验。",
+      "refs": [
+        "styles/briefing-board/STYLE.md:33",
+        "styles/briefing-board/DEMO.md:21",
+        "styles/briefing-board/demo/audio/mix.py:88"
+      ]
+    },
+    {
+      "slug": "cel-anime-80s",
+      "aliases": [
+        "角色动画",
+        "角色动作",
+        "夜景",
+        "情绪转折",
+        "光源",
+        "肤色",
+        "动画节拍",
+        "anime",
+        "character animation",
+        "night lighting"
+      ],
+      "use_for": "动作短片、夜景、情绪转折",
+      "mechanism": "迁移光源层、肤色随环境与声源身份转换，保留原项目人物和剪辑节奏。",
+      "visual": "背景color/emissive双板，cel硬影/彩色线/轮廓光；不同光环境重设肤色；角色12/8fps，摄影、光和后期24fps。",
+      "sound": "合成引擎/胎噪/风雨分层，起跳撤胎噪、改变发动机频谱；桥警铃、落地刮擦；配乐转磁带声音。",
+      "needs": "人物参考与光源分层；角色运动和镜头运动分别验证。",
+      "limits": "把复古滤镜、成熟脸型和快速切景当唯一动漫质量标准",
+      "refs": [
+        "styles/cel-anime-80s/STYLE.md:30",
+        "styles/cel-anime-80s/DEMO.md:22",
+        "styles/cel-anime-80s/demo/main.js:41",
+        "styles/cel-anime-80s/demo/mix.py:23"
+      ]
+    },
+    {
+      "slug": "crayon-book",
+      "aliases": [
+        "童话",
+        "识字",
+        "祝福",
+        "儿童故事",
+        "蜡笔",
+        "材质因果",
+        "温暖故事",
+        "fairy tale",
+        "children story",
+        "crayon",
+        "material causality"
+      ],
+      "use_for": "童话、识字、温暖祝福",
+      "mechanism": "让材质规则产生因果；关键效果先埋条件，再揭示，不靠外挂转场。",
+      "visual": "纸齿固定世界坐标；蜡笔压力改变覆盖，水洗拒蜡；手抖、越界、12fps线条生命，水与摄影24fps。",
+      "sound": "3/4慢拍；羊/梯级对应稀疏音符，星星曝光配glock；笔速控制刮擦颗粒与亮度；睡眠阶段降低动作密度。",
+      "needs": "先定义蜡笔世界能做什么，再铺垫关键变化。",
+      "limits": "要求严格几何与精细真实动作的教学证明",
+      "refs": [
+        "styles/crayon-book/STYLE.md:24",
+        "styles/crayon-book/DEMO.md:10",
+        "styles/crayon-book/demo/mix.py:22"
+      ]
+    },
+    {
+      "slug": "dark-keynote",
+      "aliases": [
+        "产品宣传",
+        "产品首发",
+        "软件宣传",
+        "能力展示",
+        "真实结果",
+        "品牌动词",
+        "系列宣传",
+        "product launch",
+        "software launch",
+        "kinetic typography"
+      ],
+      "use_for": "软件首发、效率产品、能力宣传",
+      "mechanism": "先找真实产品动词及其可见前后差异，再设计时间、声音和品牌动作。",
+      "visual": "原创代码UI、黑舞台、单品牌色对比警告色；2.5D成组展开/归位；秩序变化比装饰重要。",
+      "sound": "同音符事件表生成UI和错相音乐；归位音高取网格行/组；光扫shimmer提前0.4s；15–16s全层数字静音。",
+      "needs": "真实产品动词及可见前后结果；能读懂的主视觉。",
+      "limits": "只把真实截图换进同一故事而不证明真实功能",
+      "refs": [
+        "styles/dark-keynote/STYLE.md:40",
+        "styles/dark-keynote/DEMO.md:16",
+        "styles/dark-keynote/demo/world.js:62",
+        "styles/dark-keynote/demo/mix.py:120"
+      ]
+    },
+    {
+      "slug": "data-physical",
+      "aliases": [
+        "数据变化",
+        "比例",
+        "数量",
+        "真实数据",
+        "数据落地",
+        "计数",
+        "数据对比",
+        "事件同步",
+        "physical data",
+        "quantity",
+        "proportion",
+        "counting"
+      ],
+      "use_for": "能源、经营数据、比例与数量教学",
+      "mechanism": "先定义单位和真数据，再让落地事件驱动读数、声音和比较停留。",
+      "visual": "同单位薄片逐块落地；铝/亚克力区分类别，黄铜表示100GW；读数来自已落地物件而非漂亮插值。 俯视与透视会改变比较职责：空间表达总量，标签承担数值读取；超越节点可构成叙事转折。",
+      "sound": "铝tick与亚克力tok区分类别；每100GW加入音阶；增密细分节拍，反超处留听觉空间。",
+      "needs": "真实数据、单位、映射规则；落点与读数同源。",
+      "limits": "物理隐喻扭曲数据、舍入影响排序的情况",
+      "refs": [
+        "styles/data-physical/STYLE.md:8",
+        "styles/data-physical/DEMO.md:23",
+        "styles/data-physical/demo/set.js:27",
+        "styles/data-physical/demo/mix.py:73"
+      ]
+    },
+    {
+      "slug": "dataviz",
+      "aliases": [
+        "数据变化",
+        "时间序列",
+        "数据解释",
+        "图表",
+        "同步声音",
+        "测量",
+        "刻度",
+        "事件同步",
+        "data visualization",
+        "chart",
+        "time series",
+        "sonification"
+      ],
+      "use_for": "时间序列、变化、数据解释",
+      "mechanism": "数据事实与情绪编排分字段，图表操作导出声音事件，确保来源与刻度可追踪。",
+      "visual": "真实数值控制坐标与颜色，注释钉在数据空间；同一张纸，重标轴、逐点落地和编码变形；变形时锁摄影。",
+      "sound": "value→音高/FM亮度，gap→衰减/力度，year→统一时间；相同事件触发点声、棘轮和变形声像；环境随人物注释J/L衔接。",
+      "needs": "数据出处和刻度；事实编码与情绪配乐分开。",
+      "limits": "数据不支持却为戏剧强行破框或夸大色阶 虚构人生与真实数据显式分界，人生注释不能伪作统计事实。",
+      "refs": [
+        "styles/dataviz/STYLE.md:8",
+        "styles/dataviz/DEMO.md:36",
+        "styles/dataviz/demo/film.js:453",
+        "styles/dataviz/demo/music/score.py:33"
+      ]
+    },
+    {
+      "slug": "engraving",
+      "aliases": [
+        "自然史",
+        "博物馆",
+        "教材",
+        "部位图",
+        "出处注释",
+        "标注放大",
+        "真实资料",
+        "engraving",
+        "museum",
+        "anatomy illustration"
+      ],
+      "use_for": "博物馆、自然史、工艺、教材部位图",
+      "mechanism": "出处→放大→注释的连续链；通过材料或乐器变化标记知识层与情绪奖励。",
+      "visual": "明暗由可变宽排线生成；刻序是动画；圆窗沿出处飞到边栏并保留引线；水彩必须晚于黑印。",
+      "sound": "刻线阶段拨弦，着色才首次拉弓；不同刻线遍数提高微刮擦密度；圆窗划圈/飞行/落定有成组声型。",
+      "needs": "可追溯原图与注释；放大有知识目的。",
+      "limits": "把任意真实对象自动转线稿当准确科学插图",
+      "refs": [
+        "styles/engraving/STYLE.md:10",
+        "styles/engraving/DEMO.md:14",
+        "styles/engraving/demo/film.js:26",
+        "styles/engraving/demo/mix.py:78"
+      ]
+    },
+    {
+      "slug": "game-show",
+      "aliases": [
+        "游戏化教学",
+        "练习问答",
+        "问答",
+        "活动游戏",
+        "游戏规则",
+        "游戏反馈",
+        "轮次",
+        "quiz",
+        "game show",
+        "round feedback"
+      ],
+      "use_for": "练习、问答、阶段史、活动片",
+      "mechanism": "把一轮定义为动词、规则、变化、结果；事件名必须被声音消费者完整覆盖。",
+      "visual": "统一玩具角色与扁平舞台；换回合才换色；动作在固定节拍，短口号承担字幕，正面全景保持舞台关系。",
+      "sound": "150BPM短和弦循环，每回合不同编配；画面导出事件触发玩具拟音；短呼声提前20–30ms，音乐按声效/人声总线避让。",
+      "needs": "每轮明确动词、规则、变化与结果；反馈有消费者。",
+      "limits": "细腻日常对白和自然临场声的默认方案 舞台中的历史、价格、年份和能力断言另做事实核验。",
+      "refs": [
+        "styles/game-show/STYLE.md:10",
+        "styles/game-show/DEMO.md:27",
+        "styles/game-show/demo/main.js:491",
+        "styles/game-show/demo/music.py:267"
+      ]
+    },
+    {
+      "slug": "glass-product",
+      "aliases": [
+        "硬件",
+        "产品宣传",
+        "材质灯光",
+        "玻璃",
+        "产品动词",
+        "glass product",
+        "hardware",
+        "product lighting",
+        "外观展示"
+      ],
+      "use_for": "硬件外观、材质与品牌氛围宣传；功能演示需另行设计和验证。",
+      "mechanism": "用同一物体的显形、部件关系和灯光变化建立材质印象；外观展示不等于输入、操作、功能结果已被解释。",
+      "visual": "3D灯光与环境反射让透射、磨砂和金属互相衬托，拆合与波环表现形态及光效因果。",
+      "sound": "玻璃电子音、磁吸/摩擦/气流；鼓点驱动导光脉冲及地面波环；重组用簇状click和非谐玻璃和弦。",
+      "needs": "有依据的产品形态、材质和光源；如承诺功能，还需可读的真实操作或结果证据。",
+      "limits": "不能把image skill拟成玻璃耳机、编造真实结构，或用材质光效冒充功能证明。",
+      "refs": [
+        "styles/glass-product/STYLE.md:16",
+        "styles/glass-product/DEMO.md:35",
+        "styles/glass-product/demo/main.js:42",
+        "styles/glass-product/demo/music/score.py:18"
+      ]
+    },
+    {
+      "slug": "halftone-dossier",
+      "aliases": [
+        "习惯盘点",
+        "趣味解释",
+        "轻宣传",
+        "案卷",
+        "证据框架",
+        "遮挡",
+        "框架反差",
+        "dossier",
+        "halftone",
+        "comic explanation"
+      ],
+      "use_for": "趣味解释、习惯盘点、轻宣传",
+      "mechanism": "采用框架与内容反差、一次一证据；遮挡转场必须证明切换时确实盖满。",
+      "visual": "纸/套印/网点密度构成情绪，文本保持清晰而角色线条轻沸腾；盖章冲击、网点遮挡承担标点和换章。",
+      "sound": "印章boom+click、快门、纸、键盘与卡通拟音；宣判前撤编配，印章独占落点；音乐按秘密/汇总/宣判改变。",
+      "needs": "一次一证据；遮挡切换须真的盖满而非只加音效。",
+      "limits": "对严肃人物或事件无依据作犯罪式暗示",
+      "refs": [
+        "styles/halftone-dossier/STYLE.md:46",
+        "styles/halftone-dossier/DEMO.md:27",
+        "styles/halftone-dossier/demo/index.html:975",
+        "styles/halftone-dossier/demo/music.py:289"
+      ]
+    },
+    {
+      "slug": "hd-2d",
+      "aliases": [
+        "旅程",
+        "地图",
+        "章节故事",
+        "连续空间",
+        "前后对照",
+        "像素光源",
+        "像素",
+        "pixel journey",
+        "world map",
+        "spatial continuity"
+      ],
+      "use_for": "旅程、地图式世界、章节故事",
+      "mechanism": "同一light-state驱动火焰/光/晕；借六段空间叙事和前后构图对照，不借固定任务剧情。",
+      "visual": "像素平面角色置于真实3D微缩场景；角色步进而摄影/光/焦点平滑；中长镜头、单调样条、同构海港前后呼应。",
+      "sound": "同一许可音乐按原曲乐句剪到熄灯/重燃；分场景环境、按地面脚步、闪后雷声、UI提示与船灯小铃。",
+      "needs": "可连续行走的空间；共用光状态与前后构图参照。",
+      "limits": "需要近距离自然表情与清晰口型的英语对话默认画风",
+      "refs": [
+        "styles/hd-2d/STYLE.md:38",
+        "styles/hd-2d/DEMO.md:24",
+        "styles/hd-2d/demo/cliff.js:196",
+        "styles/hd-2d/demo/mix.py:71"
+      ]
+    },
+    {
+      "slug": "hologram-hud",
+      "aliases": [
+        "产品结构",
+        "参数对比",
+        "拆解",
+        "空间定位",
+        "计算过程",
+        "硬件",
+        "结构解释",
+        "product specifications",
+        "hologram",
+        "hardware scan"
+      ],
+      "use_for": "产品结构、参数对比、拆解；不宜直接套人物生活短剧。",
+      "mechanism": "迁移“定位→动作→结果→保留”的说明单元，而非整套HUD皮肤。",
+      "visual": "线框与半透明实体共存，模型、网格、HUD分层；锁定后爆炸分解、引线和数值滚动连续发生，阅读停留与镜头移动分开。",
+      "sound": "按音乐小节排信息；机械声承担运动，电子短音承担计算与确认；数字滚动实际合成为24次/秒的交替音高咔哒。",
+      "needs": "真实部件、参数和定位关系；锁定后给阅读停留。",
+      "limits": "容易把所有主题做成科幻仪表盘；部件真实性、事实数值与旁白时长须另验。",
+      "refs": [
+        "styles/hologram-hud/STYLE.md:43",
+        "styles/hologram-hud/DEMO.md:10",
+        "styles/hologram-hud/demo/film.js:15",
+        "styles/hologram-hud/demo/mix.py:38"
+      ]
+    },
+    {
+      "slug": "impasto",
+      "aliases": [
+        "情绪短片",
+        "艺术教育",
+        "品牌故事",
+        "厚涂",
+        "色彩扩散",
+        "材质因果",
+        "音画联动",
+        "impasto painting",
+        "colour propagation",
+        "material causality"
+      ],
+      "use_for": "情绪短片、艺术教育、品牌故事；不宜大量密集参数。 颜色可以推动情绪与故事转折。",
+      "mechanism": "材质行为、色彩事件与声画共用动作表，适合作为通用制作能力。",
+      "visual": "参考形状转换为分组约束的粗细笔触；颜色与高度双缓冲，侧光从高度梯度计算法线和高光。固定笔触种子避免逐帧沸腾；高潮改变光向揭示厚度。",
+      "sound": "同一音符表控制琴弓与配乐；伞的弹开、变色、拟音和钟琴音共享事件。雨分室外、拱廊滤波层与近处水滴，而非一条恒定底噪。",
+      "needs": "色彩/笔触变化承担剧情；材质行动与声音事件有对应。",
+      "limits": "人形细节依赖手工参考与IK；合成雨、伞声的自然度未听验；步行拟音仍复制了人物参数。 简化人物的环境厚涂表现不等于细腻面部布光或表演能力。",
+      "refs": [
+        "styles/impasto/STYLE.md:16",
+        "styles/impasto/DEMO.md:10",
+        "styles/impasto/demo/engine/plate.js:123",
+        "styles/impasto/demo/engine/impasto.js:157",
+        "styles/impasto/demo/film.js:339"
+      ]
+    },
+    {
+      "slug": "ink-wash",
+      "aliases": [
+        "诗意故事",
+        "文化短片",
+        "概念表达",
+        "水墨",
+        "笔刷",
+        "留白",
+        "动作后果",
+        "ink wash",
+        "poetry",
+        "brush stroke",
+        "expressive silence"
+      ],
+      "use_for": "诗意故事、文化与概念表达；不宜强求写实生活表演或密集UI。",
+      "mechanism": "学动作前后的时间组织、媒介内部转场与声音留白，不必复制武侠故事。",
+      "visual": "湿墨、干墨与朱砂分层；笔锋压力、墨量衰减和稳定飞白构造笔触。人物12fps、位置与镜头24fps；长卷横移与墨晕揭示维持空间连续。",
+      "sound": "古琴、箫意象与纸墨水的拟音分工；笔画起止控制刷声长度，高潮前清除全总线，断流起音恢复。",
+      "needs": "自己的动作与后果；笔刷、余白与停顿共同表达。",
+      "limits": "部分配乐时间仍硬编码在Python中；剧情改时可能声画漂移。数字静默与大幅震动应按题材选用。",
+      "refs": [
+        "styles/ink-wash/STYLE.md:50",
+        "styles/ink-wash/DEMO.md:10",
+        "styles/ink-wash/demo/comp.js:44",
+        "styles/ink-wash/demo/ink.js:128"
+      ]
+    },
+    {
+      "slug": "iso-infographic",
+      "aliases": [
+        "供应链",
+        "循环系统",
+        "流程科普",
+        "系统总图",
+        "局部动作",
+        "系统计数",
+        "等距信息图",
+        "system process",
+        "supply chain",
+        "isometric"
+      ],
+      "use_for": "供应链、循环系统、流程科普；不宜人物情感近景主导的短剧。",
+      "mechanism": "保留一张空间总图，通过局部动作与计数解释流程。",
+      "visual": "固定等距投影与三面明度建立统一空间；沿Z形路线连续移动，采用对数缩放进入剖面，数量图标和距离累加承担论证。",
+      "sound": "100BPM网格控制计数音符；站点环境交叉接续，进入剖面时减配、滤波，机械启动可提前入声。",
+      "needs": "一张清楚的系统总图；流动、计数和局部状态同源。",
+      "limits": "高速深潜和大倍率拉出不宜照搬给易眩晕用户；图标数量与距离必须来源校验。",
+      "refs": [
+        "styles/iso-infographic/STYLE.md:44",
+        "styles/iso-infographic/DEMO.md:8",
+        "styles/iso-infographic/demo/timeline.js:13",
+        "styles/iso-infographic/demo/mix.py:1"
+      ]
+    },
+    {
+      "slug": "lidar-survey",
+      "aliases": [
+        "考古",
+        "地形",
+        "工程调查",
+        "数据变换",
+        "测量证据",
+        "点云",
+        "lidar",
+        "point cloud",
+        "archaeology",
+        "terrain measurement"
+      ],
+      "use_for": "考古、地形、工程调查；缺数据时不可当通用生成景观。",
+      "mechanism": "“数据变换→证据显现→测量→解释”的镜头语法。",
+      "visual": "同坐标照片、点云、地表与测量层连续接替；分类与切割平面控制植被剥离，镜头保持连续轨迹，点本身不无故游动。",
+      "sound": "仪器脉冲、扫描颗粒、分层下降短音区分调查阶段；由配乐网格组织剥离节奏。",
+      "needs": "真实点云或调查数据；数据变换的说明与出处。",
+      "limits": "真实数据来源、标注夸张倍率和原始测量不能被视觉美化替代。",
+      "refs": [
+        "styles/lidar-survey/STYLE.md:16",
+        "styles/lidar-survey/DEMO.md:10",
+        "styles/lidar-survey/demo/film.js:88",
+        "styles/lidar-survey/demo/film.js:281"
+      ]
+    },
+    {
+      "slug": "living-screencast",
+      "aliases": [
+        "软件",
+        "软件宣传",
+        "真实操作",
+        "操作演示",
+        "操作结果",
+        "修改前后",
+        "操作教程",
+        "产品宣传",
+        "语义锚点",
+        "界面",
+        "状态变化",
+        "software demo",
+        "UI demo",
+        "product tutorial",
+        "feature launch"
+      ],
+      "use_for": "软件宣传与操作教程；不宜直接替代人物实拍或剧情场景。",
+      "mechanism": "重绘可读界面、语义锚点、字词时序、角色与操作共用事件。",
+      "visual": "高分辨率DOM界面与低分辨率角色保持材质差异；角色脚底、光标落点实时读取元素边界；重绘状态均由时间计算。",
+      "sound": "动作构建时直接发出typing/jump/land/click事件；原声乐队和芯片声分别对应界面与吉祥物；暗色模式同步降低声音亮度。",
+      "needs": "真实界面/功能依据；稳定的语义锚点与操作事件。",
+      "limits": "需核验真实功能；DOM每帧重建有开销；示例甩镜和章节密度须重新设计。",
+      "refs": [
+        "styles/living-screencast/STYLE.md:16",
+        "styles/living-screencast/DEMO.md:25",
+        "styles/living-screencast/demo/main.js:32"
+      ]
+    },
+    {
+      "slug": "lowpoly-island",
+      "aliases": [
+        "系统成长",
+        "系统建设",
+        "地理",
+        "品牌世界",
+        "空间环境",
+        "早期规则",
+        "低多边形",
+        "island",
+        "system growth",
+        "world building"
+      ],
+      "use_for": "系统成长、建设、地理与品牌世界；不宜细腻面部对话。",
+      "mechanism": "让早期建立的视听规则在后续解决问题，而非仅做节奏装饰。",
+      "visual": "真实3D平面几何、正交空间、弹性落入与水面共同构成玩具世界；增长加密通过事件间隔，而非一味加快镜头。",
+      "sound": "建设EV携带MIDI音高，配乐直接从事件合成；夜间灯光位置成为旋律的空间记忆。",
+      "needs": "生长规则先建立；后续解决问题时兑现同一规则。",
+      "limits": "须维护空间音符对应；低多边形并不自动减少灯光、AO和海面成本。",
+      "refs": [
+        "styles/lowpoly-island/STYLE.md:40",
+        "styles/lowpoly-island/DEMO.md:10",
+        "styles/lowpoly-island/demo/world.js:257",
+        "styles/lowpoly-island/demo/music/score.py:4"
+      ]
+    },
+    {
+      "slug": "microgame",
+      "aliases": [
+        "游戏化测验",
+        "活动预告",
+        "动作反馈",
+        "失败回收",
+        "游戏规则",
+        "游戏",
+        "quiz",
+        "microgame",
+        "game feedback"
+      ],
+      "use_for": "游戏化测验、活动预告；不宜长句教学或沉浸生活剧情。",
+      "mechanism": "迁移清楚的动作反馈和失败回收，不复制高速节奏。",
+      "visual": "每关一个可读动词与根本渲染方法；头盔、编号和统一界面提供连续锚点，不能据此保证跨风格面貌与比例稳定；失败重放可解释原因。",
+      "sound": "统一速度网格升至120/140/160BPM；每关换材质乐器，命令避开重击音头。",
+      "needs": "简单可读的规则；给动作反馈和失败回收留时间。",
+      "limits": "高密度硬切、快速变速明显不宜成为当前英语短剧默认。",
+      "refs": [
+        "styles/microgame/STYLE.md:10",
+        "styles/microgame/DEMO.md:24",
+        "styles/microgame/demo/timeline.js:4",
+        "styles/microgame/demo/music/score.py:19"
+      ]
+    },
+    {
+      "slug": "microscope",
+      "aliases": [
+        "显微",
+        "科学演示",
+        "图像测量",
+        "显微数据",
+        "真实图像",
+        "事件同步",
+        "显微观察",
+        "microscope",
+        "microscope image",
+        "image measurement"
+      ],
+      "use_for": "显微、图像测量、科学演示；不宜虚构微观事实。",
+      "mechanism": "实际显示状态导出声音事件，而非先写一个估计切换表。",
+      "visual": "多分辨率切片保持配准；复平面相似变换实现固定点对数螺旋缩放；高分辨率图块确实覆盖视口后才换层。",
+      "sound": "实际显示层变化导出物镜切换事件；扫描计数有短音，结果前留阅读安静区。",
+      "needs": "真实图像与测量标定；由实际显示状态导出事件。",
+      "limits": "需要合法真实切片与方法说明；不能把像素比例直接写成临床诊断。",
+      "refs": [
+        "styles/microscope/STYLE.md:16",
+        "styles/microscope/DEMO.md:19",
+        "styles/microscope/demo/film.js:68",
+        "styles/microscope/demo/film.js:99"
+      ]
+    },
+    {
+      "slug": "midcentury-toon",
+      "aliases": [
+        "安装",
+        "设置",
+        "操作说明",
+        "操作步骤",
+        "操作条件",
+        "教程",
+        "使用指南",
+        "installation",
+        "setup",
+        "step tutorial"
+      ],
+      "use_for": "安装、设置、说明片；不宜复杂理论或写实人物表演。",
+      "mechanism": "每步只完成一个真实动作，条件大字化，结尾留可截图步骤。",
+      "visual": "UPA式几何人物、有限动画、单一地面与圆形构图；身体可停，手部完成关键动作；细节圆窗与步骤圆牌共享转场语法。",
+      "sound": "轻爵士和每步和弦建立章节；按键前抽空、点击先出现，马达提前入声。",
+      "needs": "可执行的真实步骤；每步条件和结果可读。",
+      "limits": "实现只有place/tap/press等动作分派，新动词不能靠换文案自动成立。",
+      "refs": [
+        "styles/midcentury-toon/STYLE.md:48",
+        "styles/midcentury-toon/DEMO.md:19",
+        "styles/midcentury-toon/demo/film.js:215",
+        "styles/midcentury-toon/demo/film.js:311"
+      ]
+    },
+    {
+      "slug": "one-line",
+      "aliases": [
+        "人生",
+        "历程",
+        "连续过程",
+        "连续对象",
+        "对象连续",
+        "长镜头",
+        "连续线",
+        "跨尺度",
+        "one line",
+        "continuous object",
+        "life journey",
+        "人生关系",
+        "情绪隐喻",
+        "整体揭示"
+      ],
+      "use_for": "人生、情绪和彼此关联的隐喻；局部意义由最后的整体揭示回收。逐步概念推导需另行保证对象和因果可辨。",
+      "mechanism": "用同一连续结构承载多个尺度，让绘制状态直接进入声音。",
+      "visual": "全片同一点数组，场景靠连续接线转化；曲率增加时间权重，转角自然慢下来；镜头围绕笔尖兼顾预见与滞后。",
+      "sound": "笔速轨迹导出摩擦声强弱、亮暗、颗粒密度与声像；童年、老年状态改变质感；独奏旋律与转角呼应。",
+      "needs": "能由同一连续结构承载的关系；跨尺度保持锚点。",
+      "limits": "整体构图必须倒推规划；拉远过度会让线和文字不可读。 局部抽象不天然适合逐步关系教学，须有明确的整体揭示或另做解释设计。",
+      "refs": [
+        "styles/one-line/STYLE.md:43",
+        "styles/one-line/DEMO.md:8",
+        "styles/one-line/demo/geom.js:71",
+        "styles/one-line/demo/mix.py:14"
+      ]
+    },
+    {
+      "slug": "paper-lantern",
+      "aliases": [
+        "文化",
+        "亲情",
+        "诗歌",
+        "温柔",
+        "温暖",
+        "品牌故事",
+        "纸灯",
+        "纸张灯光",
+        "情绪高潮",
+        "paper lantern",
+        "family story",
+        "poetry"
+      ],
+      "use_for": "文化、亲情、诗歌、温柔品牌故事；不宜高速参数宣传。",
+      "mechanism": "用空位、重复窗景、人物位置及冷暖空间对照表达离开与归来；纸层和灯箱深度服务这条故事。",
+      "visual": "6–9层真实纵深、背光透纸、前暗后亮、微距景深；纸偶以支点转动和位移表演，云帘与柔和叠化接续场景。",
+      "sound": "授权古筝/笛音乐按诗句高潮倒推起点；字词时间控制模具、灯光和文字事件；场景环境层与旁白分层。",
+      "needs": "文字情绪和光源状态；若用现成音乐须有许可与结构分析。",
+      "limits": "中文时间索引是ASR词元而非汉字；纸层发光与阴影设置错误会变脏。 剪影与空椅叙事不能冒称细腻面部演技。",
+      "refs": [
+        "styles/paper-lantern/STYLE.md:45",
+        "styles/paper-lantern/DEMO.md:44",
+        "styles/paper-lantern/DEMO.md:57",
+        "styles/paper-lantern/demo/src/paper.js:100"
+      ]
+    },
+    {
+      "slug": "paper-popup",
+      "aliases": [
+        "儿童故事",
+        "课程开场",
+        "想象",
+        "立体书",
+        "物理换页",
+        "纸张",
+        "连续空间",
+        "遮挡",
+        "pop up book",
+        "paper pop-up",
+        "physical page",
+        "paper transition"
+      ],
+      "use_for": "儿童故事、课程开场、想象性宣传片；不宜照搬作写实人物短剧。",
+      "mechanism": "物理转场遮蔽场景更换、相机五维设计、授权音乐结构编辑、状态导出脚步。",
+      "visual": "真实桌面与扁平卡纸角色形成层次；深度决定弹出延迟，物理卷页遮蔽跨页切换；相机位置、目标、焦距、对焦与光圈独立编排。",
+      "sound": "授权音乐内部按小节删段，使乐曲结束落在跳出书页时；翻页、弹出和脚步读EV；每跨页有自己的环境床。",
+      "needs": "纸页机构、遮挡和相机关系；允许材质动作决定换景。",
+      "limits": "许多剧情拟音仍手填时间；复杂微距景深易遮脸、遮字；合成材质声需听验。 关键情绪段另核人物和表情是否可见，微缩世界精美不代替表演可读。",
+      "refs": [
+        "styles/paper-popup/STYLE.md:43",
+        "styles/paper-popup/DEMO.md:10",
+        "styles/paper-popup/demo/book.js:108",
+        "styles/paper-popup/demo/post.js:9",
+        "styles/paper-popup/demo/main.js:403",
+        "styles/paper-popup/demo/mix.py:184"
+      ]
+    },
+    {
+      "slug": "papercut-red",
+      "aliases": [
+        "民俗",
+        "节庆",
+        "手工教学",
+        "剪纸",
+        "材质因果",
+        "文化",
+        "paper cutting",
+        "festival",
+        "paper craft"
+      ],
+      "use_for": "民俗、节庆、手工教学；不宜普通写实场景。",
+      "mechanism": "先理解媒介能如何制造结果，再设计情节和转场。",
+      "visual": "红纸实体、镂空、连接桥与关节活动服从可剪性；折页分16条模拟抬升、透视和阴影；展开顺序服务于图形揭示。",
+      "sound": "剪刀、折痕、落脚与锣鼓有材料区别；折剪节奏、展开滑音和点亮合奏构成准备与回报。",
+      "needs": "理解剪、折、透光如何产生结果，再写内容。",
+      "limits": "浮岛镂空不符合实体剪纸；民族配器与重击不能机械堆满。",
+      "refs": [
+        "styles/papercut-red/STYLE.md:16",
+        "styles/papercut-red/DEMO.md:10",
+        "styles/papercut-red/demo/fold.js:37"
+      ]
+    },
+    {
+      "slug": "pictogram-motion",
+      "aliases": [
+        "目录",
+        "功能速览",
+        "系列宣传",
+        "分组",
+        "图标",
+        "音画联动",
+        "品牌图形",
+        "信息分层",
+        "feature catalogue",
+        "grouping",
+        "icons",
+        "pictogram"
+      ],
+      "use_for": "目录、赛事、功能速览；不宜逐句讲解和剧情表演。",
+      "mechanism": "目录分组、稳定版式、动作图标与音乐读取同一EDL。",
+      "visual": "每卡一个典型动作、巨大标题、索引与少量附文；同家族共享颜色和局部运动，背景格阵同时承担章节家具与过渡。",
+      "sound": "150BPM节拍决定EDL；打击乐与类别材质声强调卡片起点；作者声明逐起点核验音头。",
+      "needs": "信息分组和稳定版式；图标动作与配乐读取同一时序。",
+      "limits": "快甩镜、2拍卡片不适合当前用户的舒适性要求；配乐结构并非改EDL后自动泛化。",
+      "refs": [
+        "styles/pictogram-motion/STYLE.md:46",
+        "styles/pictogram-motion/DEMO.md:23",
+        "styles/pictogram-motion/DEMO.md:59",
+        "styles/pictogram-motion/demo/edl.js:115"
+      ]
+    },
+    {
+      "slug": "pixel-rpg",
+      "aliases": [
+        "游戏故事",
+        "互动课程",
+        "游戏情绪",
+        "信息状态",
+        "像素",
+        "像素保真度",
+        "RPG",
+        "pixel game",
+        "interface state"
+      ],
+      "use_for": "游戏语境故事、互动课程、情绪短片；不宜泛用复古装饰。",
+      "mechanism": "用信息系统状态表达剧情，并让声音保真度同步状态。",
+      "visual": "320×180索引画布最近邻放大；整数镜头、受限调色板、抖色与少帧角色保持同一硬件时代；围巾和水晶保留语义颜色。",
+      "sound": "时间线控制4色单声道4bit、8bit单声道与16bit立体回声；画面失色时配乐逐层消失。",
+      "needs": "自己的信息系统状态；声音保真度与情节状态一致。",
+      "limits": "索引映射与文字遮挡须实测；所谓有机呼吸在实现中仍为带通噪声合成，不能说是真实录音。",
+      "refs": [
+        "styles/pixel-rpg/STYLE.md:68",
+        "styles/pixel-rpg/DEMO.md:7",
+        "styles/pixel-rpg/demo/px.js:44",
+        "styles/pixel-rpg/demo/music/score.py:1",
+        "styles/pixel-rpg/demo/mix.py:97"
+      ]
+    },
+    {
+      "slug": "risograph",
+      "aliases": [
+        "温暖生活",
+        "文化活动",
+        "轻品牌故事",
+        "自然声",
+        "印刷",
+        "日常",
+        "声音层",
+        "risograph",
+        "everyday story",
+        "layered ambience"
+      ],
+      "use_for": "温暖生活片、文化活动、轻品牌故事；不宜严肃写实人物。",
+      "mechanism": "先规定何时增减声音层，再让动作触发少量显著音效。 先建立关键道具，再沿行动重复使用，用路线与色版推进故事。",
+      "visual": "2–3张油墨密度版叠印；固定镜头级套色误差、网点和油墨颗粒构成真实印刷逻辑；铃声惊鸟与急刹时才允许短暂错版冲击。",
+      "sound": "乐器随色版加入；印刷滚筒、链轮、刹车与车铃各有事件；河边安静段突出现场环境。",
+      "needs": "明确增减声音层的条件；少数显著动作保持可辨。",
+      "limits": "过度逐帧错版和颗粒会闪烁；车铃虽然有专门合成器，本次未听验其适用性。",
+      "refs": [
+        "styles/risograph/STYLE.md:47",
+        "styles/risograph/DEMO.md:20",
+        "styles/risograph/DEMO.md:34",
+        "styles/risograph/demo/riso.js:78",
+        "styles/risograph/demo/mix.py:112"
+      ]
+    },
+    {
+      "slug": "rubber-hose",
+      "aliases": [
+        "吉祥物",
+        "轻喜剧",
+        "语言韵律",
+        "人物性格",
+        "动画节拍",
+        "预备动作",
+        "动作拟音",
+        "mascot",
+        "rubber hose",
+        "character comedy"
+      ],
+      "use_for": "吉祥物、轻喜剧、语言韵律",
+      "mechanism": "人物性格可通过不同节拍表达；共用动作事件生成声音，保留安静段。",
+      "visual": "角色12fps、镜头24fps；等宽橡皮肢体、预备—停顿—甩出。全体道具共用拍点呼吸。",
+      "sound": "C：方糖步点取半拍、杯子取整拍，盘子阶梯事件来自同一故事时间源。D：ragtime配器和材质合成拟音。",
+      "needs": "角色自己的节拍和动作因果；不持续堆叠吱响。",
+      "limits": "写实对白、严肃长课",
+      "refs": [
+        "styles/rubber-hose/STYLE.md:39",
+        "styles/rubber-hose/DEMO.md:40",
+        "styles/rubber-hose/demo/events.js:1"
+      ]
+    },
+    {
+      "slug": "satellite-briefing",
+      "aliases": [
+        "环境调查",
+        "地理",
+        "城市史",
+        "真实观测",
+        "观测证据",
+        "解释层",
+        "卫星",
+        "satellite",
+        "geography",
+        "earth observation"
+      ],
+      "use_for": "环境、地理、城市史",
+      "mechanism": "观测画面与解释层分离；用声音先提示意义变化。 从地图承诺进入现实后果，再给局部恢复与全局回望。",
+      "visual": "真实地理底片与测量标注分层；对数尺度运镜，扫描切换年代；速度计算用于运动模糊。",
+      "sound": "D：测量ticks加密、倒转声、22.8秒水声先于画面；语义转折后更换调式和湿润音色。",
+      "needs": "真实观测材料；事实层和解释层可区分。",
+      "limits": "日常人物对白",
+      "refs": [
+        "styles/satellite-briefing/STYLE.md:47",
+        "styles/satellite-briefing/DEMO.md:40",
+        "styles/satellite-briefing/demo/film.js:150"
+      ]
+    },
+    {
+      "slug": "scifi-toon",
+      "aliases": [
+        "成人喜剧",
+        "趣味科普",
+        "角色语气",
+        "对白",
+        "声音空间",
+        "对白停顿",
+        "scifi cartoon",
+        "dialogue",
+        "science comedy"
+      ],
+      "use_for": "原创成人喜剧、趣味科普",
+      "mechanism": "角色语气区分、声音空间、停顿有场景余声。",
+      "visual": "人物12fps、镜头和特效24fps；持姿微表演、反应镜头和世界切换共同组织笑点。",
+      "sound": "C：按世界混环境层，人声短早反射、左右角色声像、语音包络压低音乐。D：各世界变奏及冷场保留房间钟声。",
+      "needs": "角色语气与空间；停顿中仍保留合适场景余声。 跨世界保持人物、目标和持物三个连续锚点；强反差切换按喜剧语境判断。",
+      "limits": "舒缓校园对白",
+      "refs": [
+        "styles/scifi-toon/STYLE.md:44",
+        "styles/scifi-toon/DEMO.md:19",
+        "styles/scifi-toon/demo/mix.py:120"
+      ]
+    },
+    {
+      "slug": "shadow-puppet",
+      "aliases": [
+        "神话",
+        "文化",
+        "舞台故事",
+        "灯光曝光",
+        "影子",
+        "情节状态",
+        "shadow puppet",
+        "stage lighting",
+        "puppet story"
+      ],
+      "use_for": "神话、文化、舞台故事",
+      "mechanism": "把故事状态直接映射灯光和曝光，而非结尾统一加滤镜。 故事状态改变照明，末尾可揭示媒介的幕后结构。",
+      "visual": "染皮透光叠乘，洞最亮；灯数控制曝光，熄灯有0.35秒衰败；杆、铆钉、摆件保留。",
+      "sound": "D：锣鼓领动作，逐灯/逐箭重音，抉择用轻敲；材质声来自皮革、杆与灯。",
+      "needs": "故事状态到光/曝光的对应；先验最难透光动作。",
+      "limits": "精确UI、拟真人动作",
+      "refs": [
+        "styles/shadow-puppet/STYLE.md:14",
+        "styles/shadow-puppet/DEMO.md:39",
+        "styles/shadow-puppet/demo/main.js:29",
+        "styles/shadow-puppet/demo/main.js:254"
+      ]
+    },
+    {
+      "slug": "silent-film",
+      "aliases": [
+        "宽景",
+        "动作因果",
+        "持物连续性",
+        "角色表演",
+        "默片",
+        "silent film",
+        "physical comedy",
+        "acting continuity",
+        "无对白喜剧",
+        "文字间卡"
+      ],
+      "use_for": "无对白动作喜剧、简短故事，可用文字间卡组织解释与停顿。",
+      "mechanism": "宽景因果、动作回声、持物连续性与间卡互补；无对白不等于禁止文字，不迁全局禁拟音。",
+      "visual": "4:3放映框，16fps动作、追逐18fps；稳定宽景呈现因果，关键持物与转交有连续空间位置。",
+      "sound": "D：没有对白和独立拟音，钢琴代演摇晃、跌落、撞击；转折只留放映机，再换簧风琴。",
+      "needs": "宽景中能看懂的动作与持物连续性；声音策略按片定。",
+      "limits": "语言讲解、密集教程",
+      "refs": [
+        "styles/silent-film/STYLE.md:39",
+        "styles/silent-film/DEMO.md:49",
+        "styles/silent-film/demo/film.js:1"
+      ]
+    },
+    {
+      "slug": "silkscreen-poster",
+      "aliases": [
+        "路线",
+        "活动",
+        "章节介绍",
+        "印刷",
+        "制作过程",
+        "信息层级",
+        "图像声音",
+        "silkscreen poster",
+        "printing",
+        "route reveal"
+      ],
+      "use_for": "路线、活动、章节介绍",
+      "mechanism": "制作过程充当信息层级；让场景声音从图像内部醒来。",
+      "visual": "不透明油墨、错版、叠印陷印、湿墨反光衰减；信息按印刷动作显现，松开纸层后才产生视差。",
+      "sound": "D：每次刮印对应拨弦，后续细分节拍；瀑布提前0.9秒进入，纸上场景有来源明确的环境声。",
+      "needs": "制作步骤本身组织信息；场景声音有图像内来源。 区分印制中的暂时遮挡与完成后的阅读相位。",
+      "limits": "连续软件操作",
+      "refs": [
+        "styles/silkscreen-poster/STYLE.md:55",
+        "styles/silkscreen-poster/DEMO.md:45",
+        "styles/silkscreen-poster/demo/engine/silk.js:124"
+      ]
+    },
+    {
+      "slug": "spy-titles",
+      "aliases": [
+        "品牌悬念",
+        "片头",
+        "字体构景",
+        "共锚点",
+        "声音峰值",
+        "片头节奏",
+        "title sequence",
+        "brand suspense",
+        "sound landmark"
+      ],
+      "use_for": "品牌悬念片头、演职员表",
+      "mechanism": "文字构景、共锚点匹配、把声音起点与峰值区别记录。 同一道具可以从目标、持物和空间元素回收为片名字形。",
+      "visual": "纸片轮廓、固定局部切边、文字即场景；圆形匹配保持同中心；钥匙与手共用位置关系。",
+      "sound": "D：铜管重音决定剪点，采样约提前8ms让峰值落点；纸、金属、磁带音色；特定停顿连混响一起切断。",
+      "needs": "文字和共同锚点构景；区分声音起点与峰值。",
+      "limits": "长对白、功能密集演示",
+      "refs": [
+        "styles/spy-titles/STYLE.md:8",
+        "styles/spy-titles/DEMO.md:12",
+        "styles/spy-titles/demo/film.js:360"
+      ]
+    },
+    {
+      "slug": "stained-glass",
+      "aliases": [
+        "寓言",
+        "文化",
+        "人物抉择",
+        "照明",
+        "信息顺序",
+        "痕迹",
+        "彩绘玻璃",
+        "stained glass",
+        "fable",
+        "light reveal"
+      ],
+      "use_for": "寓言、文化、人物抉择",
+      "mechanism": "用照明安排信息顺序；状态变化保留可见痕迹。 窗内与地面投影可形成第二叙事空间，并在回窗时接续。",
+      "visual": "玻璃片刚性移动，人物8fps、光与镜头24fps；未被照亮的窗冻结，地面投影成为第二叙事空间。",
+      "sound": "D：窗格领音、玻璃非谐波泛音、铅条声和长混响；碎裂段抽走音乐，重新焊接逐步升音。",
+      "needs": "照明决定信息出现顺序；选择后的痕迹可见。",
+      "limits": "拟真人物、干净UI",
+      "refs": [
+        "styles/stained-glass/STYLE.md:52",
+        "styles/stained-glass/DEMO.md:54",
+        "styles/stained-glass/demo/story.js:29",
+        "styles/stained-glass/demo/story.js:187"
+      ]
+    },
+    {
+      "slug": "swiss-motion",
+      "aliases": [
+        "设计",
+        "排版规则",
+        "产品介绍",
+        "系列宣传",
+        "几何",
+        "数据构图",
+        "音乐映射",
+        "排版",
+        "swiss typography",
+        "graphic grid",
+        "data composition"
+      ],
+      "use_for": "设计、规则、结构化产品介绍",
+      "mechanism": "从自己的规则和数据生成构图、配乐，再有目的地改变字体、留白、网格或对齐，比较系列变体；不强制所有项目采用同样规则。",
+      "visual": "网格与一个例外构成论点；条块按行扫描变红；旋转、停稳、标注、播放依次发生。",
+      "sound": "C：同score.json中列→音高、行→起音、长度→音长；红圆滑音则是手工平行编排。",
+      "needs": "自己的规则/数据生成构图和配乐；避免只换文字。",
+      "limits": "自然人物对白",
+      "refs": [
+        "styles/swiss-motion/DEMO.md:22",
+        "styles/swiss-motion/demo/film.js:440",
+        "styles/swiss-motion/demo/music/score.py:102",
+        "styles/swiss-motion/demo/film.js:316"
+      ]
+    },
+    {
+      "slug": "teardown",
+      "aliases": [
+        "硬件",
+        "机械",
+        "实物解释",
+        "产品结构",
+        "拆解",
+        "重装",
+        "空间定位",
+        "真实CAD",
+        "teardown",
+        "hardware",
+        "CAD",
+        "assembly"
+      ],
+      "use_for": "硬件、机械、实物解释",
+      "mechanism": "顺序状态驱动声画、观察点停稳、真实来源锁。 先交代总图归属，再进入局部问题，最后回到成品，避免漂亮微距丢失定位。",
+      "visual": "同轴分离与按空间顺序波动；宏观段关闭漂浮；单调三次插值相机避免过冲；真实CAD锚定。",
+      "sound": "C：导出按键升降、层启动、落位等事件；塑料、金属、机壳分别响应；进入内部前whoosh提前0.35秒。",
+      "needs": "合法且真实的模型；空间分解顺序与装回关系。",
+      "limits": "假装软件是实体拆机",
+      "refs": [
+        "styles/teardown/STYLE.md:47",
+        "styles/teardown/demo/src/main.js:163",
+        "styles/teardown/demo/mix.py:142"
+      ]
+    },
+    {
+      "slug": "tilt-shift",
+      "aliases": [
+        "交通",
+        "群体",
+        "系统流程",
+        "系统时钟",
+        "人物时钟",
+        "微缩",
+        "事件配器",
+        "tilt shift",
+        "traffic",
+        "crowd system",
+        "miniature"
+      ],
+      "use_for": "交通、群体、系统流程",
+      "mechanism": "系统时钟与主角时钟分开，事件控制配器密度。",
+      "visual": "倾斜焦带跟随主体，世界8Hz而镜头平滑；系统模拟预计算，主角路径单独编排以保证结果。",
+      "sound": "C：车辆/信号事件在量化拍格触发既定乐句，另有随机基础填充；D：实时段换怠速、鸟与脚步。",
+      "needs": "系统与主角两套时间有明确关系；配器由事件密度控制。",
+      "limits": "人脸对白、长文字",
+      "refs": [
+        "styles/tilt-shift/STYLE.md:36",
+        "styles/tilt-shift/DEMO.md:33",
+        "styles/tilt-shift/demo/music/score.py:85"
+      ]
+    },
+    {
+      "slug": "ukiyoe",
+      "aliases": [
+        "游记",
+        "诗歌",
+        "自然文化",
+        "同一锚点",
+        "媒介转场",
+        "木版",
+        "自然风景",
+        "ukiyoe",
+        "travel poem",
+        "woodblock print"
+      ],
+      "use_for": "游记、诗、自然文化",
+      "mechanism": "跨场景保留同一锚点；转场由媒介动作自然产生。",
+      "visual": "版木分色、错版、木纹、渐染；大部分画面静止，仅一两处小动作；印版揭示只有13级进度。",
+      "sound": "D：木拍对应印版，尺八自由段转三味线节奏，浪峰后留白，再以四次印刷声重建。",
+      "needs": "跨景的同一锚点；转场来自媒介行为。",
+      "limits": "密集技术教程",
+      "refs": [
+        "styles/ukiyoe/STYLE.md:43",
+        "styles/ukiyoe/DEMO.md:43",
+        "styles/ukiyoe/demo/print.js:206"
+      ]
+    },
+    {
+      "slug": "urban-sketch",
+      "aliases": [
+        "城市手记",
+        "温暖生活",
+        "轻故事",
+        "自然声",
+        "动作路径",
+        "环境变化",
+        "钢笔",
+        "淡彩",
+        "urban sketch",
+        "everyday ambience",
+        "motion path"
+      ],
+      "use_for": "城市手记、轻故事",
+      "mechanism": "动作路径→环境改变与拟音；替换不合适音色，勿照搬连续笔噪。",
+      "visual": "线与水洗分离；帽子路径生成逐像素染色到达场；人物12fps、纸面稳定；镜头提前追踪动作。",
+      "sound": "C：真实笔画事件生成笔声，帽子速度控制扑动频率和音量、轨迹控制声像；铃声为合成音。",
+      "needs": "路径改变环境的规则；持续笔噪需另做适合性判断。",
+      "limits": "精确UI、自然口型",
+      "refs": [
+        "styles/urban-sketch/demo/film.js:345",
+        "styles/urban-sketch/demo/audio/foley.py:91",
+        "styles/urban-sketch/demo/audio/foley.py:150"
+      ]
+    },
+    {
+      "slug": "watercolor",
+      "aliases": [
+        "自然科学",
+        "地理",
+        "阅读知识",
+        "连续量",
+        "音乐节拍",
+        "水彩",
+        "科普解释",
+        "watercolor",
+        "geography",
+        "science explanation"
+      ],
+      "use_for": "自然科学、地理、阅读知识",
+      "mechanism": "真实音乐节拍编辑、连续量构景、缓存与确定性渲染。 空间梯度与历史时间对照分成两条解释轴，分别标明依据。",
+      "visual": "可变笔宽、半透明笔带与刷毛轨迹；空间移动解释连续量；完成植物缓存，保持可随机取帧。",
+      "sound": "D：使用CC BY 4.0成曲Wildflowers，按拍点跨段剪接并交叉淡化；节拍文件由剪后音乐派生；地区环境声辅助。",
+      "needs": "连续量与构图；现成配乐的许可、节拍编辑和缓存。",
+      "limits": "快节奏首发片默认",
+      "refs": [
+        "styles/watercolor/DEMO.md:12",
+        "styles/watercolor/DEMO.md:56",
+        "styles/watercolor/demo/engine.js:87"
+      ]
+    },
+    {
+      "slug": "white-model",
+      "aliases": [
+        "城市历史",
+        "建筑规划",
+        "数据强调",
+        "真实模型",
+        "建筑",
+        "城市",
+        "事实材料",
+        "urban history",
+        "architecture planning",
+        "white model"
+      ],
+      "use_for": "城市历史、建筑规划",
+      "mechanism": "数据驱动强调层；事实和视觉共用计算来源。 保持同一对象，按年代、高度、日照与阴影交叉提问，让属性切换形成论证回扣。",
+      "visual": "建筑不动，投影与照明承担叙述；建筑年份、顺序等属性进入着色器，实际几何生成数字与标签。",
+      "sound": "D：投影机继电器与风扇构成场景；年代层递增配器；每屋顶音符区分战前年代；静默段仍留风扇。",
+      "needs": "真实结构/城市数据；事实与强调层共用计算。",
+      "limits": "软件UI、人物故事",
+      "refs": [
+        "styles/white-model/STYLE.md:20",
+        "styles/white-model/DEMO.md:38",
+        "styles/white-model/demo/studio.js:111"
+      ]
+    },
+    {
+      "slug": "whiteboard",
+      "aliases": [
+        "讲清关系",
+        "关系",
+        "逐步理解",
+        "概念推导",
+        "论证地图",
+        "知识讲解",
+        "教学讲解",
+        "讲解",
+        "阅读窗口",
+        "白板",
+        "解释",
+        "explanation",
+        "relation",
+        "concept",
+        "learning diagram"
+      ],
+      "use_for": "关系图、科学概念推导",
+      "mechanism": "词窗口→可读绘制、空间记忆、动作包络声效；不要每笔必加吱声。",
+      "visual": "单块大白板保存论证空间；按词时间窗安排绘制截止；笔画慢—快—慢，镜头在概念区之间移动。",
+      "sound": "C：笔画进度导数同时塑造笔声，颜色/缩放影响音色和音量；双钟用同乐句不同速率分相再合一。",
+      "needs": "清楚的关系图和讲解次序；真实词窗口或诚实的估计时序。",
+      "limits": "真实软件演示、人物对白",
+      "refs": [
+        "styles/whiteboard/DEMO.md:22",
+        "styles/whiteboard/demo/engine/wb.js:231",
+        "styles/whiteboard/demo/mix.py:25"
+      ]
+    },
+    {
+      "slug": "woodcut",
+      "aliases": [
+        "手艺",
+        "人文",
+        "品牌制作故事",
+        "木刻",
+        "材质因果",
+        "语义兑现",
+        "媒介转场",
+        "woodcut",
+        "craft making",
+        "material story"
+      ],
+      "use_for": "手艺、人文、品牌制作故事",
+      "mechanism": "一个音色留到语义兑现；由媒介自身生成转场。",
+      "visual": "白线代表刻掉木料；局部结构方向排线；角色12fps，刀刻逐笔显现，纸张翻揭保留镜像关系。",
+      "sound": "D：关键钟音在钟成功前完全保留；火声先入、风声延续；首次钟鸣完成音乐调式转变。C：刻线实现可导出实时刀尖。",
+      "needs": "自己的制作行为与兑现点；少数音色有语义任务。",
+      "limits": "精确UI、校园自然对白",
+      "refs": [
+        "styles/woodcut/STYLE.md:48",
+        "styles/woodcut/DEMO.md:50",
+        "styles/woodcut/demo/engine/knife.js:99"
+      ]
+    }
+  ]
+}

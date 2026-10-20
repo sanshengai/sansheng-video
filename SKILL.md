@@ -1,6 +1,6 @@
 ---
 name: sansheng-video
-description: 制作或编辑视频：文章和课程转视频、代码动画、真人口播与录屏剪辑，以及字幕、声音和素材处理。已有工程按差异继续；只研究他人成片不自动启动制作。
+description: 制作或编辑视频：产品宣传片、文章和课程转视频、代码动画、真人口播与录屏剪辑，以及字幕、声音和素材处理。已有工程按差异继续；只研究他人成片不自动启动制作。
 metadata:
   author: sanshengai
   version: "1.2.0"
@@ -34,7 +34,8 @@ metadata:
 
 | 工作 | 读取／调用 |
 |---|---|
-| 新作定风格、寻找绘制／镜头实现 | [Lemo 风格与实现](references/lemo-opuscar.md)：51 种风格本地有界搜索，选中才取代码；电影语法另按需检索 |
+| 新产品首发、功能宣传与品牌片 | [宣传片方法](references/promotion-film.md)：从真实产品动作、信息关系与成果推导视觉语言、声音和局部反馈；沿当前制作链执行 |
+| 新作定风格、寻找绘制／镜头实现 | [Lemo 风格与实现](references/lemo-opuscar.md)：51种风格按用途与表达机制有界搜索，inspect看前提与源码依据，选中才取代码；电影语法另按需检索 |
 | 自己的镜头方案仍有段落组织、对象连续或音画编排问题 | [视频案例参考](references/opus-video-cases.md)：8 条精选案例按需本地检索，选中才取原文；无合适结果继续原创，局部改动不重选风格 |
 | 镜头、空间、材质与运动 | [视觉机制](references/visual-craft.md) |
 | 新 HTML 镜头和渲染 | [HyperFrames 执行](references/hyperframes.md)，依项目锁核实实际 CLI help |
