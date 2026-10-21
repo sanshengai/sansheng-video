@@ -2,6 +2,7 @@
 
 ## [未发布]
 
+- Distinguish a library miss from a timing or other suitability mismatch. Finding an existing file does not justify clipping its tail or bypassing the shot's constraints.
 - Refine project-to-result demonstration and knowledge-explainer checks using rendered trials: distinguish reconstructed task notes from recorded prompts, identify the subject separately from the photo viewpoint, preserve captions through later overlays, and allow both response and answer-reading time in practice segments. These are conditional design methods, not fixed shot templates or listening approval.
 
 - Add optional knowledge and series-explainer direction: semantic relationships, continuous objects, host/diagram handoffs, readable titles and three storyboard examples. Reuse the existing production chain rather than requiring a new scene template or engine.
