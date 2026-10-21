@@ -4,6 +4,7 @@
 
 | 参考 | 采用内容 | 处理 |
 |---|---|---|
+| [观默的制作讲解](https://x.com/guanmo_ai/status/2112525216924807210)、[Gorden 的北京解说](https://x.com/Gorden_Sun/status/2112488511479902346)、[Miao 的系列讲解](https://x.com/WaterrrMiao/status/2112122511509065797) | 贯穿对象、多媒介的空间主线、逐步建立关系、主持人进退与标题阅读过程 | 作者说明、抽帧和局部时序观察转为可选知识解释方法；未据此声明完整视听或本地成片复现通过，不捆绑视频、音乐和未公开代码 |
 | [nakazakifam 的多机位对话制作说明](https://x.com/nakazakifam/status/2104231262600700140) | 同一段讲话的机位覆盖、对白与镜头装配分工 | 方法转述；五机位是作者此前案例，不是数量要求，不证明本包已接入其模型或复现成片 |
 | [yihui-dev/awesome-opus5-5-videos](https://github.com/yihui-dev/awesome-opus5-5-videos) | 精选案例的段落组织、对象连续和声音编排描述 | 固定 92aee2f586ac0715cb3cbcb6384834f98a33383d；8 条自写摘要与本地检索，原文选中才取，不捆绑视频、完整提示词或第二生产入口；视听和复现分别标记 |
 | [showheyohtaki/motion-prompt](https://github.com/showheyohtaki/motion-prompt) | 动效／镜头术语、spec、纯时间 Canvas 代码和按需检索 | 原 CLI 最小捆绑，固定 770eefb7091cc725ab0eb6d4ef5cbf28b28e282c；MIT，目录和选中条目按需获取，保留单一制作入口 |
