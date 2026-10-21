@@ -4,6 +4,7 @@
 
 - **Breaking change for the HTML renderer:** audio productions must declare scene sound decisions in their existing timeline before re-rendering. Preserve valid source audio, supplement it or deliberately leave room for speech; an absent/empty plan is no longer accepted as designed sound. Legacy event export and silent films remain readable; see the migration example in `references/events-and-tools.md`.
 - Check planned cues against the actual HTML audio tracks, current asset lock, project media hashes, timings and gains before encoding. Bind retained source media to real unmuted project dependencies. Reject unwired/zero-volume cues and incomplete scene decisions; report wiring separately from listening or mix approval.
+- Clarify that whole-mix similarity can miss quiet source audio removed under louder music. Adapters claiming source preservation need component-sensitive evidence and removal counterexamples; keep thresholds local and unverified listening claims explicit.
 
 - Add an optional product-launch method that connects real product evidence, information structure, a visible central action, music and version-bound feedback without imposing another engine or approval stage.
 - Add source-backed creative summaries for all 51 Lemo styles, bounded bilingual intent search and detailed inspection. Keep existing pinned retrieval and verify research revisions, source fingerprints and reference line ranges; exclude negative guidance from recommendation ranking.
