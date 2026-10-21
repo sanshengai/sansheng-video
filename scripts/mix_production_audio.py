@@ -108,7 +108,7 @@ def mix(video, narration, music, output, speech_intervals, *, source_audio='reje
         if start < max(previous, narration_offset) or end <= start or end > min(duration, narration_offset + voice_duration) + .001:
             raise ValueError('speech intervals overlap or exceed narration/video')
         intervals.append([start, end]); previous = end
-    parent = None
+    parent, event_ducks = None, []
     if parent_receipt:
         from render_production import verify
         parent_receipt = Path(parent_receipt).resolve()
@@ -117,6 +117,14 @@ def mix(video, narration, music, output, speech_intervals, *, source_audio='reje
         if Path(parent['output']).resolve() != video:
             raise ValueError('parent render must bind the input video')
         inputs[str(parent_receipt)] = digest(parent_receipt)
+        from production_sound_review import current_plan
+        sound_plan, _ = current_plan(parent['build_path'])
+        event_ducks = [{'id': item['id'], 'start': item['start'], 'end': item['end'], **item['music_duck']}
+                       for item in sound_plan['items'] if 'music_duck' in item]
+        if any(item['start'] < 0 or item['end'] > duration + .001 for item in event_ducks):
+            raise ValueError('event music duck exceeds actual video; repair the source timeline')
+        helper = Path(__file__).with_name('production_sound_review.py').resolve()
+        inputs[str(helper)] = digest(helper)
     if normalize_lufs is not None:
         from normalize_loudness import _validate_target_lufs
         _validate_target_lufs(normalize_lufs)
@@ -125,11 +133,14 @@ def mix(video, narration, music, output, speech_intervals, *, source_audio='reje
     # release after its end. The lowest envelope wins when ramps overlap.
     # Anchors remain caller-supplied blocks, never inferred word timings.
     gain = str(music_gain)
-    delta = music_gain - duck_gain
-    for start, end in intervals:
+    windows = [(start, end, duck_gain, attack, release) for start, end in intervals]
+    windows += [(item['start'], item['end'], music_gain * item['factor'], item['attack'], item['release'])
+                for item in event_ducks]
+    for start, end, low, fade_in, fade_out in windows:
+        delta = music_gain - low
         envelope = (f'if(lt(t,{start}),{music_gain}-{delta}*'
-                    f'clip((t-({start}-{attack}))/{attack},0,1),'
-                    f'{duck_gain}+{delta}*clip((t-{end})/{release},0,1))')
+                    f'clip((t-({start}-{fade_in}))/{fade_in},0,1),'
+                    f'{low}+{delta}*clip((t-{end})/{fade_out},0,1))')
         gain = f'min({gain},{envelope})'
     channels = next(s['channels'] for s in infos[2]['streams'] if s['codec_type'] == 'audio')
     expressions = '|'.join(f'val({channel})*({gain})' for channel in range(channels))
@@ -173,6 +184,7 @@ def mix(video, narration, music, output, speech_intervals, *, source_audio='reje
                'commands': commands, 'source_audio': source_audio, 'speech_intervals': intervals,
                'music_gain': music_gain, 'duck_gain': duck_gain, 'narration_gain': narration_gain,
                'attack': attack, 'release': release, 'duck_envelope': 'sample_linear_minimum',
+               'event_music_ducks': event_ducks,
                'narration_offset': narration_offset,
                'normalize_lufs': normalize_lufs, 'video_packets_sha256': after_video,
                'duration': duration, 'anchor_basis': 'caller_supplied_block_intervals_not_word_alignment'}

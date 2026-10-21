@@ -14,6 +14,8 @@ Xilo 等参考的制作方法已整合进内部流程，不用同时安装一排
 
 需要声音时保留合适的项目素材与原声；profile 显式启用精选共享库时，先按镜头需求查询，缺件再按 [Openverse 音效](references/openverse-sfx.md) 在线查找。采用文件和来源回执接入原素材锁与同一时间线，听最终成片。退休的旧全量库与网盘同步仍保持停用；没有私有库的使用者可直接走在线流程。
 
+声音验收会关注关键动作在同期背景中是否听得清，而不只检查音轨和整片响度。按需要从原事件安排平滑的配乐避让，并由最终文件生成试听窗口；缺少真实试听的有声候选保留待验。旧 HTML 工程的新渲染与最终听审迁移见 [生产事件与工具](references/events-and-tools.md)。具体增益、风格和留白仍由项目决定。
+
 需要新动效时，按镜头目的查 Motion Prompt 的术语、参数与代码，优先动态图形和镜头转场，取回后适配现有引擎。配合缓存和音效下载工具，仍由一条时间线控制。见 [动效与音效流程](references/motion-and-sound.md)。
 
 已有自己的镜头方案，还想借鉴段落组织、对象连续或声音动作点时，可用 [视频案例参考](references/opus-video-cases.md) 按中文需求查首批8条精选。索引离线可用，原文选中才取；资料描述、看片、听审与复现分开标记。没有合适结果继续原创，旧工程局部修改不重选方案。
@@ -135,6 +137,8 @@ Optional curated video-case discovery helps with sequence design, continuous obj
 Clone this repository once and load its root SKILL.md in your agent host. Install Python 3.10+, Node 22+, FFmpeg, and project-local HyperFrames 0.8.72 / GSAP 3.14.2. Supply an explicit browser executable. Run `python3 setup.py --check --runtime ... --browser ...` before rendering. Brand profiles and browser checks are optional, described above and in the linked references.
 
 Deliverables include editable sources, project dependencies, adopted-asset provenance and MP4 output. Technical checks never establish human audiovisual approval. No bundled paid generation, cloud credentials or upload service. See [credits](references/sources.md), [licenses](THIRD_PARTY_NOTICES.md), and [changes](CHANGELOG.md).
+
+For new HTML renders, declare cue roles and prominence on the existing timeline. Selected actions can smoothly duck added music with explicit project settings. Final-movie context windows feed the existing review, which must retain pending status without actual listening; this checks coverage and version binding, not perceived audibility. Re-export legacy timelines and follow the migration in [production events](references/events-and-tools.md).
 
 ## License
 

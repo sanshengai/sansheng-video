@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 import platform
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -8,6 +9,7 @@ import unittest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 from production_timeline import export, digest
 from render_production import verify, render, inventory, check_review
+from production_sound_review import current_plan
 
 
 class RenderReceiptTests(unittest.TestCase):
@@ -25,11 +27,13 @@ class RenderReceiptTests(unittest.TestCase):
             runtime_root = root / 'runtime-tree'
             runtime_root.mkdir()
             output, runtime = root / 'draft.mp4', runtime_root / 'runtime.bin'
-            output.write_bytes(b'test output fingerprint, not media validation')
+            subprocess.run(['ffmpeg', '-v', 'error', '-f', 'lavfi', '-i', 'color=s=160x90:r=30:d=2',
+                            '-c:v', 'libx264', '-pix_fmt', 'yuv420p', str(output)], check=True)
             runtime.write_bytes(b'test runtime fingerprint')
             receipt = root / 'draft.render.json'
             receipt.write_text(json.dumps({'kind': 'production-render/1', 'build_path': str(build),
                 'build_sha256': digest(build), 'output': str(output), 'output_sha256': digest(output),
+                'sound_review_plan_sha256': current_plan(build)[1], 'verification': {'has_audio': False},
                 'host': {'system': platform.system(), 'release': platform.release(), 'machine': platform.machine()},
                 'runtime_roots': [str(runtime_root)], 'runtime_files': {str(runtime): digest(runtime)}}))
             self.assertEqual('current_not_reviewed', verify(receipt)['status'])

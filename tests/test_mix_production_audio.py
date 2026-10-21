@@ -174,7 +174,8 @@ class MixTests(unittest.TestCase):
 
     def test_derived_receipt_and_existing_final_review_binding(self):
         from production_timeline import export
-        from render_production import verify, check_review
+        from render_production import verify, check_review, prepare_review
+        from production_sound_review import current_plan
         project=self.root/'production-fixture';project.mkdir()
         source=project/'timeline.json'
         source.write_text(json.dumps({'fps':30,'duration':6,'canvas':[160,90],'requires_audio':True,
@@ -188,6 +189,7 @@ class MixTests(unittest.TestCase):
         parent.write_text(json.dumps({'kind':'production-render/1','operation':'test-fixture',
             'output':str(self.source),'output_sha256':mixer.digest(self.source),
             'build_path':str(build),'build_sha256':mixer.digest(build),
+            'sound_review_plan_sha256':current_plan(build)[1], 'verification':{'has_audio':True},
             'runtime_roots':[],'runtime_files':{},'host':{'system':platform.system(),
                 'release':platform.release(),'machine':platform.machine()},'command':['synthetic-test-fixture']}))
         output=project/'mixed.mp4'
@@ -200,8 +202,17 @@ class MixTests(unittest.TestCase):
         self.assertEqual('current_not_reviewed',verify(derived)['status'])
         review=project/'fixture-only-review.json'
         # Deliberate test-only approval fixture, not an authored user review.
-        review.write_text(json.dumps({'approved':True,'output_sha256':mixer.digest(output),
-            'production_build_sha256':mixer.digest(build),'render_receipt_sha256':mixer.digest(derived)}))
+        prepare_review(project,output,review)
+        fixture=json.loads(review.read_text())
+        fixture['approved']=True
+        review.write_text(json.dumps(fixture))
+        with self.assertRaisesRegex(ValueError,'listening is pending'):
+            check_review(project,output,review)
+        fixture['audio_review'].update(status='listened',listener='synthetic unit-test assertion only',playback='no real listening claimed')
+        fixture['audio_review']['checks']={key:'pass' for key in fixture['audio_review']['checks']}
+        for item in fixture['audio_review']['items']:
+            item.update(outcome='appropriate',note='synthetic coverage fixture, not an ear judgment')
+        review.write_text(json.dumps(fixture))
         self.assertEqual('review_binding_current',check_review(project,output,review)['status'])
         parent.write_text(parent.read_text()+' ')
         with self.assertRaisesRegex(ValueError,'runtime changed'):

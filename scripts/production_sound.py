@@ -12,6 +12,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
 from generate_sfx_tags import Composition, digest, find_manifest, plan, probe_audio
+from production_sound_review import plan as review_plan, current_plan
 
 
 def decisions(timeline, *, required=False):
@@ -87,6 +88,12 @@ def preflight(project, timeline, build):
     """Follow decisions to actual locked HTML media before calling the encoder."""
     project = Path(project).resolve()
     rows = decisions(timeline, required=True)
+    # Export can inspect legacy plans. New renders need a declared local intent
+    # for each added cue, so a quiet detail is not judged as a key action.
+    expected_review = review_plan(timeline, require_intent=True)
+    actual_review, review_sha = current_plan(project / "derived/production-build.json")
+    if actual_review != expected_review:
+        raise ValueError("sound review plan differs from the render source")
     index = _bound(project / "index.html", build["inputs"], "HTML")
     cues_path = project / "derived/sound-cues.json"
     cues = json.loads(cues_path.read_text())
@@ -151,4 +158,5 @@ def preflight(project, timeline, build):
                     raise ValueError("retained source does not cover scene: " + scene)
     return {"status": "wired_not_listened", "decisions": len(rows or []),
             "supplemental_cues": len(cues), "retained_elements": sorted(set(retained)),
-            "design_sha256": hashlib.sha256(json.dumps(rows, sort_keys=True).encode()).hexdigest()}
+            "design_sha256": hashlib.sha256(json.dumps(rows, sort_keys=True).encode()).hexdigest(),
+            "review_plan_sha256": review_sha}

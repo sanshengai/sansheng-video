@@ -34,7 +34,9 @@ class ProductionSoundTests(unittest.TestCase):
         self.data = {'fps': 30, 'duration': 2, 'canvas': [160, 90], 'requires_audio': True,
             'shots': [{'id': 'one', 'start': 0, 'end': 2}],
             'events': [{'id': 'cue', 'scene_id': 'one', 'start': 0, 'end': 2, 'timing_basis': 'authored',
-                        'sound': {'asset_id': 'tone', 'revision': 'v1', 'duration': 2, 'volume': .2}}],
+                        'sound': {'asset_id': 'tone', 'revision': 'v1', 'duration': 2, 'volume': .2},
+                        'sound_intent': {'role': 'ambience', 'prominence': 'support',
+                                         'reason': 'Continuous technical fixture, not a key action.'}}],
             'sound_design': [{'scene_ids': ['one'], 'mode': 'supplement',
                               'reason': 'Technical fixture: one continuous audible track.'}]}
         self.html = '<div id="root" data-composition-id="test" data-duration="2">\n</div>\n'
@@ -62,6 +64,12 @@ class ProductionSoundTests(unittest.TestCase):
         self.assertEqual('wired_not_listened', result['status'])
         self.assertEqual(1, result['supplemental_cues'])
         with self.assertRaisesRegex(ValueError, 'explicit local browser missing'):
+            self.consume()
+
+    def test_new_render_requires_cue_intent_on_existing_wiring_path(self):
+        del self.data['events'][0]['sound_intent']
+        self.compile()
+        with self.assertRaisesRegex(ValueError, 'sound_intent missing'):
             self.consume()
 
     def test_taken_but_unwired_asset_rejected_before_encoder(self):

@@ -45,6 +45,12 @@ def verify_production_review(project, output, review):
         if review.get("render_receipt_sha256") != evidence["render_receipt_sha256"]:
             raise ValueError("验收记录未绑定当前 render receipt")
         evidence["render_receipt"] = str(receipt)
+        from production_sound_review import current_plan, verify_listening
+        plan, plan_sha = current_plan(data["build_path"])
+        if data.get("sound_review_plan_sha256") != plan_sha:
+            raise ValueError("成片须重新导出并绑定声音试听计划，旧技术回执不等于试听通过")
+        if data.get("verification", {}).get("has_audio") is True:
+            evidence["audio_review"] = verify_listening(review, plan, plan_sha, sha256(output))
     elif "render_receipt_sha256" in review:
         raise ValueError("验收记录缺少对应 render receipt")
     return evidence

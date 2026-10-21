@@ -2,6 +2,10 @@
 
 ## [未发布]
 
+- **⚠ Breaking change for final audio review:** new renders require cue role/prominence declarations and a source-derived listening plan. Re-export the existing timeline, render or assemble the actual movie, then use `render_production.py prepare-review` to prepare the audio section of the existing final review. Formal audio approval needs explicit, version-bound scene/action listening coverage; technical results never fill approval. Silent films do not require fabricated listening.
+- Allow selected actions to smoothly duck added music using explicit per-event settings on the same timeline. Preserve dialogue/source lanes and bind the applied envelope to the existing mix receipt; no event gain or duck amount becomes a universal default.
+- Review short effects against simultaneous background and speech in the actual final movie. Provide context-window playback and reject pending, incomplete or transplanted listening records. This is a coverage/binding check, not automatic perceptual scoring; quiet/distant intentions remain scene-specific.
+
 - Distinguish a library miss from a timing or other suitability mismatch. Finding an existing file does not justify clipping its tail or bypassing the shot's constraints.
 - Refine project-to-result demonstration and knowledge-explainer checks using rendered trials: distinguish reconstructed task notes from recorded prompts, identify the subject separately from the photo viewpoint, preserve captions through later overlays, and allow both response and answer-reading time in practice segments. These are conditional design methods, not fixed shot templates or listening approval.
 

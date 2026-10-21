@@ -15,6 +15,7 @@ from pathlib import Path
 from motion_review_schedule import schedule
 import production_narration
 from production_sound import decisions as sound_decisions
+from production_sound_review import plan as sound_review_plan
 
 
 def digest(path):
@@ -168,7 +169,8 @@ def products(timeline, narration=None):
     js = js.replace("<", "\\u003c").replace("\u2028", "\\u2028").replace("\u2029", "\\u2029")
     return {"events.js": "window.productionTimeline = " + js.rstrip() + ";\n",
             "captions.json": encoded(captions), "captions.srt": "\n\n".join(srt) + ("\n" if srt else ""),
-            "sound-cues.json": encoded(cues), "motion-review-plan.json": encoded(review)}
+            "sound-cues.json": encoded(cues), "motion-review-plan.json": encoded(review),
+            "sound-review-plan.json": encoded(sound_review_plan(timeline))}
 
 
 def export(source, destination, dependencies=(), refresh=False):
@@ -186,6 +188,7 @@ def export(source, destination, dependencies=(), refresh=False):
     outputs = products(timeline, narration) if narration is not None else products(timeline)
     inputs = {source, Path(__file__).resolve(), Path(__file__).with_name("motion_review_schedule.py").resolve()}
     inputs.add(Path(__file__).with_name("production_sound.py").resolve())
+    inputs.add(Path(__file__).with_name("production_sound_review.py").resolve())
     inputs.update(Path(p).resolve() for p in dependencies)
     inputs.update(Path(p) for p in narration_inputs)
     fingerprints = {}
@@ -210,7 +213,7 @@ def export(source, destination, dependencies=(), refresh=False):
         (destination / name).write_text(text, encoding="utf-8")
     if any(digest(path) != expected for path, expected in fingerprints.items()):
         raise ValueError("input changed while writing production outputs")
-    receipt = {"kind": "production-event-export/1", "status": "compiled_not_rendered",
+    receipt = {"kind": "production-event-export/1", "status": "compiled_not_rendered", "source": str(source),
                "inputs": fingerprints, "outputs": {name: digest(destination / name) for name in outputs}}
     (destination / "production-build.json").write_text(encoded(receipt))
     return receipt

@@ -17,6 +17,7 @@ import subprocess
 from runtime_support import locate_renderer, managed_command, verify_clip
 from production_timeline import check, digest, encoded
 from production_sound import preflight as sound_preflight
+from production_sound_review import current_plan, pending, listening_page
 
 
 def runtime_roots(runtime, browser):
@@ -50,7 +51,7 @@ def runtime_files(runtime, browser):
     package = Path(runtime).resolve()
     files = inventory(runtime_roots(runtime, browser))
     fixed = [Path(__file__).resolve(), *[Path(__file__).with_name(name).resolve() for name in
-             ('runtime_support.py', 'production_sound.py', 'generate_sfx_tags.py')]]
+             ('runtime_support.py', 'production_sound.py', 'production_sound_review.py', 'generate_sfx_tags.py')]]
     for name in ('node', 'ffmpeg', 'ffprobe'):
         binary = shutil.which(name)
         if not binary:
@@ -85,6 +86,17 @@ def verify(receipt_path):
     output = Path(receipt['output'])
     if not output.is_file() or digest(output) != receipt['output_sha256']:
         raise ValueError('render output changed or missing')
+    build_data = json.loads(Path(receipt['build_path']).read_text())
+    if 'source' in build_data or 'sound_review_plan_sha256' in receipt:
+        _, plan_sha = current_plan(receipt['build_path'])
+        if receipt.get('sound_review_plan_sha256') != plan_sha:
+            raise ValueError('render sound review plan changed')
+        declared_audio = receipt.get('verification', {}).get('has_audio')
+        actual_audio = bool(json.loads(subprocess.run(
+            ['ffprobe', '-v', 'error', '-select_streams', 'a', '-show_entries', 'stream=index',
+             '-of', 'json', str(output)], capture_output=True, text=True, check=True).stdout)['streams'])
+        if type(declared_audio) is not bool or declared_audio != actual_audio:
+            raise ValueError('render audio presence evidence missing or differs from final movie')
     return {'status': 'current_not_reviewed', 'output': str(output)}
 
 
@@ -101,6 +113,49 @@ def check_review(project, output, review_path):
         raise ValueError('production review requires render receipt')
     evidence = verify_production_review(project, output, review)
     return {'status': 'review_binding_current', 'output': str(output), 'evidence': evidence}
+
+
+def prepare_review(project, output, review_path, *, refresh=False):
+    """Prepare the audio section of the existing final review, always pending."""
+    requested = Path(review_path).absolute()
+    if requested.is_symlink():
+        raise ValueError('review cannot be a symlink')
+    project, output, review_path = (Path(p).resolve() for p in (project, output, review_path))
+    if not output.is_relative_to(project) or not review_path.is_relative_to(project):
+        raise ValueError('review and movie must be project-local')
+    if review_path.suffix != '.json':
+        raise ValueError('final review must use a JSON file')
+    receipt_path = output.with_suffix('.render.json')
+    verify(receipt_path)
+    receipt = json.loads(receipt_path.read_text())
+    if Path(receipt['output']).resolve() != output:
+        raise ValueError('render receipt belongs to another movie')
+    build = project / 'derived/production-build.json'
+    if Path(receipt['build_path']).resolve() != build:
+        raise ValueError('render receipt belongs to another production build')
+    plan_data, plan_sha = current_plan(build)
+    if receipt.get('sound_review_plan_sha256') != plan_sha:
+        raise ValueError('legacy render needs current sound-plan evidence; re-export and render')
+    page = review_path.with_suffix('.listen.html')
+    protected = {output, receipt_path, build, *map(Path, json.loads(build.read_text())['inputs']),
+                 *map(Path, receipt.get('runtime_files', {}))}
+    if any(p in protected or p.is_relative_to(build.parent) or p.is_symlink() for p in (requested, review_path, page)):
+        raise ValueError('review outputs would overwrite production evidence or dependencies')
+    if (review_path.exists() or page.exists()) and not refresh:
+        raise ValueError('review exists; use a new path or --refresh to reset pending')
+    value = {'approved': False, 'output_sha256': digest(output),
+             'production_build_sha256': digest(build), 'render_receipt_sha256': digest(receipt_path),
+             'render_receipt': str(receipt_path.relative_to(project))}
+    has_audio = receipt.get('verification', {}).get('has_audio')
+    if type(has_audio) is not bool:
+        raise ValueError('actual render audio presence evidence missing')
+    if has_audio:
+        value['audio_review'] = pending(plan_data, plan_sha, value['output_sha256'])
+    review_path.parent.mkdir(parents=True, exist_ok=True)
+    review_path.write_text(encoded(value))
+    page.write_text(listening_page(output, page, plan_data))
+    return {'status': 'pending_actual_review', 'review': str(review_path), 'listening_page': str(page),
+            'listening_required': has_audio, 'windows': len(plan_data['items']) if has_audio else 0}
 
 
 def render(project, source, runtime, browser, output, refresh=False, quality='draft'):
@@ -152,6 +207,7 @@ def render(project, source, runtime, browser, output, refresh=False, quality='dr
         raise ValueError('render audio presence differs from declared intention')
     receipt = {'kind': 'production-render/1', 'status': 'rendered_not_reviewed', 'output': str(output),
                'output_sha256': digest(output), 'build_path': str(build), 'build_sha256': build_hash,
+               'sound_review_plan_sha256': sound['review_plan_sha256'],
                'runtime_files': inputs, 'runtime_roots': runtime_roots(runtime, browser), 'host': {'system': platform.system(), 'release': platform.release(), 'machine': platform.machine()},
                'command': command, 'browser': str(browser), 'verification': {**probe, 'has_audio': has_audio,
                                                                              'sound_wiring': sound}}
@@ -173,7 +229,14 @@ if __name__ == '__main__':
     review_parser = subs.add_parser('check-review')
     for name in ('project', 'output', 'review'):
         review_parser.add_argument('--' + name, required=True, type=Path)
+    prepare_parser = subs.add_parser('prepare-review')
+    for name in ('project', 'output', 'review'):
+        prepare_parser.add_argument('--' + name, required=True, type=Path)
+    prepare_parser.add_argument('--refresh', action='store_true')
     args = parser.parse_args()
+    if args.command == 'prepare-review':
+        print(encoded(prepare_review(args.project, args.output, args.review, refresh=args.refresh)), end='')
+        raise SystemExit(0)
     if args.command == 'check-review':
         print(encoded(check_review(args.project, args.output, args.review)), end='')
         raise SystemExit(0)

@@ -10,7 +10,7 @@ python3 "$SKILL/scripts/production_timeline.py" export "$PROJECT/timeline.json" 
 python3 "$SKILL/scripts/production_timeline.py" check "$PROJECT/derived/production-build.json"
 ```
 
-实际字体、脚本、素材和生成器都应加入 dependency，不由导出器猜测。导出 events.js、字幕 JSON／SRT、sound-cues.json 和 motion-review-plan.json；画面从 window.productionTimeline.events 取时序。声音事件给真实消费方，不因导出 JSON 就声称声音已经入片。
+实际字体、脚本、素材和生成器都应加入 dependency，不由导出器猜测。导出 events.js、字幕 JSON／SRT、sound-cues.json、motion-review-plan.json 和 sound-review-plan.json；画面从 window.productionTimeline.events 取时序。后者仅从原 shots/events 派生试听窗口，不能手填第二套时间。production-build 记录明确的 source 路径及依赖。声音事件给真实消费方，不因导出 JSON 就声称声音已经入片。
 
 导出器拒绝空／缺失依赖，记录源与产物 hash。改事件或依赖后使用 --refresh 重新导出，不能手改派生数据。production-build 证明当前字节一致，渲染和审片另有证据。
 
@@ -31,6 +31,10 @@ python3 "$SKILL/scripts/production_timeline.py" check "$PROJECT/derived/producti
 `source` 需真实 `<audio>`／`<video>` 元素 ID，文件在项目内且列入构建依赖；元素明确 `data-start`、`data-duration`，有效音量大于零、未 muted，并实际覆盖相应镜头。已有剪裁用 `data-media-start`／`data-playback-start`；这个检查适配器不接受原声变速，先生成有来源记录的派生媒体。`supplement` 每个所列镜头需有原 events 中的正音量 `sound` 事件，可保留 `source_elements`；它们由下一节接线。`quiet` 指有意不加这些场景声音，允许对白继续；整个作品无声才设 `requires_audio: false`。不要为过检查把未决场景批量写成 quiet。
 
 兼容边界：旧事件文件仍可 export/check；**有声 HTML 工程重新运行 `render_production.py render` 前必须补此决定**。空数组、漏镜头、虚假的补音或缺原声元素均拒绝。旧无声作品仍支持 `requires_audio: false`。这是渲染前置契约变化，迁移时由 Agent 依据原声与制作说明补决定，不能自动推断“只有对白就已设计好”。
+
+每个补入的 `sound` 事件还需 `sound_intent`。在该事件旁增加字段，例如 `"sound_intent": {"role":"action","prominence":"key","reason":"观众需要听到放下物品的接触，完成这一动作。"}`。`role` 为 dialogue／music／ambience／action，`prominence` 为 key／support／distant；按剧情选择，不批量填 key。原声里需要关注的动作，在原 visual／caption 事件上同样标记，不复制音源或时间。未标记的原声动作无法由工具自动识别，设计时由 Agent 核对。
+
+新 HTML 渲染会拒绝缺少用途声明的补音事件；旧文件仍可导出供迁移检查。旧成片的技术回执不自动成为新验收：需要当前导出器产生的声音计划、实际渲染或装配的回执及最终文件的试听。无声工程无需添加假声音。
 
 HTML 渲染器在启动编码前和编码后调用 `production_sound.preflight`，复核当前 cue 与实际自动音轨、锁定字节、有效增益及原声依赖，结果记入原 render receipt 的 `verification.sound_wiring`，状态仅为 `wired_not_listened`。原生片段、Remotion、自有 FFmpeg/EDL 装配器在其真实消费者实现等价核对，保留现有字段与引擎；本 HTML 检查不替它们宣称通过，也不将检查 JSON 当成最终音频听审。
 
@@ -71,6 +75,10 @@ python3 "$SKILL/scripts/mix_production_audio.py" \
 
 真实讲话区间不得冒称逐词发声检测。最终试听和必要响度处理见媒体编辑。
 
+先固定对白基准，再听动作附近的音效、同期背景及对白。短音效不能只看峰值、全片 LUFS 或声部存在性；有实际分轨时用相同动作窗口比较短时声能，编码后仍核对最终文件，测量不签发听感通过。避免把整混音当作目标声部，具体比较方法和参考范围属于实际装配器与当前素材。
+
+需要为某一动作让新增配乐平滑避让时，可在该事件的 `sound_intent` 加 `music_duck`，显式给出 `factor`（相对本次 music_gain，0 ≤ factor < 1）、`attack` 和 `release`（正秒数）。没有通用默认值。传入当前 `--parent-receipt` 后，混音器从它绑定的原 timeline 读取动作区间，自动把这条包络与对白包络取较低值，写入原 mix 回执的 `event_music_ducks`；不把动作混进 speech-intervals 冒充讲话。此功能只调新增音乐轨，不会分离或自动压低原片中已混合的环境声；该部分由已有分轨装配器处理。无需避让时不填该字段，关键动作也可通过素材选择、相对增益或原有轨道自动化解决。
+
 后续 FFmpeg 混音才加入的声音，以该步骤的实际命令、源区间、EDL 和回执为准，不假填成 HTML 已入轨。最终消费者须核对计划声部是否真的被混入、原声是否保留及各声部电平；仅探测到一个音频流或整片 LUFS 达标不能证明配乐/环境声存在。素材批准、接线检查和最终混音试听分别记录。
 
 整混音相似也不能单独证明每个保留声部都存在：较强配乐可能掩盖很弱原声被删除。以信号核对保留原声时，由实际装配器依据对应处理链的分轨或参考混音，核查编码前与实际编码后的原声贡献，并验证“保留配乐、删除或静音目标原声”的反例能被拒绝。算法与阈值限于已验证的适配器，不复制单片数值；无法可靠分辨时标明未验证，留待相应复核，不能用整混音通过代替声部完整性。
@@ -84,7 +92,20 @@ python3 "$SKILL/scripts/check_timeline_seek.py" "$PROJECT/index.html" \
 
 使用 Playwright，检查顺序、逆序及冷 context 截图、资源、字体和页面错误。不要把返回 GSAP thenable 的 pause／seek 直接交给 Playwright 等待。采样一致不证明全片所有帧和声音。
 
-final-review.json 在真实审查后记录 approved、output_sha256、production_build_sha256 和 render_receipt_sha256。render_production.py check-review --project ... --output ... --review ... 只验证这份记录仍对应当前输入输出，不自动创造人工认可。
+沿用 final-review.json：先准备当前最终文件的待验部分，再进行真实审查。
+
+```sh
+python3 "$SKILL/scripts/render_production.py" prepare-review \
+  --project "$PROJECT" --output "$PROJECT/renders/mixed.mp4" --review "$PROJECT/final-review.json"
+python3 "$SKILL/scripts/render_production.py" check-review \
+  --project "$PROJECT" --output "$PROJECT/renders/mixed.mp4" --review "$PROJECT/final-review.json"
+```
+
+prepare-review 保留安全的“不覆盖”默认；显式 `--refresh` 才会重置旧文件为待验。它只写 `approved: false` 和 pending 的 audio_review，并生成旁边的 `.listen.html`：播放最终 MP4 的场景及动作上下文，含原声中声明的动作，不能用素材单独试听代替。页面不自动保存批准。已有有效结论且当前文件未变时直接 check-review，不重复准备。
+
+真实试听后在原 final-review 的 audio_review 填 `status: listened`、实际 `listener`／`playback`，checks 中对白清晰度、局部声部关系、自然度、动作同步和瞬态检查填 pass；确无对白或动作同步任务才可为相应项填 not_applicable 并在 not_applicable_reason 写明原因。每个派生 items 填实际局部观察 note：场景 outcome 为 appropriate，事件为 clear；support／distant 才可为 intentionally_subtle，关键动作不能以“有一点点声音”替代清楚可闻。未听、需改或不确定的部分保留 pending／revise，整体 approved 不填 true。检查只能核对明确结论、覆盖和文件绑定，不能判断这些陈述是否真实；禁止用模板或技术结果编造听审。
+
+最终 approved、output_sha256、production_build_sha256、render_receipt_sha256 与 audio_review 必须对应同一版文件。重新补音、换配乐或编码后，原试听结论不能移植到新输出；派生混音回执沿用原构建及计划，但新的最终文件重新待验。无音轨的真实无声作品不要求填写虚假听审。check-review 拒绝漏窗口、关键动作仍待验或只有技术通过的有声正式批准；它不是自动可闻性检测器。自有 EDL／其他引擎在原消费者和验收中实现等价覆盖，不强制改用 HTML 工具或迁移项目参数。
 
 ## 本机可选调度
 
