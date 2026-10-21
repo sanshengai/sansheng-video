@@ -26,6 +26,8 @@ python3 scripts/production_timeline.py check project/derived/production-build.js
 
 映射写进 `events.js` 的 `promotion` 和 `promotion-plan.json`，原证据及 brief 进入构建指纹。无镜头承接的卖点、未知 ID、缺失／变化的证据会被拒绝。渲染器仍须消费视觉事件和选材；导出只证明来源与镜头绑定，不证明事实正确、图已入镜或审美通过。整片编码前，先用实际素材预览最不确定的开篇、证据变化和音乐重音，内部迭代即可。
 
+选已有作品、生成有限总览、锁定实际原图并做横竖版选图预览时，继续读 [选材接入](promotion-selection.md)。它接入同一时间线，不另建独立镜头表。
+
 ## 品牌原件与横竖屏预览
 
 `brand_assets.py` 读取实际 profile.json。兼容旧 `brand.logo` / `logo_on_dark`；可选 `brand.variants` 区分完整标识和独立图形：

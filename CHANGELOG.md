@@ -2,6 +2,8 @@
 
 ## [未发布]
 
+- 新增可选目录选材、有限缩略图总览、素材锁和真实选图短预览，按原图比例或明确焦点裁切；已选文件与目录来源进入制作时间线指纹，缺失或变化会使实际预览／导出失败。
+
 - Capture real webpage states through an existing authorized browser page and bind screenshots, viewport, controls, copied text and task feedback to promotion evidence. Label synthetic camera presentation accurately and reject stale capture contexts.
 
 - Bind optional promotion briefs to the existing production timeline: connect audience benefits, captured source evidence and visual events, and invalidate builds when that evidence changes. Keep old timelines readable.

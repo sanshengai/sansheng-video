@@ -15,6 +15,7 @@ from pathlib import Path
 from motion_review_schedule import schedule
 import production_narration
 import promotion
+import select_assets
 from production_sound import decisions as sound_decisions
 from production_sound_review import plan as sound_review_plan
 
@@ -145,12 +146,24 @@ def srt_time(ms):
     return f"{hours:02}:{minutes:02}:{seconds:02},{millis:03}"
 
 
-def products(timeline, narration=None, promotion_plan=None):
+def products(timeline, narration=None, promotion_plan=None, selection_plan=None):
     review = validate(timeline, narration)
     if timeline.get("promotion") is not None and promotion_plan is None:
         raise ValueError("promotion requires source-relative export")
     if any("claim_ids" in event for event in timeline["events"]) and promotion_plan is None:
         raise ValueError("claim_ids require a promotion brief")
+    if timeline.get("asset_selection") is not None and selection_plan is None:
+        raise ValueError("asset_selection requires source-relative export")
+    selected_ids = {item['asset_id'] for item in selection_plan['items']} if selection_plan else set()
+    consumed = set()
+    for event in timeline['events']:
+        ids = (event.get('visual') or {}).get('asset_ids')
+        if ids is not None:
+            if not isinstance(ids, list) or not ids or any(not isinstance(i, str) or i not in selected_ids for i in ids):
+                raise ValueError('visual.asset_ids must reference selected assets')
+            consumed.update(ids)
+    if selected_ids - consumed:
+        raise ValueError('selected assets need visual events: '+', '.join(sorted(selected_ids-consumed)))
     events = sorted(timeline["events"], key=lambda e: (e["start"], e["id"]))
     captions, cues, srt = [], [], []
     for event in events:
@@ -167,6 +180,8 @@ def products(timeline, narration=None, promotion_plan=None):
     payload = {"fps": timeline["fps"], "duration": timeline["duration"], "events": events}
     if promotion_plan is not None:
         payload["promotion"] = promotion_plan
+    if selection_plan is not None:
+        payload['asset_selection'] = selection_plan
     if narration is not None:
         payload["narration"] = {"audio_path": narration["audio_path"],
                                 "audio_sha256": narration["audio_sha256"],
@@ -180,6 +195,8 @@ def products(timeline, narration=None, promotion_plan=None):
             "sound-review-plan.json": encoded(sound_review_plan(timeline))}
     if promotion_plan is not None:
         outputs["promotion-plan.json"] = encoded(promotion_plan)
+    if selection_plan is not None:
+        outputs['asset-selection.json'] = encoded(selection_plan)
     return outputs
 
 
@@ -199,7 +216,15 @@ def export(source, destination, dependencies=(), refresh=False):
     if timeline.get("promotion") is not None:
         brief = nonempty(timeline["promotion"], "promotion")
         promotion_plan, promotion_inputs = promotion.resolve(source.parent / brief, timeline)
-    if promotion_plan is not None:
+    selection_plan, selection_inputs = None, {}
+    if timeline.get('asset_selection') is not None:
+        selection_path = nonempty(timeline['asset_selection'], 'asset_selection')
+        selection_plan, selection_inputs = select_assets.verified(source.parent / selection_path)
+        if timeline.get('canvas') != selection_plan['canvas']:
+            raise ValueError('timeline and selection canvas differ; make a native selection for this aspect')
+    if selection_plan is not None:
+        outputs = products(timeline, narration, promotion_plan, selection_plan)
+    elif promotion_plan is not None:
         outputs = products(timeline, narration, promotion_plan)
     else:
         outputs = products(timeline, narration) if narration is not None else products(timeline)
@@ -210,6 +235,7 @@ def export(source, destination, dependencies=(), refresh=False):
     inputs.update(Path(p).resolve() for p in dependencies)
     inputs.update(Path(p) for p in narration_inputs)
     inputs.update(Path(p) for p in promotion_inputs)
+    inputs.update(Path(p) for p in selection_inputs)
     fingerprints = {}
     for path in sorted(inputs):
         if not path.is_file() or not path.stat().st_size:
@@ -221,6 +247,8 @@ def export(source, destination, dependencies=(), refresh=False):
         raise ValueError("narration input changed after verification")
     if any(fingerprints[path] != expected for path, expected in promotion_inputs.items()):
         raise ValueError("promotion input changed after verification")
+    if any(fingerprints[path] != expected for path, expected in selection_inputs.items()):
+        raise ValueError('selection input changed after verification')
     names = [*outputs, "production-build.json"]
     if any((destination / name).resolve() in inputs for name in names):
         raise ValueError("outputs would overwrite an input dependency")
