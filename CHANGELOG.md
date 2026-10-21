@@ -2,6 +2,12 @@
 
 ## [未发布]
 
+- Capture real webpage states through an existing authorized browser page and bind screenshots, viewport, controls, copied text and task feedback to promotion evidence. Label synthetic camera presentation accurately and reject stale capture contexts.
+
+- Bind optional promotion briefs to the existing production timeline: connect audience benefits, captured source evidence and visual events, and invalidate builds when that evidence changes. Keep old timelines readable.
+- Resolve original brand variants by background and role, with optional alpha-bound layout previews for landscape and portrait canvases. Preserve legacy logo fields and keep private branding outside the package.
+- Package final MP4 copies, posters, a concise handoff and local preview in a shallow directory. Verify full decoding and copy hashes, reject conflicting deliveries and keep upload and editorial approval separate.
+
 ## [2.0.0] -- 2026-10-21
 
 - **⚠ Breaking change for final audio review:** new renders require cue role/prominence declarations and a source-derived listening plan. Re-export the existing timeline, render or assemble the actual movie, then use `render_production.py prepare-review` to prepare the audio section of the existing final review. Formal audio approval needs explicit, version-bound scene/action listening coverage; technical results never fill approval. Silent films do not require fabricated listening.

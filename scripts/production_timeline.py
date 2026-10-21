@@ -14,6 +14,7 @@ from pathlib import Path
 
 from motion_review_schedule import schedule
 import production_narration
+import promotion
 from production_sound import decisions as sound_decisions
 from production_sound_review import plan as sound_review_plan
 
@@ -144,8 +145,12 @@ def srt_time(ms):
     return f"{hours:02}:{minutes:02}:{seconds:02},{millis:03}"
 
 
-def products(timeline, narration=None):
+def products(timeline, narration=None, promotion_plan=None):
     review = validate(timeline, narration)
+    if timeline.get("promotion") is not None and promotion_plan is None:
+        raise ValueError("promotion requires source-relative export")
+    if any("claim_ids" in event for event in timeline["events"]) and promotion_plan is None:
+        raise ValueError("claim_ids require a promotion brief")
     events = sorted(timeline["events"], key=lambda e: (e["start"], e["id"]))
     captions, cues, srt = [], [], []
     for event in events:
@@ -160,6 +165,8 @@ def products(timeline, narration=None):
                          "time": event["start"]})
     # Data only. Consumers seek to the event's absolute start/end in their engine.
     payload = {"fps": timeline["fps"], "duration": timeline["duration"], "events": events}
+    if promotion_plan is not None:
+        payload["promotion"] = promotion_plan
     if narration is not None:
         payload["narration"] = {"audio_path": narration["audio_path"],
                                 "audio_sha256": narration["audio_sha256"],
@@ -167,10 +174,13 @@ def products(timeline, narration=None):
                                 "anchor_basis": narration["anchor_basis"], "blocks": narration["blocks"]}
     js = encoded(payload)
     js = js.replace("<", "\\u003c").replace("\u2028", "\\u2028").replace("\u2029", "\\u2029")
-    return {"events.js": "window.productionTimeline = " + js.rstrip() + ";\n",
+    outputs = {"events.js": "window.productionTimeline = " + js.rstrip() + ";\n",
             "captions.json": encoded(captions), "captions.srt": "\n\n".join(srt) + ("\n" if srt else ""),
             "sound-cues.json": encoded(cues), "motion-review-plan.json": encoded(review),
             "sound-review-plan.json": encoded(sound_review_plan(timeline))}
+    if promotion_plan is not None:
+        outputs["promotion-plan.json"] = encoded(promotion_plan)
+    return outputs
 
 
 def export(source, destination, dependencies=(), refresh=False):
@@ -185,12 +195,21 @@ def export(source, destination, dependencies=(), refresh=False):
             raise ValueError("narration must be an object")
         evidence = nonempty(voice.get("evidence"), "narration.evidence")
         narration, narration_inputs = production_narration.verified_inputs(source.parent / evidence)
-    outputs = products(timeline, narration) if narration is not None else products(timeline)
+    promotion_plan, promotion_inputs = None, {}
+    if timeline.get("promotion") is not None:
+        brief = nonempty(timeline["promotion"], "promotion")
+        promotion_plan, promotion_inputs = promotion.resolve(source.parent / brief, timeline)
+    if promotion_plan is not None:
+        outputs = products(timeline, narration, promotion_plan)
+    else:
+        outputs = products(timeline, narration) if narration is not None else products(timeline)
     inputs = {source, Path(__file__).resolve(), Path(__file__).with_name("motion_review_schedule.py").resolve()}
     inputs.add(Path(__file__).with_name("production_sound.py").resolve())
     inputs.add(Path(__file__).with_name("production_sound_review.py").resolve())
+    inputs.add(Path(__file__).with_name("promotion.py").resolve())
     inputs.update(Path(p).resolve() for p in dependencies)
     inputs.update(Path(p) for p in narration_inputs)
+    inputs.update(Path(p) for p in promotion_inputs)
     fingerprints = {}
     for path in sorted(inputs):
         if not path.is_file() or not path.stat().st_size:
@@ -200,6 +219,8 @@ def export(source, destination, dependencies=(), refresh=False):
         raise ValueError("source changed during export; retry from stable input")
     if any(fingerprints[path] != expected for path, expected in narration_inputs.items()):
         raise ValueError("narration input changed after verification")
+    if any(fingerprints[path] != expected for path, expected in promotion_inputs.items()):
+        raise ValueError("promotion input changed after verification")
     names = [*outputs, "production-build.json"]
     if any((destination / name).resolve() in inputs for name in names):
         raise ValueError("outputs would overwrite an input dependency")

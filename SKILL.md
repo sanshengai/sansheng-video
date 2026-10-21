@@ -48,6 +48,7 @@ metadata:
 | 裁剪、分段装配、原声与响度 | [媒体编辑](references/media-editing.md) |
 | 按需查动效、取代码与配声音 | [动效与音效](references/motion-and-sound.md)：镜头设计时触发，Motion Prompt 检索／缓存与 Openverse 下载接入原时间线 |
 | 项目素材、品牌与许可 | [资源配置](references/assets-and-profile.md) |
+| 宣传片卖点证据、品牌原件预览和浅层成品交付 | [证据与交付工具](references/promotion-evidence.md)：可选接入原时间线，核对来源、可见 Logo 占比与交付副本 |
 | 按镜头找音效、下载与入片 | [资源配置](references/assets-and-profile.md) 决定来源顺序；项目与显式精选库缺件后走 [Openverse 音效](references/openverse-sfx.md)，接入现有素材锁与声音事件 |
 | 需要新增配音 | [TTS 选型与制作](references/tts.md)：VoxCPM2 主候选，Kokoro 轻量备用；先定声音再用实际时长驱动时间线 |
 | 通用真实 B-roll 缺件 | [在线画面素材](references/stock-footage.md)：Pexels 主源、Pixabay 备用，按镜头最多 3 个候选 |
