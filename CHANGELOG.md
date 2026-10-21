@@ -2,6 +2,8 @@
 
 ## [未发布]
 
+- Refine project-to-result demonstration and knowledge-explainer checks using rendered trials: distinguish reconstructed task notes from recorded prompts, identify the subject separately from the photo viewpoint, preserve captions through later overlays, and allow both response and answer-reading time in practice segments. These are conditional design methods, not fixed shot templates or listening approval.
+
 - Add optional knowledge and series-explainer direction: semantic relationships, continuous objects, host/diagram handoffs, readable titles and three storyboard examples. Reuse the existing production chain rather than requiring a new scene template or engine.
 - Distinguish factual evidence, schematic reconstruction and atmosphere in source selection; retain project provenance and state the generic stock downloader's limits. Clarify narration-change dependencies and the separate responsibility for lip-sync verification.
 - **Breaking change for the HTML renderer:** audio productions must declare scene sound decisions in their existing timeline before re-rendering. Preserve valid source audio, supplement it or deliberately leave room for speech; an absent/empty plan is no longer accepted as designed sound. Legacy event export and silent films remain readable; see the migration example in `references/events-and-tools.md`.
