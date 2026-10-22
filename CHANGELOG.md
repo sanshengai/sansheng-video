@@ -2,6 +2,9 @@
 
 ## [未发布]
 
+- Unify the creative handoffs across direction, shot-led asset selection, audio timing, reference adoption, playable trials and scoped revisions. Reuse the existing project brief and timeline rather than adding another director, approval flow or metadata schema.
+- Distinguish music-driven timing from narration and scene-led work, verify useful reference mechanisms with actual assets, and separate whole-concept comparisons from engine or music attribution. Existing projects and local edits retain their selected engine and unaffected decisions.
+
 - 补充多画幅原生重排和局部修订方法，提供作品接力、画风展开与色系事件的可选接口示例，区分项目参数、设计留白、真实试听及新版采用范围。
 
 - 新增可选目录选材、有限缩略图总览、素材锁和真实选图短预览，按原图比例或明确焦点裁切；已选文件与目录来源进入制作时间线指纹，缺失或变化会使实际预览／导出失败。

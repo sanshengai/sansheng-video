@@ -105,7 +105,7 @@ prepare-review 保留安全的“不覆盖”默认；显式 `--refresh` 才会�
 
 真实试听后在原 final-review 的 audio_review 填 `status: listened`、实际 `listener`／`playback`，checks 中对白清晰度、局部声部关系、自然度、动作同步和瞬态检查填 pass；确无对白或动作同步任务才可为相应项填 not_applicable 并在 not_applicable_reason 写明原因。每个派生 items 填实际局部观察 note：场景 outcome 为 appropriate，事件为 clear；support／distant 才可为 intentionally_subtle，关键动作不能以“有一点点声音”替代清楚可闻。未听、需改或不确定的部分保留 pending／revise，整体 approved 不填 true。检查只能核对明确结论、覆盖和文件绑定，不能判断这些陈述是否真实；禁止用模板或技术结果编造听审。
 
-最终 approved、output_sha256、production_build_sha256、render_receipt_sha256 与 audio_review 必须对应同一版文件。重新补音、换配乐或编码后，原试听结论不能移植到新输出；派生混音回执沿用原构建及计划，但新的最终文件重新待验。无音轨的真实无声作品不要求填写虚假听审。check-review 拒绝漏窗口、关键动作仍待验或只有技术通过的有声正式批准；它不是自动可闻性检测器。自有 EDL／其他引擎在原消费者和验收中实现等价覆盖，不强制改用 HTML 工具或迁移项目参数。
+最终 approved、output_sha256、production_build_sha256、render_receipt_sha256 与 audio_review 必须对应同一版文件。补音、换配乐或编码产生新文件后，不直接复制旧批准；派生混音回执沿用原构建及计划，但新的最终文件重新待验。即使只重编码画面并逐包复制旧音轨，当前工具也不支持自动继承正式批准；原声音反馈可以保留为明确范围的历史证据，按 [主流程](production.md#5-检查和交付) 区分复用与新文件验收，不伪造新试听。无音轨的真实无声作品不要求填写虚假听审。check-review 拒绝漏窗口、关键动作仍待验或只有技术通过的有声正式批准；它不是自动可闻性检测器。自有 EDL／其他引擎在原消费者和验收中实现等价覆盖，不强制改用 HTML 工具或迁移项目参数。
 
 ## 本机可选调度
 
