@@ -2,6 +2,8 @@
 
 ## [未发布]
 
+## [2.1.0] -- 2026-10-22
+
 - Unify the creative handoffs across direction, shot-led asset selection, audio timing, reference adoption, playable trials and scoped revisions. Reuse the existing project brief and timeline rather than adding another director, approval flow or metadata schema.
 - Distinguish music-driven timing from narration and scene-led work, verify useful reference mechanisms with actual assets, and separate whole-concept comparisons from engine or music attribution. Existing projects and local edits retain their selected engine and unaffected decisions.
 
