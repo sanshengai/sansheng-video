@@ -2,6 +2,8 @@
 
 ## [未发布]
 
+- PATCH 候选：补齐原声保留决定到降噪／门控及最终复核的衔接，避免按字幕或讲话范围误压环境声和动作声；核对处理前源区间、实际保留窗及编码后贡献。沿用原时间线、回执与真实听审边界，不新增通用衰减默认值。
+
 ## [2.1.0] -- 2026-10-22
 
 - Unify the creative handoffs across direction, shot-led asset selection, audio timing, reference adoption, playable trials and scoped revisions. Reuse the existing project brief and timeline rather than adding another director, approval flow or metadata schema.
