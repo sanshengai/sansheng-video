@@ -1,11 +1,11 @@
 {
   "schema": "lemo-creative-index/1",
   "source": "https://github.com/lemomo-ai/lemo-opuscar",
-  "catalog_revision": "d33bdea74eeecde3922b0fbad227f0d3dc7afe75",
-  "research_revision": "b5e8ef93930b6d828f352055a689320f138237b1",
-  "basis": "51 style/source reviews; 12 deeper traces; nine-point visual sampling of all 51 released films, not continuous viewing or listening; no universal audiovisual quality approval.",
+  "catalog_revision": "3961ddb3d24d8876e0e2754f7790d66908acee51",
+  "research_revision": "3961ddb3d24d8876e0e2754f7790d66908acee51",
+  "basis": "51 inherited source/mechanism cards with changed anchors checked against pinned upstream; 8 added STYLE source reviews, not audiovisual replication. Prior nine-point visual sampling applies only to the former 51 films at their prior revision, not the latest 59. No continuous-viewing or listening approval; no universal audiovisual quality approval.",
   "compatibility": {
-    "catalogued_text_files_compared": 1461,
+    "catalogued_text_files_compared": 1688,
     "sha256_mismatches": 0
   },
   "attribution": "Lemomo / LemoLab; curated/adapted source descriptions by Sansheng. Original licensing retained with catalog.",
@@ -388,7 +388,7 @@
       "limits": "细腻日常对白和自然临场声的默认方案 舞台中的历史、价格、年份和能力断言另做事实核验。",
       "refs": [
         "styles/game-show/STYLE.md:10",
-        "styles/game-show/DEMO.md:27",
+        "styles/game-show/DEMO.md:29",
         "styles/game-show/demo/main.js:491",
         "styles/game-show/demo/music.py:267"
       ]
@@ -467,7 +467,7 @@
       "needs": "可连续行走的空间；共用光状态与前后构图参照。",
       "limits": "需要近距离自然表情与清晰口型的英语对话默认画风",
       "refs": [
-        "styles/hd-2d/STYLE.md:38",
+        "styles/hd-2d/STYLE.md:39",
         "styles/hd-2d/DEMO.md:24",
         "styles/hd-2d/demo/cliff.js:196",
         "styles/hd-2d/demo/mix.py:71"
@@ -803,8 +803,8 @@
       "limits": "中文时间索引是ASR词元而非汉字；纸层发光与阴影设置错误会变脏。 剪影与空椅叙事不能冒称细腻面部演技。",
       "refs": [
         "styles/paper-lantern/STYLE.md:45",
-        "styles/paper-lantern/DEMO.md:44",
-        "styles/paper-lantern/DEMO.md:57",
+        "styles/paper-lantern/DEMO.md:46",
+        "styles/paper-lantern/DEMO.md:59",
         "styles/paper-lantern/demo/src/paper.js:100"
       ]
     },
@@ -1398,6 +1398,163 @@
         "styles/woodcut/STYLE.md:48",
         "styles/woodcut/DEMO.md:50",
         "styles/woodcut/demo/engine/knife.js:99"
+      ]
+    },
+    {
+      "slug": "caption-news",
+      "aliases": [
+        "静音新闻",
+        "字幕新闻",
+        "caption news",
+        "sound-off"
+      ],
+      "use_for": "信息流新闻、数据反转短片",
+      "mechanism": "先用大数字提出问题，再用带来源的文件与事实改变观众对数字的理解；静音也可读懂。",
+      "visual": "真实画面承载分块大字幕，关键词色块；数据和来源标签同步出现，先高亮原始文件再引用数字。",
+      "sound": "口播与音乐支撑节奏，转折处停顿；信息不能只靠声音提供。",
+      "needs": "真实画面、可追溯数字和原文件；足够阅读时间。",
+      "limits": "不能用字幕密度代替事实，也不能照搬媒体品牌包装。",
+      "refs": [
+        "styles/caption-news/STYLE.md:8",
+        "styles/caption-news/STYLE.md:10",
+        "styles/caption-news/STYLE.md:68"
+      ]
+    },
+    {
+      "slug": "newsreel",
+      "aliases": [
+        "新闻影片",
+        "复古新闻",
+        "newsreel"
+      ],
+      "use_for": "历史风潮、时代故事",
+      "mechanism": "用真实报刊、档案与地点日期卡串起新闻条目；报纸旋入、翻页、圈闭与播音共同叙事。",
+      "visual": "档案放进统一投影画门，银盐调色和轻微抖动；新闻物件承担说明。",
+      "sound": "活泼播音、年代乐队及突然停奏落包袱；处理前后语音均需核对。",
+      "needs": "有使用权的档案与年代信息、可懂的播音。",
+      "limits": "仿旧不是史料真实性；不复制真实新闻台标或乐曲。",
+      "refs": [
+        "styles/newsreel/STYLE.md:8",
+        "styles/newsreel/STYLE.md:9",
+        "styles/newsreel/STYLE.md:74"
+      ]
+    },
+    {
+      "slug": "countdown",
+      "aliases": [
+        "实时倒计时",
+        "同步分屏",
+        "countdown"
+      ],
+      "use_for": "发射、判决、终场等有已知零点的事件",
+      "mechanism": "屏幕时间等于事件时间；同一秒的多路画面不断分格，在零点合一。",
+      "visual": "时钟与同步标记可逐帧对照；布局变化由真实呼叫或事件触发。",
+      "sound": "现场原声优先，秒针声跟事件时间；不可把音乐节拍伪称现场节点。",
+      "needs": "连续真实素材、可靠同步点；不同步的画面显式标注。",
+      "limits": "禁止剪掉等待、重排事件或把慢动作当实时。",
+      "refs": [
+        "styles/countdown/STYLE.md:8",
+        "styles/countdown/STYLE.md:10",
+        "styles/countdown/STYLE.md:63"
+      ]
+    },
+    {
+      "slug": "city-symphony",
+      "aliases": [
+        "延时交响",
+        "城市交响",
+        "city symphony"
+      ],
+      "use_for": "城市影像、音乐剪辑与开场",
+      "mechanism": "先写有弧线的音乐，再以延时、慢镜和历史并置组织城市的一天。",
+      "visual": "机器与流动加速成线，脆弱瞬间减速；文字少而有事实依据。",
+      "sound": "音乐主导剪辑；本风格原则上无旁白与源片音轨，需核源片已有配乐权利。",
+      "needs": "足够城市实拍与延时、原创或获准音乐、真实数字和档案日期。",
+      "limits": "不是配流行歌曲的风景轮播，别把这一风格的无音效约定推广所有片。",
+      "refs": [
+        "styles/city-symphony/STYLE.md:8",
+        "styles/city-symphony/STYLE.md:9",
+        "styles/city-symphony/STYLE.md:74"
+      ]
+    },
+    {
+      "slug": "visual-investigation",
+      "aliases": [
+        "视觉调查",
+        "多源同步取证",
+        "visual investigation"
+      ],
+      "use_for": "证据重建、时间与空间关系调查",
+      "mechanism": "让相互独立的资料在同一地点或时刻会合；逐层从小时缩到秒，把不确定性画出来。",
+      "visual": "每布局一个发现，图表读头、卡片时间码与证据帧同步；已知和推断分别表达。",
+      "sound": "克制音床与事件秒针对齐；真实灾难不以煽情音乐替代证据。",
+      "needs": "独立来源、原始时间与推断边界；可复核的同步依据。",
+      "limits": "示意不是实拍；无覆盖不伪造证据，不能仅凭并置宣称因果。",
+      "refs": [
+        "styles/visual-investigation/STYLE.md:8",
+        "styles/visual-investigation/STYLE.md:9",
+        "styles/visual-investigation/STYLE.md:11",
+        "styles/visual-investigation/STYLE.md:66"
+      ]
+    },
+    {
+      "slug": "telestrator",
+      "aliases": [
+        "战术讲解",
+        "体育画线",
+        "telestrator"
+      ],
+      "use_for": "体育回放与动作拆解",
+      "mechanism": "先完整看动作再定格分析；重复同几秒，每遍增加一层发现。",
+      "visual": "圈与箭头贴合脚下、球路和球场透视；一次定格解释一点。",
+      "sound": "比赛原声先行，定格时鼓停止、画线拟音跟线走；回放继续时节奏恢复。",
+      "needs": "获准比赛素材、真实帧数与场地标记；测量范围由画面决定。",
+      "limits": "不能从素材测量的球速、距离不编造；线不能漂离真实对象。",
+      "refs": [
+        "styles/telestrator/STYLE.md:8",
+        "styles/telestrator/STYLE.md:10",
+        "styles/telestrator/STYLE.md:11",
+        "styles/telestrator/STYLE.md:79"
+      ]
+    },
+    {
+      "slug": "kino-montage",
+      "aliases": [
+        "构成主义蒙太奇",
+        "kino montage",
+        "kino-montage"
+      ],
+      "use_for": "档案论述、群体与机器节奏",
+      "mechanism": "真实资料以节拍切割和碰撞形成新的概念；单一印刷系统组织类型、人物和数量。",
+      "visual": "纸、黑墨与单红色，斜带字与照片剪贴同属一张印刷页；不是随意套红黑滤镜。",
+      "sound": "机器型配器驱动节拍，真实录音可接管一节；纸张与印刷动作对应拟音。",
+      "needs": "与主题相关的真实档案、明确论点和可用原声或音乐。",
+      "limits": "蒙太奇形成的解释要有证据，不挪用政治口号和原片镜头。",
+      "refs": [
+        "styles/kino-montage/STYLE.md:8",
+        "styles/kino-montage/STYLE.md:9",
+        "styles/kino-montage/STYLE.md:10",
+        "styles/kino-montage/STYLE.md:87"
+      ]
+    },
+    {
+      "slug": "news-package",
+      "aliases": [
+        "电视新闻包装",
+        "新闻栏目包装",
+        "news package"
+      ],
+      "use_for": "多条新闻、金融科技简报",
+      "mechanism": "统一包装组件承担信息层级，片头与菜单开场、逐条展开、回到已勾选菜单收束。",
+      "visual": "固定标题条与单屏一个事实，图表、地图、规格卡在同一组件系统内变化；字幕独立文件。",
+      "sound": "一句口播配一张图，音乐按新闻段落换状态并在语音下避让。",
+      "needs": "已核实的新闻事实、来源、日期及统一品牌组件。",
+      "limits": "新闻包装不代表机构背书；去掉字幕或滚动条时必须重排画面。",
+      "refs": [
+        "styles/news-package/STYLE.md:8",
+        "styles/news-package/STYLE.md:9",
+        "styles/news-package/STYLE.md:10",
+        "styles/news-package/STYLE.md:81"
       ]
     }
   ]

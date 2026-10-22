@@ -10,7 +10,7 @@ import re
 
 INDEX = Path(__file__).parent / 'vendor/lemo-opuscar/creative-index.json'
 SOURCES = INDEX.with_name('creative-sources.json')
-SOURCES_SHA256 = '1077cd0393fecb685e5f92d962b8ce2fb525a7d0fe2df3bc5299e4b2c94eea93'
+SOURCES_SHA256 = '630a5a955d411ad88024499ece6d6e82f30bb4584415da48c02c4ba7d371ee04'
 
 
 def load(catalog):

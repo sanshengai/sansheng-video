@@ -43,7 +43,7 @@ class StockInput(unittest.TestCase):
 
 class LemoReference(unittest.TestCase):
     def test_catalog_counts_and_bounded_search(self):
-        data=lemo.catalog();self.assertEqual(len(data['styles']),51);self.assertEqual(len(data['cinema']['films']),98)
+        data=lemo.catalog();self.assertEqual(len(data['styles']),59);self.assertEqual(len(data['cinema']['films']),98)
         self.assertEqual(lemo.search('白板')['results'][0]['slug'],'whiteboard')
         self.assertLessEqual(len(lemo.search('film')['results']),3)
         self.assertEqual(lemo.search('no-such-reference-xyz')['results'],[])
