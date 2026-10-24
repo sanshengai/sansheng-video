@@ -19,15 +19,30 @@ def export(delivery_path, targets_path, output, *, job_id='video-publish'):
     if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]*', job_id):
         raise ValueError('非法 job_id')
     assets = []
-    for ident, kind, field in (('video','video','video'), ('cover','image','poster')):
-        rel = report.get(field)
+    entries = [('video','video',report.get('video'),{}), ('cover','image',report.get('poster'),{})]
+    subtitles = report.get('subtitles', [])
+    if not isinstance(subtitles, list):
+        raise ValueError('subtitles 必须是数组')
+    seen_languages = set()
+    for index, subtitle in enumerate(subtitles):
+        if not isinstance(subtitle, dict) or not re.fullmatch(r'[a-zA-Z]{2,3}(?:-[a-zA-Z0-9]{2,8})*', subtitle.get('language','')):
+            raise ValueError('字幕需明确 language')
+        language = subtitle['language']
+        if language.lower() in seen_languages:
+            raise ValueError('同语种字幕重复；请在交付回执中明确最终版本')
+        seen_languages.add(language.lower())
+        rel = subtitle.get('path')
+        if not isinstance(rel,str) or Path(rel).suffix.lower() not in {'.srt','.vtt'}:
+            raise ValueError('字幕需为 SRT 或 VTT')
+        entries.append((f'subtitle-{index+1}','subtitle',rel,dict(language=language)))
+    for ident, kind, rel, metadata in entries:
         if not isinstance(rel, str) or Path(rel).is_absolute():
             raise ValueError('交付文件必须是回执目录下的相对路径')
         path = (root/rel).resolve()
         expected = report.get('files', {}).get(rel)
         if not path.is_relative_to(root) or not path.is_file() or not path.stat().st_size or digest(path) != expected:
-            raise ValueError(f'交付文件已改变、缺失或越界：{field}')
-        assets.append(dict(id=ident,kind=kind,path=rel,sha256=expected))
+            raise ValueError(f'交付文件已改变、缺失或越界：{ident}')
+        assets.append(dict(id=ident,kind=kind,path=rel,sha256=expected,**metadata))
     if not isinstance(targets, list) or not targets:
         raise ValueError('targets 不能为空')
     for target in targets:
@@ -35,7 +50,7 @@ def export(delivery_path, targets_path, output, *, job_id='video-publish'):
             raise ValueError('每个目标需明确平台、账号、终点和 video 类型')
         target.setdefault('title', report['suggested_title'])
         target.setdefault('text', report['summary'])
-        target['asset_ids'] = ['video','cover']
+        target['asset_ids'] = [a['id'] for a in assets]
         target['cover_asset_id'] = 'cover'
         target['document_id'] = 'delivery-receipt'
     manifest = dict(schema_version=1,job_id=job_id,producer='sansheng-video',content_status='final',source_root=str(root),

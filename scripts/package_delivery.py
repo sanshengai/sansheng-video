@@ -7,6 +7,7 @@ import hashlib
 import html
 import json
 import math
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -20,6 +21,32 @@ def digest(path):
         for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             result.update(chunk)
     return result.hexdigest()
+
+
+def copy_subtitles(spec, source_root, staging):
+    """Copy explicitly selected sidecars; never infer a subtitle from nearby files."""
+    rows = spec.get('subtitles', [])
+    if not isinstance(rows, list):
+        raise ValueError('subtitles must be a list')
+    result, hashes, seen = [], {}, set()
+    for row in rows:
+        language = row.get('language','') if isinstance(row,dict) else ''
+        if not re.fullmatch(r'[a-zA-Z]{2,3}(?:-[a-zA-Z0-9]{2,8})*', language) or language.lower() in seen:
+            raise ValueError('subtitle requires a unique language')
+        seen.add(language.lower())
+        if not isinstance(row.get('path'),str) or not row['path']:
+            raise ValueError('subtitle path required')
+        source = (Path(source_root)/row['path']).resolve()
+        if not source.is_file() or source.suffix.lower() not in {'.srt','.vtt'} or not source.stat().st_size:
+            raise ValueError('subtitle must be a nonempty SRT or VTT file')
+        original = digest(source)
+        name = f'subtitles-{language}{source.suffix.lower()}'
+        shutil.copy2(source, Path(staging)/name)
+        if digest(Path(staging)/name) != original or digest(source) != original:
+            raise ValueError('subtitle changed during copy')
+        result.append(dict(path=name,language=language))
+        hashes[name] = original
+    return result, hashes
 
 
 def probe(video):
@@ -99,12 +126,16 @@ def package(source, destination):
             subprocess.run(["ffmpeg", "-v", "error", "-ss", str(info["duration"] * .35), "-i", str(video),
                             "-frames:v", "1", "-vf", "scale=960:960:force_original_aspect_ratio=decrease",
                             str(poster)], check=True, capture_output=True, timeout=60)
+        subtitles, subtitle_hashes = copy_subtitles(spec, source.parent, staging)
         report = {"kind": "video-delivery/1", "source": str(video), "source_sha256": original,
                   "project": spec["project"], "title": spec["title"], "summary": spec["summary"],
                   "suggested_title": spec["suggested_title"], "review_status": spec["review_status"],
                   "review_source": spec.get("review_source"), "online_urls": urls,
                   "technical": {**info, "full_decode": True}, "video": name, "poster": poster.name,
                   "files": {name: original, poster.name: digest(poster)}}
+        if subtitles:
+            report['subtitles'] = subtitles
+            report['files'].update(subtitle_hashes)
         (staging / "delivery.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
         online = "\n".join(urls) or "无线上地址（尚未上传）"
         (staging / "说明.md").write_text(
