@@ -1,4 +1,6 @@
-# 把成片交给发布器
+# 把成品交给 sansheng-distribute
+
+统一分发技能名称为`sansheng-distribute`。此处交接合同不变；按分发端已验收的平台能力执行，名称确定不代表全部平台已可用。
 
 `scripts/export_publish.py` 消费 `package_delivery.py` 产生的 `delivery.json`，核对实际成片/封面哈希及原有完整解码证据。接受状态须绑定作者实际反馈，不能由导出器替作者填写。此处只处理数据交接，不制作视频、不上传。
 
