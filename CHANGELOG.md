@@ -2,6 +2,8 @@
 
 ## [未发布]
 
+## [2.4.0] -- 2026-10-30
+
 - Add an optional Muse handoff template connecting film intent, reference roles, shot start/action/end states and adjacent edits. Distinguish planning text from actual generator requests, preserve native audio evidence and scope revisions to observed defects without promising provider capabilities.
 
 ## [2.3.1] -- 2026-10-30
