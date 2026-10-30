@@ -43,7 +43,7 @@ python3 "$SKILL/scripts/compare_frames.py" "$PROJECT/qa/seek-old" "$PROJECT/qa/s
 | 工具 | 查什么 | 退出码 |
 |---|---|---|
 | `check_brief.py` | 制作单的必填标题是否齐全、非空；竖屏信息流平台是否写了开头 3 秒或豁免理由。只查有没有，不评内容 | 缺必填项为 1 |
-| `check_readability.py` | 字幕读速、单条时长、行数；`reads` 的停留是否够读完；声明字号是否低于下限；术语是否出现在字幕或画面文字里。阈值见[数字默认值](craft-defaults.md) | 只提示，恒为 0 |
+| `check_readability.py` | 字幕读速、单条时长、行数；`reads` 的停留是否够读完；声明字号是否低于下限；术语是否出现在字幕或画面文字里。阈值见[数字默认值](craft-defaults.md)；系列制作单按条写术语时，加 `--film N` 只核对第 N 条 | 只提示，恒为 0 |
 | `qa_delivery.py` | 成片整合响度与真峰值（目标取 profile 的 `delivery.loudness`）；冻结段分为设计停留、待查和短停顿；检出切点与计划切点比对（只对硬切的片子有参考价值，渐变转场对不上属正常）；生成 0–3 秒、手机尺寸、节拍三张联系表和 `summary.md` | 响度不达标，或时间线声明有声而成片没有音轨时为 1 |
 | `compare_frames.py` | 修订前后：截帧目录模式下范围外逐像素一致；EDL 模式下范围外片段的源文件与出入点不变 | 范围外有变化为 1 |
 
