@@ -1,0 +1,23 @@
+{
+  "note": "只做到制作单与时间线的计划阶段评测；不渲染、不联网、不生成媒体。评分见 score_case.py。",
+  "cases": [
+    {
+      "id": "article-to-feed",
+      "task": "把下面这篇短文做成一条 30 秒左右的抖音竖屏知识短片（1080×1920，30 fps，成人观众，无旁白、靠字幕和画面）。只做到计划阶段：在输出目录写 brief.md 和 timeline.json，不渲染。",
+      "input": "标题：为什么提示词要先写目标\n\n很多人用 AI 时先写一长串背景，最后才说想要什么。模型读到最后才知道任务，前面的信息就用不准。更好的顺序是：第一句写清你要的结果，比如“给我三条标题，每条不超过 15 字”；再补限制条件，比如受众、语气和不能出现的词；最后才给背景材料。目标在前，模型会带着任务去读材料，结果更贴近需要。试一次就能看出差别：同样的材料，把目标挪到第一句，返回的内容会短而准。",
+      "outputs": ["brief.md", "timeline.json"]
+    },
+    {
+      "id": "promo-series",
+      "task": "在已认可的样板上，把一款笔记应用的宣传片扩成 3 条小红书竖屏系列，每条讲一个功能。只做到计划阶段：在输出目录写一份系列制作单 brief.md，并为第 1 条写 timeline-1.json，不渲染。",
+      "input": "已认可样板（作者 10 月确认过）：竖屏 1080×1920、30 fps；主标题 Source Han Sans Heavy 96 px，左对齐标题配右侧真实产品截图；元素入场 0.4 秒、上移 20 px；底乐用精选库 calm-piano-v2；片尾统一 1.5 秒字标。三个功能：离线同步、语音转写、模板库。每条约 20 秒。",
+      "outputs": ["brief.md", "timeline-1.json"]
+    },
+    {
+      "id": "local-caption-fix",
+      "task": "已有工程只改一句字幕：把第二句字幕「模糊的要求换来模糊的结果」改成「要求越模糊，结果越难用」，其他都不动。工程时间线在 fixtures/local-edit-timeline.json。在输出目录写修改后的 timeline.json 和这次修改的修订卡 revision-card.md，不渲染。",
+      "input_files": ["fixtures/local-edit-timeline.json"],
+      "outputs": ["timeline.json", "revision-card.md"]
+    }
+  ]
+}

@@ -19,10 +19,10 @@ curl --fail --show-error --silent --get --max-time 30 \
   'https://api.openverse.org/v1/audio/' \
   --data-urlencode 'q=soft paper page turn' \
   --data-urlencode 'license=cc0,by' \
-  --data-urlencode 'page_size=5'
+  --data-urlencode 'page_size=3'
 ```
 
-先用准确的英文动作／材质／空间词，必要时补中文。每个声音需求先看 3–5 个候选，明显不合适再换一组词；不要批量翻页下载。`license=cc0,by` 是默认候选筛选，方便商业用途与剪辑；它不代替原始来源核验。不要凭历史记忆硬编码额度、时长单位或额外筛选参数，使用前可查当前官方接口文档。
+先用准确的英文动作／材质／空间词，必要时补中文。每个声音需求每轮最多看 3 个候选，明显不合适再换一组词，最多两轮；仍不合适就保留留白或改用项目已有声音，不要批量翻页下载。`license=cc0,by` 是默认候选筛选，方便商业用途与剪辑；它不代替原始来源核验。不要凭历史记忆硬编码额度、时长单位或额外筛选参数，使用前可查当前官方接口文档。
 
 Openverse 是索引，检索命中不等于文件一定可下。读取结果的 `id`、`title`、`creator`、`creator_url`、`license`、`license_version`、`license_url`、`foreign_landing_url` 和媒体 `url`；缺失字段如实留空，不推断作者或许可证。返回字段以实际响应为准。候选链接是来源证据，媒体地址才用于取文件。
 

@@ -8,6 +8,7 @@ Original project code and instructions are MIT. The following adapted portions r
 | scripts/vendor/lemo-opuscar/catalog.json; creative-index.json; creative-sources.json (source metadata and adapted summaries) | lemomo-ai/lemo-opuscar (style catalog + OPUSCAR 98) | d33bdea74eeecde3922b0fbad227f0d3dc7afe75 | Catalog retrieval stays on this locked commit; mechanism research is pinned to b5e8ef93930b6d828f352055a689320f138237b1. That README licenses code/docs under MIT and demo films/stills under CC BY 4.0. MIT text is retained alongside the catalog. Reused demo media requires LemoLab credit, a repository link and a modification notice; third-party assets keep their own terms. No demo media is bundled. See references/lemo-opuscar.md |
 | scripts/vendor/motion-prompt/cli.mjs; examples/motion-sfx/kit-lp.js and ripple.js | showheyohtaki/motion-prompt | 770eefb7091cc725ab0eb6d4ef5cbf28b28e282c | MIT, full copyright/license in scripts/vendor/motion-prompt/LICENSE; CLI unchanged, example adapted with modifications in its README |
 | scripts/validate_edl.py and tests/test_edl_validation.py | guigulaoshi/music-video-director-skill, mvd/validate.py | 06abf674e936eefd69f053759f673e3c72f71e2e | MIT, full copyright/license in LICENSES/music-video-director-MIT.txt |
+| scripts/vendor/video-director/qa_video.py | win4r/video-director, video-director/scripts/qa_video.py | 4747e5c153509ef7f8f7fd1a0aad6acfda36280d | MIT, full copyright/license in scripts/vendor/video-director/LICENSE; file unchanged (sha256 in UPSTREAM.json). Timeline translation, platform loudness targets and the Chinese summary live in scripts/qa_delivery.py |
 | scripts/normalize_loudness.py | KyaniteLabs/mcp-video, mcp_video/engine_audio_normalize.py | ba9d64048f095688ee3d3b18aa1d3f1fa7a0cd7e | Apache-2.0, full license in LICENSES/mcp-video-Apache-2.0.txt |
 | scripts/check_merge_compat.py | KyaniteLabs/mcp-video, mcp_video/merge_guardrails.py | ba9d64048f095688ee3d3b18aa1d3f1fa7a0cd7e | Apache-2.0, same license |
 
@@ -19,5 +20,6 @@ Adaptations remove upstream application dependencies, expose standalone CLI oper
 - [GSAP](https://gsap.com/standard-license), standard license; used by project-authored animations, not bundled.
 - [Playwright](https://github.com/microsoft/playwright), Apache-2.0; browser verification only, not bundled.
 - [FFmpeg](https://ffmpeg.org/legal.html), license depends on the installed build; executable not bundled.
+- [NumPy](https://numpy.org/) (BSD-3-Clause) and [Pillow](https://python-pillow.org/) (MIT-CMU); delivery QA only, not bundled.
 
 Fonts, music, footage and generated assets must carry their own usage rights. Research credits for method-only references are in references/sources.md; the selected Motion Prompt example code and a Lemo reference catalog are distributed with their notices; upstream example media and full production installers are not bundled.

@@ -24,6 +24,8 @@ Xilo 等参考的制作方法已整合进内部流程，不用同时安装一排
 
 新作先让镜头需求、实际素材与声音结构相互验证，再用原工程的连续短样解决不确定处，之后扩展全片。导演、选材、参考、时间线和验收沿[一条制作流程](references/production.md)交接；已有工程局部修改直接进入受影响环节，不重新选择整套风格。多版对比区分整体创意与单项原因，技术通过不自动成为视听认可。
 
+每条新片先写一份固定标题的[制作单](references/brief-template.md)：一句话主张、观看情境、开头 3 秒、术语、段落表等，`check_brief.py` 只查齐不齐。字幕读速、文字停留、字号和响度有[数字默认值](references/craft-defaults.md)，偏离写一句理由；`check_readability.py` 提示读不完的地方。成片用 `qa_delivery.py` 按平台目标测响度、区分设计停留与可疑冻结，并出三张联系表；再请一个没参与制作的[独立评审](references/independent-review.md)先复述这片讲什么、再列缺陷，不打分。局部修改写修订卡，`compare_frames.py` 证明修改范围外的画面没变。
+
 知识和角色系列讲解可按[知识解释与系列表达](references/knowledge-explainers.md)，让地图、资料、图解和主持人围绕同一个问题交接。具体地点／年代的事实资料与通用氛围素材分别判断，沿现有来源记录与时间线制作。
 
 | 输入 | 制作与交付 |
@@ -96,6 +98,7 @@ python3 setup.py --check --runtime /path/to/project/node_modules/hyperframes --b
 |---|---|---|
 | 私有品牌 | 使用自己的 Logo、颜色与内容规则 | 使用项目已有或中性配置；运行 `python3 setup.py` 指定私有 profile，或设置 `SANSHENG_VIDEO_PROFILE_DIR` |
 | 浏览器确定性检查 | 比较顺序、逆序、冷启动帧；需要 Playwright | 不加载该检查器，不影响核心编辑；需要时安装 `playwright==1.62.0`，使用 `setup.py --check --browser-checks` |
+| 成片测量 | 按平台目标测响度、找可疑冻结、出三张联系表；需要 numpy 与 Pillow | 不安装时 `qa_delivery.py` 不可用，其余工具不受影响；平台响度目标写在 profile 的 `delivery.loudness`，未配置时按 −14 LUFS |
 | 既有本机调度 | 把编码命令交给已有本机资源队列 | 默认直接运行；高级使用者设置 `SANSHENG_VIDEO_COMMAND_PREFIX` 为 JSON argv 前缀 |
 
 配置示例在 `.env.example` 和 `profile.example/profile.json`。本包不自动加载 shell 的 `.env`；明确加载后使用，配置里不写密钥。
@@ -139,6 +142,8 @@ Optional curated video-case discovery helps with sequence design, continuous obj
 Clone this repository once and load its root SKILL.md in your agent host. Install Python 3.10+, Node 22+, FFmpeg, and project-local HyperFrames 0.8.72 / GSAP 3.14.2. Supply an explicit browser executable. Run `python3 setup.py --check --runtime ... --browser ...` before rendering. Brand profiles and browser checks are optional, described above and in the linked references.
 
 Deliverables include editable sources, project dependencies, adopted-asset provenance and MP4 output. Technical checks never establish human audiovisual approval. No bundled paid generation, cloud credentials or upload service. See [credits](references/sources.md), [licenses](THIRD_PARTY_NOTICES.md), and [changes](CHANGELOG.md).
+
+Each new film starts from a fixed-heading [brief](references/brief-template.md); readability, safe-area and loudness [defaults](references/craft-defaults.md) are numbers you may override with a stated reason. `check_readability.py` flags captions and holds that are too short, `qa_delivery.py` measures platform loudness, separates designed holds from suspicious freezes and builds three contact sheets for a clean-context [review](references/independent-review.md) that restates the film before listing defects, with no scoring. Revision cards plus `compare_frames.py` prove that frames outside a revision's scope did not change.
 
 For new HTML renders, declare cue roles and prominence on the existing timeline. Selected actions can smoothly duck added music with explicit project settings. Final-movie context windows feed the existing review, which must retain pending status without actual listening; this checks coverage and version binding, not perceived audibility. Re-export legacy timelines and follow the migration in [production events](references/events-and-tools.md).
 

@@ -16,6 +16,39 @@ python3 "$SKILL/scripts/production_timeline.py" check "$PROJECT/derived/producti
 
 案例采用记在原制作说明，原文与来源回执留在 references。实际改写的代码、字体和媒体才进入运行依赖；未执行的提示词、检索索引不绑定影片渲染。只改推荐标签不应使旧片过期；实际时间源、采用素材或实现字节变化则必须重建对应消费者与证据。
 
+## 阅读停留与画面文字（可选）
+
+观众需要读完的文字或画面，写在所属镜头的 `reads` 里，不另建字段：
+
+```json
+"reads": [{"start": 3.2, "end": 6.0, "revealCompleteAt": 3.6, "min_hold": 2.0, "purpose": "读完定义",
+           "text": "提示词就是任务说明", "text_px": 64, "role": "term"}]
+```
+
+- `start`／`end` 取全片绝对秒，须落在镜头内，按先后排列且不重叠；`revealCompleteAt` 是文字完全显示的时刻；`min_hold` 是完整显示后至少停留的秒数，须满足 `end − revealCompleteAt ≥ min_hold`；`purpose` 写观众要读懂什么。这五项由导出器校验。
+- 以下三项可选：`text` 是屏幕上要读完的文字，供停留公式计算；`text_px` 是交付画幅下的实际渲染字号（像素）；`role` 取 `hook`（开头主句）、`term`（术语）或 `cta`（行动入口）。填写时导出器只校验格式。
+- 字幕仍写在事件的 `caption`，不进 `reads`。
+- 全部可选，旧时间线不填照常导出。[可读性检查](#可读性与成片测量)只对已填的项提示；成片测量把 `reads` 区间当作设计停留，不列为冻结待查。旧样例中空的 `reading_windows` 从未被任何工具读取，已删除；旧工程里出现可忽略。
+
+## 可读性与成片测量
+
+```sh
+python3 "$SKILL/scripts/check_brief.py" "$PROJECT/brief.md" --mode new --platform douyin
+python3 "$SKILL/scripts/check_readability.py" "$PROJECT/timeline.json" --brief "$PROJECT/brief.md"
+python3 "$SKILL/scripts/qa_delivery.py" "$PROJECT/renders/final.mp4" --timeline "$PROJECT/timeline.json" \
+  --platform shipinhao --out "$PROJECT/qa"
+python3 "$SKILL/scripts/compare_frames.py" "$PROJECT/qa/seek-old" "$PROJECT/qa/seek-new" --scope 3.2-5.0
+```
+
+| 工具 | 查什么 | 退出码 |
+|---|---|---|
+| `check_brief.py` | 制作单的必填标题是否齐全、非空；竖屏信息流平台是否写了开头 3 秒或豁免理由。只查有没有，不评内容 | 缺必填项为 1 |
+| `check_readability.py` | 字幕读速、单条时长、行数；`reads` 的停留是否够读完；声明字号是否低于下限；术语是否出现在字幕或画面文字里。阈值见[数字默认值](craft-defaults.md) | 只提示，恒为 0 |
+| `qa_delivery.py` | 成片整合响度与真峰值（目标取 profile 的 `delivery.loudness`）；冻结段分为设计停留、待查和短停顿；检出切点与计划切点比对；生成 0–3 秒、手机尺寸、节拍三张联系表和 `summary.md` | 响度不达标，或时间线声明有声而成片没有音轨时为 1 |
+| `compare_frames.py` | 修订前后：截帧目录模式下范围外逐像素一致；EDL 模式下范围外片段的源文件与出入点不变 | 范围外有变化为 1 |
+
+`qa_delivery.py` 调用 `scripts/vendor/video-director/qa_video.py`（锁定上游提交，原样未改），需要 ffmpeg、numpy 和 Pillow；`compare_frames.py` 的截帧模式需要 Pillow，截帧目录用 `check_timeline_seek.py` 在新旧工程的同一组时间点上分别生成。提示级结果不拦交付，但要处理，或在制作单「自主决定」写明不改的理由。测量只证明技术项，不代替试听和作者认可。
+
 ## 场景声音决定与旧工程迁移
 
 在原 timeline 的 `sound_design` 中按既有镜头 ID 记录决定。每个镜头恰好覆盖一次，相同决定可合并 `scene_ids`，时间仍只取 shots/events，不另写一份。以下是字段示意，填入当前工程真实 ID 后使用：

@@ -29,4 +29,4 @@
 
 显式设置 SANSHENG_VIDEO_PROFILE_DIR 时读取该目录 profile.json；否则只识别用户主动建立的仓根 profile/（可为链接）。运行 `python3 setup.py --show-profile` 获取真实配置与根目录。配置错误明确报错，不默默改品牌。
 
-推荐字段见 profile.example/profile.json：brand、content_rules、output_root、legacy_root。可选 `media_library` 由用户显式配置 `root`、`tool` 和 `usage`；相对路径按 profile 根解析，不假定本机目录或工具接口。未启用时继续项目与在线来源，不要求建设素材库。legacy_root 仅用于已有生成执行器等私有能力，不是素材目录。旧配置中的 asset_roots、cold_storage_root 被忽略且不向 Agent 暴露。资源相对 profile 解析；交付只复制实际采用且有权使用的文件。profile 不保存密钥。
+推荐字段见 profile.example/profile.json：brand、content_rules、output_root、legacy_root、delivery。`delivery.loudness` 给各平台的整合响度目标（LUFS）与真峰值上限，`qa_delivery.py` 按它判定；`delivery.feed_platforms` 列出要求开头 3 秒静音可懂的竖屏信息流平台；`delivery.caption_cps` 覆盖字幕读速上限（`default`／`learners`，字/秒）。可选 `media_library` 由用户显式配置 `root`、`tool` 和 `usage`；相对路径按 profile 根解析，不假定本机目录或工具接口。未启用时继续项目与在线来源，不要求建设素材库。legacy_root 仅用于已有生成执行器等私有能力，不是素材目录。旧配置中的 asset_roots、cold_storage_root 被忽略且不向 Agent 暴露。资源相对 profile 解析；交付只复制实际采用且有权使用的文件。profile 不保存密钥。

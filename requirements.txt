@@ -1,2 +1,3 @@
 # Core scripts use Python standard library.
 # Browser seek checks only: install with python3 -m pip install playwright==1.62.0
+# Delivery QA only (qa_delivery.py, compare_frames.py frame mode): python3 -m pip install numpy Pillow

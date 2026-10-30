@@ -9,5 +9,28 @@
   },
   "content_rules": [],
   "output_root": null,
-  "legacy_root": null
+  "legacy_root": null,
+  "delivery": {
+    "root": null,
+    "loudness": {
+      "douyin": -14,
+      "xhs": -14,
+      "shipinhao": -16,
+      "default": -14,
+      "true_peak_max": -1.0,
+      "normalize_true_peak": -1.5
+    },
+    "feed_platforms": [
+      "douyin",
+      "shipinhao",
+      "xhs",
+      "tiktok",
+      "reels",
+      "shorts"
+    ],
+    "caption_cps": {
+      "default": 9,
+      "learners": 7
+    }
+  }
 }

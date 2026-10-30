@@ -1,0 +1,7 @@
+{
+  "repository": "https://github.com/win4r/video-director",
+  "commit": "4747e5c153509ef7f8f7fd1a0aad6acfda36280d",
+  "source_path": "video-director/scripts/qa_video.py",
+  "sha256": "fb0aee3ec22c84a105aa652b7f76e9127e51bd41dd657b5501e7e7730f65b4c9",
+  "modifications": "none; timeline translation, platform loudness targets and Chinese summary live in scripts/qa_delivery.py"
+}

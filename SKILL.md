@@ -1,73 +1,86 @@
 ---
 name: sansheng-video
-description: 制作或编辑视频：产品宣传片、文章和课程转视频、代码动画、真人口播与录屏剪辑，以及字幕、声音和素材处理。已有工程按差异继续；只研究他人成片不自动启动制作。
+description: 当用户要制作或修改视频时使用：产品宣传片、文章／课程／知识讲解转视频、代码动画、AI 生成镜头短片、真人口播与录屏剪辑，以及配音、配乐音效、字幕、封面和成片交付；已有工程按差异继续。只研究他人成片不启动制作；静态配图与发布交给对应技能。
 metadata:
   author: sanshengai
   version: "2.5.0"
-  compatibility: Python >=3.10, Node >=22, FFmpeg and HyperFrames 0.8.72; Playwright for browser checks
+  compatibility: Python >=3.10, Node >=22, FFmpeg and HyperFrames 0.8.72; Playwright for browser checks; numpy and Pillow for delivery QA
 ---
 
 # Video · 单入口视频制作
 
-负责从内容到可编辑成片的制作。默认用 HyperFrames 执行代码镜头，FFmpeg／EDL 处理真实媒体和声音。Xilo 等参考的方法已合并在内部，不再启动另一个导演或让用户选择框架。
+负责从内容到可编辑成片的制作。默认用 HyperFrames 执行代码镜头，FFmpeg／EDL 处理真实媒体和声音。参考过的方法已合并在内部，不再启动另一个导演，也不让用户选择框架。
 
-## 先判断项目状态
+## 每次先做
 
-- **已有工程或局部修改**：读取原工程、实际依赖锁和本次差异，沿用既有引擎与内容，只重做受影响部分。现存 Remotion 工程也如此，不自动迁移。
-- **已有口播、录屏或 B-roll**：使用 [媒体编辑](references/media-editing.md)。先检查实际素材，不必补写文章。
-- **新作或整体重做**：读取 [制作流程](references/production.md)，确定观众要理解什么，再组织镜头和声音。
-- **只处理素材、声音或字幕**：只读制作流程中对应部分，不启动全链。
+1. 在 Skill 根运行 `python3 setup.py --show-profile`。新会话、接手旧工程、局部修改都要执行。返回配置时，读其中的 `context_file`；涉及素材且配置了 `media_library` 时，再读它的 `usage`。没有配置时，用项目自选的中性视觉，不套作者品牌。
+2. 判断任务类型，决定从哪里进入：
 
-主入口不承担内容产品的事实裁决。已有文章可直接转视频；课程、角色和栏目规范由输入方提供，不把写长文当作所有视频的前置。每个新会话首次处理视频制作、剪辑、声音或素材任务时，都先运行 `python3 setup.py --show-profile`；接手旧工程和局部修改同样执行。返回配置时读取其中 `context_file` 和当前业务对应的规则；涉及素材且显式配置了 `media_library` 时，再读它的 `usage`，依其根目录、工具与取用约定处理。品牌从项目配置、显式 `SANSHENG_VIDEO_PROFILE_DIR` 或用户建立的本地 `profile/` 获取；无配置时使用项目自选的中性视觉，不套作者品牌。已有工程局部修改仍沿用其引擎、内容和项目约定。
+| 任务 | 从哪里进入 | 先写什么 |
+|---|---|---|
+| 新作或整体重做 | 阶段 1 | 制作单（`new`） |
+| 续作，或在已认可样板上扩片 | 阶段 1 | 制作单（`continue`），先列已认可组合 |
+| 一次交付多条的系列或批量 | 阶段 1 | 制作单（`series`），再按[系列与批量扩展](references/production.md#系列与批量扩展) |
+| 已有工程局部修改 | 受影响的阶段 | [修订卡](references/production.md#修订卡)；沿用原引擎、内容和约定，不重选风格 |
+| 只处理素材、声音或字幕 | 对应阶段 | 不启动全链 |
+| 已有口播、录屏或 B-roll | [媒体编辑](references/media-editing.md) | 先检查实际素材，不补写文章 |
 
-运行本包的相对脚本路径时，每次显式以实际 Skill 根目录为工作目录；终端调用可能不保留上次 `cd` 的状态。素材库工具的相对路径按返回的 profile 根解析，媒体存储目录与工具目录分别取配置中的真实值。
+3. 运行本包的相对路径脚本时，每次显式以 Skill 根为工作目录；终端不一定保留上次的 `cd`。
 
-## 固定责任链
+内容的事实裁决不归本 Skill：已有文章可直接转视频，课程、角色和栏目规范由输入方提供。项目约定、作者偏好和其他 Skill 的借调关系以 profile 的 `context_file` 为准。
 
-制作说明 → 镜头需求与素材／声音选择 → 实际片段验证不确定处 → 同一音画时间源与全片制作 → 视听复核及局部修改 → 检查与工程交付。新作的交接与回退范围统一由 [制作流程](references/production.md) 管理；专项参考补方法，不另开一条总流程。已有工程的局部任务直接进入受影响环节。
+## 阶段
 
-声音设计随场景决定：保留足够的原声、补入合适素材或有意留白。空计划不能代表已做决定；保留意图还须传给原声的降噪／门控，拟采用的声音须由实际装配器支持并进入音轨，再检查最终混音。具体接线见 [生产事件与工具](references/events-and-tools.md)，不要求每镜添加音效。
+| 阶段 | 交出什么 | 进入下一步的条件 | 读哪份 |
+|---|---|---|---|
+| 1 制作单 | `brief.md`，按[制作单模板](references/brief-template.md) | `check_brief.py` 无缺项；核心主张、结构或牵动全片的视觉方向已有作者判断或明确授权 | [制作流程 §1](references/production.md#1-内容变成影片) |
+| 2 镜头与素材声音 | 每镜 ID、目的、变化和声音决定；素材候选与缺件 | 每个镜头都有可取得的画面和声音决定 | [§2](references/production.md#2-镜头设计) |
+| 3 时间源 | `timeline.json` 或 EDL；真实旁白块 | `production_timeline.py check` 通过；`check_readability.py` 的提示已处理或写了理由 | [§3](references/production.md#3-按声音角色确定真实时间)、[生产事件与工具](references/events-and-tools.md) |
+| 4 风险片段验证 | 覆盖最不确定处的一段连续片段 | 开篇、关键交接和音乐成立；已验证的方向和局部任务跳过此步 | [§4](references/production.md#4-制作与修订) |
+| 5 全片制作 | 成片与渲染回执 | 计划的声音全部入轨；全片能连续播放 | [§4](references/production.md#4-制作与修订) |
+| 6 测量与独立评审 | `qa/summary.md`、三张联系表、评审意见 | 响度达标；P0 已修，最多再修一轮复查 | [§5](references/production.md#5-检查和交付)、[独立评审](references/independent-review.md) |
+| 7 听审与交付 | 交付目录、交付报告 | 下面的交付清单逐条有证据 | [§5](references/production.md#交付报告) |
 
-新作先由 Agent 研究内容、提出推荐，再与作者对齐核心表达、段落结构和真实选材的视觉方向，按 [制作流程](references/production.md#前期与作者共同定方向) 处理尚未解决的关键取舍。作者的受众经验与审美不能用模型评分代替，也不能把海量筛选工作交回作者。已有决定持续有效；局部修改、已认可的方向与明确授权自行决定的任务不重复确认，普通构图、目录和实现细节自行完成。
+阶段之间可以围绕高风险片段回看；回退范围由实际依赖决定，见制作流程 §4。
 
-让画面解释内容：对象之间发生什么变化、为什么变化、观众如何看懂。不要默认把文章逐段变成大标题和字幕页；也不为追求运动牺牲阅读与理解。
+## 交付清单
 
-## 按需技术资料
+| # | 检查 | 证据 |
+|---|---|---|
+| 1 | 最终文件完整解码，画幅、帧率、时长、音轨与制作单一致 | ffprobe／渲染回执 |
+| 2 | 成片响度在平台目标 ±1 LU 内，真峰值 ≤ −1 dBTP | `qa_delivery.py` |
+| 3 | 首帧是完整构图 | 首帧截图 |
+| 4 | 开头 3 秒：评审只看 0–3 秒联系表就能说出这片讲什么，或制作单已写豁免理由；说不出时记 P1，修好或在交付报告说明 | 评审意见 |
+| 5 | 讲解类片子的术语已说出并显示 | 字幕／画面文字 |
+| 6 | 最长句、字幕读速、手机安全区没有未处理的提示 | `check_readability.py`、手机尺寸联系表 |
+| 7 | 计划的声音全部入轨 | 渲染回执的 `sound_wiring` 或装配器回执 |
+| 8 | 听审状态如实，没试听的标「待验」 | 最终验收记录 |
+| 9 | 续作或扩片：已认可组合逐项对照过，修改范围外的画面没变 | 对照图、`compare_frames.py` |
+| 10 | 系列：全部目标影片的开头和结尾横向一致 | 横向联系表 |
+| 11 | 许可与署名齐全；录屏已脱敏 | 来源表、`ATTRIBUTION.md` |
+| 12 | 交付报告已写 | 交付报告 |
 
-| 工作 | 读取／调用 |
-|---|---|
-| 视频封面、首帧、横竖构图或整季换封面 | [封面与首帧](references/video-covers.md)：真实画面先行，分别构图，绑定原时间线与同版交接 |
-| 新产品首发、功能宣传与品牌片 | [宣传片方法](references/promotion-film.md)：从真实产品动作、信息关系与成果推导视觉语言、声音和局部反馈；沿当前制作链执行 |
-| 知识、城市／历史或角色系列讲解 | [知识解释与系列表达](references/knowledge-explainers.md)：从问题推导关系变化、贯穿对象和角色进退；资料适用范围沿原来源记录核对 |
-| 新作定风格、寻找绘制／镜头实现 | [Lemo 风格与实现](references/lemo-opuscar.md)：59种风格按用途与表达机制有界搜索，inspect看前提与源码依据，选中才取代码；电影语法另按需检索 |
-| 自己的镜头方案仍有段落组织、对象连续或音画编排问题 | [视频案例参考](references/opus-video-cases.md)：8 条精选案例按需本地检索，选中才取原文；无合适结果继续原创，局部改动不重选风格 |
-| 镜头、空间、材质与运动 | [视觉机制](references/visual-craft.md) |
-| 新 HTML 镜头和渲染 | [HyperFrames 执行](references/hyperframes.md)，依项目锁核实实际 CLI help |
-| 音画统一、字幕与真实旁白锚点 | [生产事件与工具](references/events-and-tools.md) |
-| 角色表演、生成镜头及连续片段 | [生成镜头](references/generated-shots.md)；角色对话、数字人口播或口型／接话问题，同时读 [配音的对话表演](references/tts.md#角色对话的表演)，按真实音频输入能力选路径 |
-| 逐镜生成追求大片感的叙事短片（奇幻动画、绘本改编、风景史诗） | [电影感生成短片](references/cinematic-generated-film.md)：蓝本选择、生成前三道关卡（剧情因果审查、静图版、动态画风小样）、大景与揭示镜头、运镜转场、画风一致性 |
-| 写发给视频生成器的逐镜请求（任意入口） | [镜头请求模板](references/shot-request-template.md)：固定字段与顺序、人数锁与机位锁、发送前因果自查、返修纪律、镜头表批量拼装 |
-| 通过 Muse 编排生成、参考图交接或逐镜返工 | [Muse 结构化交接](references/muse-handoff.md)：影片与镜头两层交接、Muse 特有要点、网页执行与回收；不假定工具能力 |
-| 生成片段的场景光照、色彩、空间声音与质量归因；配乐/音效该原生生成还是后期 | [生成片段的视听设计](references/generated-audiovisual.md)：落实到首帧、镜头请求和同一混音时间线；环境声与拟音原生、配乐整片单独做 |
-| 裁剪、分段装配、原声与响度 | [媒体编辑](references/media-editing.md) |
-| 按需查动效、取代码与配声音 | [动效与音效](references/motion-and-sound.md)：镜头设计时触发，Motion Prompt 检索／缓存与 Openverse 下载接入原时间线 |
-| 项目素材、品牌与许可 | [资源配置](references/assets-and-profile.md) |
-| 宣传片卖点证据、品牌原件预览和浅层成品交付 | [证据与交付工具](references/promotion-evidence.md)：可选接入原时间线，核对来源、可见 Logo 占比与交付副本 |
-| 按镜头找音效、下载与入片 | [资源配置](references/assets-and-profile.md) 决定来源顺序；项目与显式精选库缺件后走 [Openverse 音效](references/openverse-sfx.md)，接入现有素材锁与声音事件 |
-| 需要新增配音 | [TTS 选型与制作](references/tts.md)：VoxCPM2 主候选，Kokoro 轻量备用；先定声音再用实际时长驱动时间线 |
-| 通用真实 B-roll 缺件 | [在线画面素材](references/stock-footage.md)：Pexels 主源、Pixabay 备用，按镜头最多 3 个候选 |
-| 发布包的能力边界和借鉴来源 | [来源与采用](references/sources.md) |
+## 铁律
 
-工具不自动安装 latest、不调用付费生成服务、不上传文件。生成图像、TTS、搜索等使用当前宿主已有且获授权的工具；本包的本地 TTS 与素材检索能力按对应手册调用；其他 API 不伪装已提供。缺组件明确指出缺什么，不偷偷改供应商或降为静态卡片来冒充完成。
+- 不编造事实、数据、亲身经历、界面状态或 AI 回复；生成画面不冒充真实证据，模拟窗口标为示意。
+- 不自动安装 latest、不调用付费生成服务、不上传、不发布；制作授权不等于发布或付费授权。缺组件时明说缺什么，不偷换供应商，也不降为静态卡片冒充完成。
+- 机器检查只证明技术项。完整播放、音色、叙事和审美要靠真实视听；没试听就标「待验」，可以先交候选；不代填人工批准，不用自评分代替作者认可。
+- 时间只有一个来源：`timeline.json` 或 EDL。改了时间数据就重建它的消费者，不手改派生产物；修订用新输出名，保留旧版本。
+- 声音随场景决定：保留够用的原声、补合适的素材，或有意留白；空计划不算决定。拟采用的声音必须进入音轨并检查最终混音，但不要求每镜都加音效。
+- 录屏交付前检查账号、通知、令牌和个人资料。音效遇到 NC、ND、SA 许可不直接入片，CC BY 必须署名。
+- 系列交付前，横向检查全部目标影片；批量出片前，对全部目标影片 × 全部画幅先跑一遍不出片的版式检查。
+- 已有决定持续有效，「不重复确认」指不重复问作者，不等于不再对照：扩片和续作仍要逐项对照已认可组合。
 
-## 交付与证据
+## 按需资料
 
-已接受的本地交付可以用 [发布交接](references/publish-handoff.md) 导出中性发布包，交给`sansheng-distribute`；不要求 Write 介入，不重新渲染，制作授权不自动变成发布授权。
+**阶段 1**　必读[制作单模板](references/brief-template.md)和[数字默认值与套路清单](references/craft-defaults.md)。宣传片读[宣传片方法](references/promotion-film.md)，从作品目录选材读[真实作品选材](references/promotion-selection.md)，介绍真实网页读[真实网页介绍](references/web-walkthrough.md)；知识、城市／历史、角色系列读[知识解释与系列表达](references/knowledge-explainers.md)；面向发布的片子同时考虑[封面与首帧](references/video-covers.md)。
 
-面向发布的新视频都应有与内容相符的封面，短、中、长片同样适用；作者已选样式持续有效。需要设计或修改时按 [封面与首帧](references/video-covers.md) 执行，不因局部改音等无关任务重开封面流程。
+**阶段 2**　镜头、空间、材质与运动读[视觉机制](references/visual-craft.md)；新作定风格、找绘制或镜头实现查 [Lemo 风格与实现](references/lemo-opuscar.md)；段落组织、对象连续或音画编排卡住时查[视频案例参考](references/opus-video-cases.md)；动效术语、代码与配声读[动效与音效](references/motion-and-sound.md)。素材、品牌与许可读[资源配置](references/assets-and-profile.md)，音效缺件走 [Openverse 音效](references/openverse-sfx.md)，真实 B-roll 缺件走[在线画面素材](references/stock-footage.md)。
 
-每次交付检查最终文件可用、尺寸／时长／帧率／音轨意图及完整解码。改时间逻辑才补乱序与冷启动检查；改文字看最长句与手机安全区；换声音核同步和混音。已有有效证据不重复跑全量验证。
+**生成镜头**　角色表演与连续片段读[生成镜头](references/generated-shots.md)，角色对话或口型同时读[配音的对话表演](references/tts.md#角色对话的表演)；追求大片感的逐镜叙事短片读[电影感生成短片](references/cinematic-generated-film.md)（生成前三道关卡）；写发给生成器的逐镜请求用[镜头请求模板](references/shot-request-template.md)；经 Muse 编排读 [Muse 结构化交接](references/muse-handoff.md)；光照、色彩、空间声音，以及配乐和音效该原生生成还是后期做，读[生成片段的视听设计](references/generated-audiovisual.md)。
 
-机器检查只证明对应技术项。完整播放、音色、叙事与审美需要真实视听；不能自动填写人工批准，也不以自评分替代。未具备听审条件时如实标记待验，不阻止明确要求先交付候选的工作。
+**阶段 3**　必读[生产事件与工具](references/events-and-tools.md)；新增配音读 [TTS 选型与制作](references/tts.md)；真实媒体按场景剪辑用 [EDL 结构](references/edl-schema.md)。
 
-保留 MP4、源工程、内容说明、时间源、素材来源与许可证据、依赖锁和必要回执；修订中使用新输出名保留旧版本。用户授权清理后，收敛为一套可恢复工程与最终交付，删除被替代渲染、重复打包及可再生缓存；先核对实际依赖和恢复入口，不删除仍被引用的素材或运行环境。保留清理范围与关键失败结论，不以清理抹掉验收边界。输入变化使相关旧回执失效。制作授权不自动包含对外发布或新服务付费。
+**阶段 4–5**　新 HTML 镜头和渲染读 [HyperFrames 执行](references/hyperframes.md)，依项目锁核实际 CLI help；裁剪、装配、原声与响度读[媒体编辑](references/media-editing.md)；横竖版或保留已认可部分做局部修订读[多画幅与局部反馈](references/multi-aspect-revisions.md)；宣传片卖点证据与品牌原件预览读[证据与交付工具](references/promotion-evidence.md)。
+
+**阶段 6–7**　评审按[独立评审](references/independent-review.md)；已接受的本地交付交给 `sansheng-distribute` 时读[发布交接](references/publish-handoff.md)，不重新渲染；能力边界和借鉴来源见[来源与采用](references/sources.md)。

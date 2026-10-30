@@ -48,6 +48,14 @@ def validate(timeline, narration=None):
     if "direction" in timeline:
         review["direction"] = timeline["direction"]
     schedule(review)
+    for shot in timeline["shots"]:
+        for read in shot.get("reads", []):
+            if "text" in read:
+                nonempty(read["text"], f"{shot['id']}.read.text")
+            if "text_px" in read and number(read["text_px"], f"{shot['id']}.read.text_px") <= 0:
+                raise ValueError(f"{shot['id']}.read.text_px must be positive")
+            if "role" in read and read["role"] not in {"hook", "term", "cta"}:
+                raise ValueError(f"{shot['id']}.read.role must be hook, term or cta")
     if type(timeline.get("requires_audio")) is not bool:
         raise ValueError("requires_audio must explicitly be true or false")
     voice = timeline.get("narration")

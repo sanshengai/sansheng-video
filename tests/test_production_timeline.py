@@ -190,6 +190,19 @@ class ProductionTimelineTests(unittest.TestCase):
             with self.subTest(data=data), self.assertRaises(ValueError):
                 production.products(data)
 
+    def test_optional_read_text_fields_are_checked_only_when_present(self):
+        read = {'start': 1, 'end': 3, 'revealCompleteAt': 1.2, 'min_hold': 1.5, 'purpose': '读完结论'}
+        data = timeline()
+        data['shots'][0]['reads'] = [dict(read)]
+        production.products(data)
+        data['shots'][0]['reads'] = [dict(read, text='让复杂变清楚', text_px=64, role='term')]
+        production.products(data)
+        for bad in ({'text': ' '}, {'text_px': 0}, {'text_px': True}, {'role': 'title'}):
+            data = timeline()
+            data['shots'][0]['reads'] = [dict(read, **bad)]
+            with self.subTest(bad=bad), self.assertRaises(ValueError):
+                production.products(data)
+
     def test_stale_input_dependency_generated_output_and_missing_evidence(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp).resolve()

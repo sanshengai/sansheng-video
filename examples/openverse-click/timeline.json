@@ -10,8 +10,7 @@
     {
       "id": "click-test",
       "start": 0,
-      "end": 5,
-      "reading_windows": []
+      "end": 5
     }
   ],
   "events": [

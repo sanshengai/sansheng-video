@@ -1,0 +1,5 @@
+{
+  "delivery": {
+    "feed_platforms": ["douyin", "shipinhao", "xhs", "tiktok", "reels", "shorts"]
+  }
+}

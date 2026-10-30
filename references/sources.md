@@ -14,6 +14,7 @@
 | [chuspeeism/dashi-animationstyle](https://github.com/chuspeeism/dashi-animationstyle) | 中文词句锚点和字幕／动作关系 | 方法转述，不把估时包装成对齐 |
 | [alchaincyf/huashu-motion](https://github.com/alchaincyf/huashu-motion) | 真实产品研究、信息形状、视觉性格、关键画面、原生声音/修订与经验回流 | 固定5f2608c2e12abcf518f74dde86093b19f7f88603；形成按需宣传片方法，本地原生工具实际试制；未捆绑运行器或采样，未把技术验绿当视听认可 |
 | [alchaincyf/huashu-art-motion](https://github.com/alchaincyf/huashu-art-motion) | 大场景、构图、风格语言与故事母题分离、跨场景验证和正面经验 | 固定8a0d7d72ca65fcce6f8ba82c4a6c8dfe35b8422c；方法转述，与huashu-motion分别研究；不承诺未验证的透明渲染 |
+| [win4r/video-director](https://github.com/win4r/video-director) | 计划用数字写、数字是默认值且偏离写理由；制作单固定标题；可读性与安全区默认值；干净上下文评审先复述主张再列缺陷；修订卡与范围外不变的证明；交付清单 | 固定4747e5c153509ef7f8f7fd1a0aad6acfda36280d；方法改写为中文模板与检查，数字先作提示、按真实片校准；`qa_video.py` 原样放入 vendor 由适配器调用（MIT）；不采用其评分、固定高潮比例与英文语境的读速 |
 | [WaterDJiang/Wattter_openSkills](https://github.com/WaterDJiang/Wattter_openSkills) | 工程版本、素材与渲染关联、帧检查 | 复用本项目单套机制 |
 | [Vincentwei1021/video-shotcraft](https://github.com/Vincentwei1021/video-shotcraft) | 镜头卡、构图、衔接和可编辑性 | 合并流程，不新建工作台 |
 

@@ -1,0 +1,24 @@
+{
+  "fps": 30,
+  "duration": 9,
+  "canvas": [1080, 1920],
+  "requires_audio": false,
+  "sound_design": [
+    {"scene_ids": ["hook", "compare", "close"], "mode": "quiet", "reason": "无声竖屏样片，靠字幕和画面说明。"}
+  ],
+  "shots": [
+    {"id": "hook", "start": 0, "end": 3,
+     "reads": [{"start": 0.2, "end": 3, "revealCompleteAt": 0.6, "min_hold": 2.0, "purpose": "读完开头主句",
+                "text": "一句话说清你要什么", "text_px": 96, "role": "hook"}]},
+    {"id": "compare", "start": 3, "end": 6.5},
+    {"id": "close", "start": 6.5, "end": 9}
+  ],
+  "events": [
+    {"id": "cap-hook", "scene_id": "hook", "start": 0.2, "end": 3, "timing_basis": "authored",
+     "caption": "一句话说清你要什么", "visual": {"type": "title-card"}},
+    {"id": "cap-compare", "scene_id": "compare", "start": 3, "end": 6.5, "timing_basis": "authored",
+     "caption": "模糊的要求换来模糊的结果", "visual": {"type": "side-by-side"}},
+    {"id": "cap-close", "scene_id": "close", "start": 6.5, "end": 9, "timing_basis": "authored",
+     "caption": "先写目标，再写限制", "visual": {"type": "checklist"}}
+  ]
+}
