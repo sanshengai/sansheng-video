@@ -145,6 +145,15 @@ class CheckReadabilityTests(unittest.TestCase):
             self.assertEqual(len(speed_notices('--profile-dir', str(prof))), 1)  # profile 上限 5
         self.assertEqual(cr.read_speed_limits({'delivery': {'caption_cps': {'learners': 'x'}}}), cr.READ_SPEED_MAX)
 
+    def test_malformed_reads_is_input_error(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / 't.json'
+            p.write_text(json.dumps({'canvas': [1080, 1920], 'shots': [{'id': 'a', 'start': 0, 'end': 2, 'reads': 5}],
+                                     'events': []}), encoding='utf-8')
+            proc = subprocess.run([sys.executable, str(CLI), str(p)], capture_output=True, text=True)
+            self.assertEqual(proc.returncode, 2, proc.stderr)
+            self.assertNotIn('Traceback', proc.stderr)
+
     def test_cli_exit_codes(self):
         with tempfile.TemporaryDirectory() as d:
             bad = Path(d) / 'bad.json'

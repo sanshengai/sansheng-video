@@ -77,11 +77,20 @@ def canon_platform(name):
     return low or None
 
 
+NEGATED = re.compile(r"(不发|不投|不上|不在|不是|不含|非|除了)\s*$")
+
+
 def detect_platforms(body):
+    """按出现位置返回平台；「不发抖音」「非小红书」这类被否定的平台不算。"""
     low = body.lower()
-    found = []
+    hits = []
     for alias, code in ALIASES:
-        if alias in low and code not in found:
+        for m in re.finditer(re.escape(alias), low):
+            if not NEGATED.search(low[max(0, m.start() - 4):m.start()]):
+                hits.append((m.start(), code))
+    found = []
+    for _, code in sorted(hits):
+        if code not in found:
             found.append(code)
     return found
 
@@ -127,8 +136,8 @@ def check_text(text, mode="new", platform=None, profile_dir=None):
         elif is_empty(body):
             missing.append("内容为空：开头 3 秒")
         else:
-            m = re.match(r"^豁免[：:](.*)$", body.strip(), flags=re.S)
-            if m and not _norm(m.group(1)):
+            m = re.match(r"^豁免[：:]?(.*)$", body.strip(), flags=re.S)
+            if m and not _norm(m.group(1).lstrip("：:")):
                 missing.append("开头 3 秒：豁免必须写理由")
 
     terms = sections.get("术语")

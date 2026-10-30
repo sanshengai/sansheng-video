@@ -6,7 +6,9 @@ screenshots are paired by sample time; outside the scope they must be
 pixel-identical, inside the scope they are listed for viewing.
 
 EDL mode: OLD and NEW are EDL JSON files. Every scene that does not touch the
-scope must keep its timeline interval, source and source in/out points.
+scope must keep its timeline interval, source, source in/out points and, when
+the source file exists next to the EDL, its sha256. Top-level audio fields
+(audio_mode, audio_file and the audio file's sha256) must not change either.
 
 Usage:
   python3 compare_frames.py OLD_QA_DIR NEW_QA_DIR --scope 3.2-5.0[,8-9] [--json]
@@ -17,6 +19,7 @@ Exit code 1 when anything outside the scope changed, 2 on unusable input.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -109,22 +112,32 @@ def compare_frames(old_dir, new_dir, scope):
 SCENE_KEYS = ("timeline_start", "timeline_end", "source", "source_in", "source_out")
 
 
-def scenes(path):
+def file_sha(base, name):
+    """源文件按 EDL 所在目录解析；不存在时返回 None（只比对路径与出入点）。"""
+    path = Path(base) / str(name)
+    return hashlib.sha256(path.read_bytes()).hexdigest() if path.is_file() else None
+
+
+def load_edl(path):
     data = json.loads(Path(path).read_text())
     items = data.get("scenes") if isinstance(data, dict) else None
     if not isinstance(items, list) or not items:
         raise ValueError(f"{path} 不是含 scenes 的 EDL")
+    base = Path(path).parent
     out = []
     for i, scene in enumerate(items):
         if not isinstance(scene, dict) or any(k not in scene for k in SCENE_KEYS):
             raise ValueError(f"{path} 第 {i + 1} 个 scene 缺少 {'/'.join(SCENE_KEYS)}")
-        out.append({k: scene[k] for k in SCENE_KEYS} | {"n": scene.get("n", i + 1)})
-    return out
+        out.append({k: scene[k] for k in SCENE_KEYS}
+                   | {"source_sha256": file_sha(base, scene["source"]), "n": scene.get("n", i + 1)})
+    audio = {"audio_mode": data.get("audio_mode"), "audio_file": data.get("audio_file")}
+    audio["audio_sha256"] = file_sha(base, audio["audio_file"]) if audio["audio_file"] else None
+    return out, audio
 
 
 def compare_edl(old_path, new_path, scope):
-    old, new = scenes(old_path), scenes(new_path)
-    key = lambda s: tuple(s[k] for k in SCENE_KEYS)
+    (old, old_audio), (new, new_audio) = load_edl(old_path), load_edl(new_path)
+    key = lambda s: tuple(s[k] for k in (*SCENE_KEYS, "source_sha256"))
     new_keys, old_keys = {key(s) for s in new}, {key(s) for s in old}
     result = {"mode": "edl", "changed_outside": [], "in_scope": [], "unchanged": [], "missing": []}
     for side, items, other in (("old", old, new_keys), ("new", new, old_keys)):
@@ -138,6 +151,8 @@ def compare_edl(old_path, new_path, scope):
                     result["unchanged"].append(s["n"])
             else:
                 result["changed_outside"].append({"side": side, "scene": s})
+    if old_audio != new_audio:
+        result["changed_outside"].append({"audio": {"old": old_audio, "new": new_audio}})
     return result
 
 

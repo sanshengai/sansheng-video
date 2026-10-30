@@ -3,7 +3,7 @@
 
 用法：
   python3 scripts/qa_delivery.py final.mp4 [--timeline timeline.json] [--platform douyin|shipinhao|xhs|…]
-                                 [--out qa/] [--profile-dir 目录] [--json]
+                                 --out 工程/qa [--profile-dir 目录] [--json]
 
 vendor 脚本只通过子进程调用，不 import、不修改。响度是否达标由本脚本自己判定；
 冻结段与切点只给提示。退出码：1 = 响度不达标；2 = vendor 没有生成 report.json 或输入有误；其余 0。
@@ -22,6 +22,7 @@ VENDOR = ROOT / "scripts" / "vendor" / "video-director" / "qa_video.py"
 
 DEFAULT_LUFS = -14.0          # 没有 profile 时的目标：主流短视频平台的常见整合响度
 DEFAULT_TRUE_PEAK_MAX = -1.0  # 真峰值上限：AAC 编码会抬高峰值，留 1 dB 余量防削波
+SILENT_LUFS = -70.0            # ebur128 的绝对门限：低于它视为静音轨
 LOUDNESS_TOLERANCE_LU = 1.0   # ±1 LU：平台响度归一的常见容差，见 references/craft-defaults.md
 HOLD_OVERLAP_RATIO = 0.5      # 与 reads 重叠达到冻结段一半以上 = 设计停留
 REVIEW_SECS = 3.0             # 非设计停留且 >= 3 秒 = 待查
@@ -38,8 +39,15 @@ def load_profile(profile_dir=None):
     return profile(profile_dir)
 
 
+def canon_platform(name):
+    """与 check_brief 共用平台别名：「视频号」→ shipinhao；认不出的原样小写。"""
+    from check_brief import canon_platform as canon
+    return canon(name)
+
+
 def resolve_targets(configuration, platform=None):
     """返回 {platform, target_lufs, true_peak_max, source}。"""
+    platform = canon_platform(platform)
     loud = {}
     if isinstance(configuration, dict):
         delivery = configuration.get("delivery")
@@ -90,15 +98,6 @@ def read_plan(timeline):
     bounds = sorted({float(v) for s in shots for v in (s["start"], s["end"])
                      if v > 1e-6 and v < end - 1e-6})
     beats = sorted({float(s["start"]) for s in shots})
-    by_id = {s.get("id"): s for s in shots}
-    quiet = []
-    for d in timeline.get("sound_design", []) or []:
-        if isinstance(d, dict) and d.get("mode") == "quiet":
-            for sid in d.get("scene_ids", []) or []:
-                s = by_id.get(sid)
-                if s:
-                    quiet.append({"from": float(s["start"]), "to": float(s["end"])})
-    quiet.sort(key=lambda q: q["from"])
     reads = []
     for s in shots:
         for r in s.get("reads", []) or []:
@@ -106,13 +105,14 @@ def read_plan(timeline):
             if a is not None and b is not None and b > a:
                 reads.append((a, b))
     reads.sort()
-    return {"cuts": bounds, "beats": beats, "quiet": quiet, "reads": reads,
+    return {"cuts": bounds, "beats": beats, "reads": reads,
             "requires_audio": timeline.get("requires_audio") is True}
 
 
 def vendor_timeline(plan):
+    # quiet 只表示「不加场景声音」，对白和整片配乐照常存在，不当作静音段交给 vendor。
     return {"scenes": [{"id": f"shot{i}", "start": b} for i, b in enumerate(plan["beats"])],
-            "cuts": plan["cuts"], "silences": plan["quiet"]}
+            "cuts": plan["cuts"]}
 
 
 # ---------------------------------------------------------------- 冻结段与切点
@@ -195,9 +195,8 @@ def build_summary_md(s):
     else:
         L.append(f"- 实测：整合响度 {ld['measured_lufs']} LUFS，真峰值 {ld['measured_true_peak']} dBTP")
     L.append("- 结论：" + ("响度达标" if ld["ok"] else "响度不达标：" + "；".join(ld["reasons"])))
-    if s.get("planned_silences"):
-        bad = [p for p in s["planned_silences"] if not p.get("ok")]
-        L.append(f"- 计划安静段：共 {len(s['planned_silences'])} 段，{len(bad)} 段实际不够安静（提示）")
+    for n in ld.get("notices", []):
+        L.append(f"- 提示：{n}")
     L += ["", "## 冻结段", ""]
     fz = s["frozen"]
     for key, title in (("design_hold", "设计停留（落在 reads 区间内）"),
@@ -229,7 +228,7 @@ def main(argv=None):
     ap.add_argument("video")
     ap.add_argument("--timeline")
     ap.add_argument("--platform")
-    ap.add_argument("--out", default="qa")
+    ap.add_argument("--out", required=True, help="测量输出目录，放在工程里，如 PROJECT/qa")
     ap.add_argument("--profile-dir")
     ap.add_argument("--json", action="store_true", help="标准输出打印 summary.json")
     args = ap.parse_args(argv)
@@ -278,12 +277,16 @@ def main(argv=None):
     aud = report.get("audio")
     lufs = aud.get("lufs") if aud else None
     tp = aud.get("true_peak") if aud else None
-    if aud is None:
-        # 无音轨只有在时间线声明有声时才是缺陷；无声作品照常通过。
+    notices = []
+    silent_track = aud is not None and (lufs is None or not math.isfinite(lufs) or lufs <= SILENT_LUFS)
+    if aud is None or (silent_track and plan and not plan["requires_audio"]):
+        # 无音轨（或只有静音轨）只有在时间线声明有声时才是缺陷；无声作品照常通过。
         if plan and plan["requires_audio"]:
             ok, reasons = False, ["时间线声明有声（requires_audio: true），成片却没有音轨"]
         else:
             ok, reasons = True, []
+        if aud is not None:
+            notices.append("时间线声明无声，成片带了一条静音轨；不影响判定，可在交付前去掉")
     else:
         ok, reasons = judge_loudness(lufs, tp, targets["target_lufs"], targets["true_peak_max"])
 
@@ -300,9 +303,8 @@ def main(argv=None):
         "video": str(video), "platform": args.platform, "fps": fps,
         "loudness": {**targets, "tolerance_lu": LOUDNESS_TOLERANCE_LU,
                      "measured_lufs": _jnum(lufs), "measured_true_peak": _jnum(tp),
-                     "ok": ok, "reasons": reasons},
+                     "ok": ok, "reasons": reasons, "notices": notices},
         "frozen": frozen, "cuts": cuts,
-        "planned_silences": (aud or {}).get("planned_silences", []),
         "sheets": report.get("sheets", {}),
         "report_md": str(out / "report.md"), "report_json": str(rj),
     }

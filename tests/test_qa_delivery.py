@@ -15,6 +15,12 @@ sys.path.insert(0, str(SCRIPTS))
 import qa_delivery as qa
 
 FFMPEG = shutil.which('ffmpeg')
+try:  # vendor 的 qa_video.py 需要 numpy 与 Pillow；缺任一项时跳过实测类用例
+    import numpy  # noqa: F401
+    import PIL  # noqa: F401
+    VENDOR_DEPS = True
+except ImportError:
+    VENDOR_DEPS = False
 PROFILE = {'delivery': {'loudness': {'douyin': -14, 'xhs': -14, 'shipinhao': -16, 'default': -16,
                                      'true_peak_max': -1.0, 'normalize_true_peak': -1.5}}}
 
@@ -68,7 +74,7 @@ def run_cli(*argv):
     return code, buf.getvalue()
 
 
-@unittest.skipUnless(FFMPEG, 'ffmpeg missing')
+@unittest.skipUnless(FFMPEG and VENDOR_DEPS, 'ffmpeg, numpy or Pillow missing')
 class DeliveryMeasureTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -132,6 +138,22 @@ class DeliveryMeasureTests(unittest.TestCase):
             with self.subTest(requires_audio=requires):
                 self.assertEqual(code, expected, (out / 'summary.md').read_text())
 
+    def test_silent_track_passes_when_timeline_declares_no_audio(self):
+        silent = self.root / 'silent-track.mp4'
+        sh('ffmpeg', '-y', '-v', 'error', '-f', 'lavfi', '-i', 'testsrc2=s=360x640:r=30:d=2',
+           '-f', 'lavfi', '-i', 'anullsrc=r=48000:cl=stereo', '-t', '2',
+           '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-shortest', str(silent))
+        shots = [{'id': 'a', 'start': 0, 'end': 2}]
+        for requires, expected in ((False, 0), (True, 1)):
+            tl = self.root / f'silent-track-{requires}.json'
+            tl.write_text(json.dumps({'fps': 30, 'duration': 2, 'requires_audio': requires, 'shots': shots}))
+            out = self.root / f'qa_silent_track_{requires}'
+            code, _ = run_cli(str(silent), '--timeline', str(tl), '--platform', '视频号',
+                              '--profile-dir', self.profile, '--out', str(out))
+            with self.subTest(requires_audio=requires):
+                self.assertEqual(code, expected, (out / 'summary.md').read_text())
+        self.assertIn('静音轨', (self.root / 'qa_silent_track_False' / 'summary.md').read_text())
+
     def test_still_outside_reads_is_listed_for_review(self):
         s = json.loads((self.out_a / 'summary.json').read_text())
         self.assertEqual(self.code_a, 0)
@@ -187,6 +209,14 @@ class PureFunctionTests(unittest.TestCase):
         self.assertEqual(qa.resolve_targets(None, 'douyin')['target_lufs'], -14.0)
         self.assertEqual(qa.resolve_targets({'delivery': {}}, None)['target_lufs'], -14.0)
         self.assertEqual(qa.resolve_targets({}, 'xhs')['true_peak_max'], -1.0)
+        # 中文平台名与 check_brief 同一套别名，不会悄悄退回 default
+        self.assertEqual(qa.resolve_targets(PROFILE, '视频号')['target_lufs'], -16.0)
+        self.assertEqual(qa.resolve_targets(PROFILE, '抖音')['target_lufs'], -14.0)
+
+    def test_quiet_scenes_are_not_sent_as_silences(self):
+        plan = qa.read_plan({'shots': [{'id': 'a', 'start': 0, 'end': 2}, {'id': 'b', 'start': 2, 'end': 4}],
+                             'sound_design': [{'scene_ids': ['a', 'b'], 'mode': 'quiet', 'reason': 'x'}]})
+        self.assertNotIn('silences', qa.vendor_timeline(plan))
 
     def test_loudness_judgement(self):
         self.assertTrue(qa.judge_loudness(-16.9, -3, -16, -1)[0])

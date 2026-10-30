@@ -46,7 +46,8 @@ def brief_checks(out, mode, platform):
 
 
 def readability_handled(timeline, brief_text):
-    code, stdout = run(SKILL / "scripts/check_readability.py", timeline, "--json")
+    code, stdout = run(SKILL / "scripts/check_readability.py", timeline, "--json",
+                       "--profile-dir", HERE / "fixtures")
     count = json.loads(stdout)["count"] if code == 0 else -1
     return count == 0 or bool(section(brief_text, "自主决定"))
 

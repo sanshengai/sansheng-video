@@ -116,6 +116,15 @@ class CheckBriefTest(unittest.TestCase):
         self.assertEqual(code, 0)
         self.assertTrue(any("第 1 条" in n for n in res["notices"]), res["notices"])
 
+    def test_negated_platform_and_bare_exemption(self):
+        landscape = brief(drop=("开头 3 秒",), override={"观看情境": "B站 横屏 10 分钟，不发抖音"})
+        code, res = self.run_cli(landscape)
+        self.assertEqual((code, res["platform"]), (0, "bilibili"), res)
+        bare = brief(override={"开头 3 秒": "豁免"})
+        code, res = self.run_cli(bare, "--platform", "douyin")
+        self.assertEqual(code, 1)
+        self.assertTrue(any("豁免必须写理由" in m for m in res["missing"]), res)
+
     def test_profile_feed_platforms_respected(self):
         text = brief(drop=["开头 3 秒"])
         code, r = self.run_cli(text, "--platform", "抖音", feed=("xhs",))

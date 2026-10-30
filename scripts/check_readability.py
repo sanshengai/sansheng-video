@@ -254,7 +254,12 @@ def main(argv=None):
     except (OSError, ValueError) as exc:
         print(f'profile 读取失败：{exc}', file=sys.stderr)
         return 2
-    res = run(timeline, brief_text, a.audience, read_speed_limits(prof['configuration'] if prof else None), a.film)
+    try:
+        res = run(timeline, brief_text, a.audience,
+                  read_speed_limits(prof['configuration'] if prof else None), a.film)
+    except (TypeError, AttributeError, KeyError, ValueError) as exc:
+        print(f'时间线格式不对，无法检查：{exc}', file=sys.stderr)
+        return 2
     if a.json:
         print(json.dumps({'audience': res['audience'], 'notices': res['notices'],
                           'count': res['count']}, ensure_ascii=False, indent=2))

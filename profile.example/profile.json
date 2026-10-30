@@ -11,14 +11,12 @@
   "output_root": null,
   "legacy_root": null,
   "delivery": {
-    "root": null,
     "loudness": {
       "douyin": -14,
       "xhs": -14,
       "shipinhao": -16,
       "default": -14,
-      "true_peak_max": -1.0,
-      "normalize_true_peak": -1.5
+      "true_peak_max": -1.0
     },
     "feed_platforms": [
       "douyin",

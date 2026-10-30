@@ -42,10 +42,10 @@ python3 "$SKILL/scripts/compare_frames.py" "$PROJECT/qa/seek-old" "$PROJECT/qa/s
 
 | 工具 | 查什么 | 退出码 |
 |---|---|---|
-| `check_brief.py` | 制作单的必填标题是否齐全、非空；竖屏信息流平台是否写了开头 3 秒或豁免理由。只查有没有，不评内容 | 缺必填项为 1 |
-| `check_readability.py` | 字幕读速、单条时长、行数；`reads` 的停留是否够读完；声明字号是否低于下限；术语是否出现在字幕或画面文字里。阈值见[数字默认值](craft-defaults.md)；系列制作单按条写术语时，加 `--film N` 只核对第 N 条 | 只提示，恒为 0 |
-| `qa_delivery.py` | 成片整合响度与真峰值（目标取 profile 的 `delivery.loudness`）；冻结段分为设计停留、待查和短停顿；检出切点与计划切点比对（只对硬切的片子有参考价值，渐变转场对不上属正常）；生成 0–3 秒、手机尺寸、节拍三张联系表和 `summary.md` | 响度不达标，或时间线声明有声而成片没有音轨时为 1 |
-| `compare_frames.py` | 修订前后：截帧目录模式下范围外逐像素一致；EDL 模式下范围外片段的源文件与出入点不变 | 范围外有变化为 1 |
+| `check_brief.py` | 制作单的必填标题是否齐全、非空；竖屏信息流平台是否写了开头 3 秒或豁免理由。只查有没有，不评内容 | 缺必填项为 1，输入无法读取为 2 |
+| `check_readability.py` | 字幕读速、单条时长、行数；`reads` 的停留是否够读完；声明字号是否低于下限；术语是否出现在字幕或画面文字里。阈值见[数字默认值](craft-defaults.md)；系列制作单按条写术语时，加 `--film N` 只核对第 N 条 | 提示不影响退出码（为 0）；输入格式错误为 2 |
+| `qa_delivery.py` | 成片整合响度与真峰值（目标取 profile 的 `delivery.loudness`）；冻结段分为设计停留、待查和短停顿；检出切点与计划切点比对（只对硬切的片子有参考价值，渐变转场对不上属正常）；生成 0–3 秒、手机尺寸、节拍三张联系表和 `summary.md` | 响度不达标，或时间线声明有声而成片没有音轨时为 1；输入错误为 2 |
+| `compare_frames.py` | 修订前后：截帧目录模式下范围外逐像素一致；EDL 模式下范围外片段的源文件（含内容哈希）、出入点与顶层音频不变 | 范围外有变化为 1；输入错误为 2 |
 
 `qa_delivery.py` 调用 `scripts/vendor/video-director/qa_video.py`（锁定上游提交，原样未改），需要 ffmpeg、numpy 和 Pillow；`compare_frames.py` 的截帧模式需要 Pillow，截帧目录用 `check_timeline_seek.py` 在新旧工程的同一组时间点上分别生成。提示级结果不拦交付，但要处理，或在制作单「自主决定」写明不改的理由。测量只证明技术项，不代替试听和作者认可。
 
@@ -63,7 +63,7 @@ python3 "$SKILL/scripts/compare_frames.py" "$PROJECT/qa/seek-old" "$PROJECT/qa/s
 
 `source` 需真实 `<audio>`／`<video>` 元素 ID，文件在项目内且列入构建依赖；元素明确 `data-start`、`data-duration`，有效音量大于零、未 muted，并实际覆盖相应镜头。已有剪裁用 `data-media-start`／`data-playback-start`；这个检查适配器不接受原声变速，先生成有来源记录的派生媒体。`supplement` 每个所列镜头需有原 events 中的正音量 `sound` 事件，可保留 `source_elements`；它们由下一节接线。`quiet` 指有意不加这些场景声音，允许对白继续；整个作品无声才设 `requires_audio: false`。不要为过检查把未决场景批量写成 quiet。
 
-补音的素材必须先取定（有 `asset_id` 和 `revision`）才能写 `supplement`。还没取定时停在镜头与素材阶段，在制作单段落表的「声音」列写「补 X，素材待定：缺什么」；不写空的 supplement，也不用 quiet 顶替。
+补音的素材必须先取定（有 `asset_id` 和 `revision`）才能写 `supplement`。还没取定时停在镜头与素材阶段，在制作单段落表的「声音」列写「补 X，素材待定：缺什么」；不写空的 supplement，也不用 quiet 顶替。重新判断后决定有意留白是正当的声音决定，写明理由即可；它和「素材待定」不同，不算缺件。
 
 配乐有两种接法，选一种写清楚：随 HTML 渲染入轨的，按 `supplement` 给每个所列镜头一个 `sound` 事件；整片连续配乐在渲染后用 `mix_production_audio.py --music` 混入的，不切成逐镜事件，`sound_design` 只记各镜头的场景声音，配乐的文件、区间和避让写在制作单与混音回执里。
 

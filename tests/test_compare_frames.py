@@ -86,6 +86,27 @@ class EdlModeTests(unittest.TestCase):
             old, new = self.write(temp, "old.json", self.EDL), self.write(temp, "new.json", changed)
             self.assertEqual(1, cf.main([str(old), str(new), "--scope", "2.5-3.5", "--json"]))
 
+    def test_same_name_source_rerendered_outside_scope_fails(self):
+        # 旧版工程与新版工程各一份目录：EDL 一字不差，但范围外的 a.mp4 被同名重渲染
+        with tempfile.TemporaryDirectory() as temp:
+            sides = {}
+            for side in ("old", "new"):
+                directory = Path(temp) / side
+                directory.mkdir()
+                for name in ("a.mp4", "b.mp4", "c.mp4"):
+                    (directory / name).write_bytes(b"v1-" + name.encode())
+                sides[side] = self.write(directory, "edl.json", self.EDL)
+            self.assertEqual(0, cf.main([str(sides["old"]), str(sides["new"]), "--scope", "2.5-3.5", "--json"]))
+            (Path(temp) / "new" / "a.mp4").write_bytes(b"v2-rerendered")
+            self.assertEqual(1, cf.main([str(sides["old"]), str(sides["new"]), "--scope", "2.5-3.5", "--json"]))
+
+    def test_top_level_audio_change_fails(self):
+        with tempfile.TemporaryDirectory() as temp:
+            changed = copy.deepcopy(self.EDL)
+            changed["audio_mode"] = "replace"
+            old, new = self.write(temp, "old.json", self.EDL), self.write(temp, "new.json", changed)
+            self.assertEqual(1, cf.main([str(old), str(new), "--scope", "2.5-3.5", "--json"]))
+
     def test_change_inside_scope_passes(self):
         with tempfile.TemporaryDirectory() as temp:
             changed = copy.deepcopy(self.EDL)
