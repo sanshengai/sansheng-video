@@ -3,7 +3,7 @@ name: sansheng-video
 description: 当用户要制作或修改视频时使用：产品宣传片、文章／课程／知识讲解转视频、代码动画、AI 生成镜头短片、真人口播与录屏剪辑，以及配音、配乐音效、字幕、封面和成片交付；已有工程按差异继续。只研究他人成片不启动制作；静态配图与发布交给对应技能。
 metadata:
   author: sanshengai
-  version: "2.5.0"
+  version: "2.6.0"
   compatibility: Python >=3.10, Node >=22, FFmpeg and HyperFrames 0.8.72; Playwright for browser checks; numpy and Pillow for delivery QA
 ---
 
