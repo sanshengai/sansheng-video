@@ -45,8 +45,10 @@ metadata:
 | 新 HTML 镜头和渲染 | [HyperFrames 执行](references/hyperframes.md)，依项目锁核实实际 CLI help |
 | 音画统一、字幕与真实旁白锚点 | [生产事件与工具](references/events-and-tools.md) |
 | 角色表演、生成镜头及连续片段 | [生成镜头](references/generated-shots.md)；角色对话、数字人口播或口型／接话问题，同时读 [配音的对话表演](references/tts.md#角色对话的表演)，按真实音频输入能力选路径 |
-| 通过 Muse 编排生成、参考图交接或逐镜返工 | [Muse 结构化交接](references/muse-handoff.md)：影片与镜头两层请求、参考用途、首尾状态及真实输入回执；不假定工具能力 |
-| 生成片段的场景光照、色彩、空间声音与质量归因 | [生成片段的视听设计](references/generated-audiovisual.md)：沿项目角色与预算，落实到首帧、镜头请求和同一混音时间线 |
+| 逐镜生成追求大片感的叙事短片（奇幻动画、绘本改编、风景史诗） | [电影感生成短片](references/cinematic-generated-film.md)：蓝本选择、生成前三道关卡（剧情因果审查、静图版、动态画风小样）、大景与揭示镜头、运镜转场、画风一致性 |
+| 写发给视频生成器的逐镜请求（任意入口） | [镜头请求模板](references/shot-request-template.md)：固定字段与顺序、人数锁与机位锁、发送前因果自查、返修纪律、镜头表批量拼装 |
+| 通过 Muse 编排生成、参考图交接或逐镜返工 | [Muse 结构化交接](references/muse-handoff.md)：影片与镜头两层交接、Muse 特有要点、网页执行与回收；不假定工具能力 |
+| 生成片段的场景光照、色彩、空间声音与质量归因；配乐/音效该原生生成还是后期 | [生成片段的视听设计](references/generated-audiovisual.md)：落实到首帧、镜头请求和同一混音时间线；环境声与拟音原生、配乐整片单独做 |
 | 裁剪、分段装配、原声与响度 | [媒体编辑](references/media-editing.md) |
 | 按需查动效、取代码与配声音 | [动效与音效](references/motion-and-sound.md)：镜头设计时触发，Motion Prompt 检索／缓存与 Openverse 下载接入原时间线 |
 | 项目素材、品牌与许可 | [资源配置](references/assets-and-profile.md) |
