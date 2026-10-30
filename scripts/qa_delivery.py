@@ -212,7 +212,8 @@ def build_summary_md(s):
         L.append(f"- 计划 {len(c['planned'])} 个，检出（合并后）{len(c['detected'])} 个，对上 {len(c['matched'])} 个")
         L.append("- 缺失（计划有、成片没检出）：" + (", ".join(f"{t:.2f}" for t in c["missing"]) or "无"))
         L.append("- 多出（成片检出、计划没有）：" + (", ".join(f"{t:.2f}" for t in c["extra"]) or "无"))
-        L.append("- 以上均为提示，不影响退出码")
+        L.append("- 以上均为提示，不影响退出码。只对硬切的片子有参考价值：代码动画的镜头之间多是渐变或连续运动，"
+                 "画面变化常落在镜头边界之后，对不上属正常，不要为此改时间线")
     L += ["", "## 联系表", ""]
     uses = {"hook": "0–3 秒每 0.5 秒一帧，看静音开头能不能看懂这是什么、要做什么",
             "phone": "每秒一帧缩成手机宽度，看字在手机上是否看得清",
@@ -295,6 +296,7 @@ def main(argv=None):
         cuts.update(compare_cuts(detected, plan["cuts"], fps))
 
     summary = {
+        "status": "loudness_ok" if ok else "loudness_failed",
         "video": str(video), "platform": args.platform, "fps": fps,
         "loudness": {**targets, "tolerance_lu": LOUDNESS_TOLERANCE_LU,
                      "measured_lufs": _jnum(lufs), "measured_true_peak": _jnum(tp),

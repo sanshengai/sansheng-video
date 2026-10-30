@@ -101,6 +101,21 @@ class CheckReadabilityTests(unittest.TestCase):
         self.assertEqual(cr.run(tl(), brief_text=brief, audience='adult')['audience'], 'adult')
         self.assertEqual(cr.run(tl(), brief_text='## 观看情境\n成人 横屏\n')['audience'], 'adult')
 
+    def test_audience_line_and_negation(self):
+        self.assertEqual(cr.run(tl(), brief_text='## 观看情境\n抖音 竖屏\n受众：成人，非学生\n')['audience'], 'adult')
+        self.assertEqual(cr.run(tl(), brief_text='## 观看情境\n不面向学生，竖屏\n')['audience'], 'adult')
+        self.assertEqual(cr.run(tl(), brief_text='## 观看情境\n竖屏\n受众：初中生\n')['audience'], 'learners')
+        # 写了「受众：」一行时只看这一行，其他句子里的「学生」不再触发
+        self.assertEqual(cr.run(tl(), brief_text='## 观看情境\n学生也可能看到\n受众：成人\n')['audience'], 'adult')
+
+    def test_series_terms_checked_per_film(self):
+        brief = '## 术语\n第 1 条：离线同步\n第 2 条：语音转写\n'
+        timeline = tl(captions=[('离线同步不怕断网', 0, 3)])
+        self.assertEqual(['语音转写'], [n['target'][3:-1] for n in cr.run(timeline, brief_text=brief)['notices']
+                                      if n['kind'] == '术语'])
+        self.assertEqual([], [n for n in cr.run(timeline, brief_text=brief, film=1)['notices'] if n['kind'] == '术语'])
+        self.assertEqual(1, len([n for n in cr.run(timeline, brief_text=brief, film=2)['notices'] if n['kind'] == '术语']))
+
     def test_old_timeline_cli(self):
         with tempfile.TemporaryDirectory() as d:
             p = Path(d) / 't.json'

@@ -12,6 +12,8 @@
 - 制作流程每节开头加「输入／产物／进入下一步的条件／不满足时」表；新增封面与首帧、系列与批量扩展、修订卡、独立评审、交付报告、工程保留与清理、新规则准入；作者确认节点按任务分档，高成本逐镜生成短片沿用电影感短片的关卡。
 - 时间线的阅读停留统一用已有的 `shots[].reads`，并写入文档；新增可选的 `text`、`text_px`、`role`，填写时校验格式。样例中从未被任何工具读取的空 `reading_windows` 已删除。
 - `profile.example` 新增 `delivery.loudness`、`feed_platforms`、`caption_cps` 示例。
+- `production_timeline.py validate`：计划阶段只校验时间线，不写文件、不要求依赖，判据与 export 完全相同。
+- 按计划阶段评测（sonnet 3/3、haiku 2/3）回改说明：profile 相对路径以返回的 `root` 为根；制作单「受众：」单独一行，检查器识别「非学生」等否定；系列术语按 `第 N 条：` 逐条写，`check_readability.py --film N` 只核对那一条；补音素材未取定时停在素材阶段、不写空的 supplement；整片配乐两种接法（随渲染入轨或渲染后混入）分别怎么写；指定素材找不到时不换近似品；修订卡在渲染前先写比对方法；停留公式附算例；时间线必填字段与 `visual` 的写法。
 - 统一冲突口径：Openverse 每轮最多看 3 个候选、最多两轮；HyperFrames 与 24 fps 生成片混用时按帧率规则统一交付帧率。
 - 修正 EDL 说明里与实际目标不符的两处链接文字；来源说明链入验证说明；视觉机制补 `geometry_strokes.py` 的输入契约（本包不附带白板模板）。
 - 移除 `scripts/zh_caption_tokens.py`：未入文档、无测试，本包内没有调用方，不属于使用契约。

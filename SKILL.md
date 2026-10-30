@@ -13,7 +13,7 @@ metadata:
 
 ## 每次先做
 
-1. 在 Skill 根运行 `python3 setup.py --show-profile`。新会话、接手旧工程、局部修改都要执行。返回配置时，读其中的 `context_file`；涉及素材且配置了 `media_library` 时，再读它的 `usage`。没有配置时，用项目自选的中性视觉，不套作者品牌。
+1. 在 Skill 根运行 `python3 setup.py --show-profile`。新会话、接手旧工程、局部修改都要执行。返回配置时，读其中的 `context_file`；涉及素材且配置了 `media_library` 时，再读它的 `usage`。配置里的相对路径（`context_file`、`usage`、`tool` 等）一律以返回的 `root` 为根，不在本 Skill 目录下找。没有配置时，用项目自选的中性视觉，不套作者品牌。
 2. 判断任务类型，决定从哪里进入：
 
 | 任务 | 从哪里进入 | 先写什么 |
@@ -33,9 +33,9 @@ metadata:
 
 | 阶段 | 交出什么 | 进入下一步的条件 | 读哪份 |
 |---|---|---|---|
-| 1 制作单 | `brief.md`，按[制作单模板](references/brief-template.md) | `check_brief.py` 无缺项；核心主张、结构或牵动全片的视觉方向已有作者判断或明确授权 | [制作流程 §1](references/production.md#1-内容变成影片) |
-| 2 镜头与素材声音 | 每镜 ID、目的、变化和声音决定；素材候选与缺件 | 每个镜头都有可取得的画面和声音决定 | [§2](references/production.md#2-镜头设计) |
-| 3 时间源 | `timeline.json` 或 EDL；真实旁白块 | `production_timeline.py check` 通过；`check_readability.py` 的提示已处理或写了理由 | [§3](references/production.md#3-按声音角色确定真实时间)、[生产事件与工具](references/events-and-tools.md) |
+| 1 制作单 | `brief.md`，按[制作单模板](references/brief-template.md) | `check_brief.py` 无缺项；核心主张、结构或牵动全片的视觉方向已有作者判断，或作者已授权 Agent 自行决定（选择写进「自主决定」） | [制作流程 §1](references/production.md#1-内容变成影片) |
+| 2 镜头与素材声音 | 每镜 ID、目的、变化和声音决定；素材候选与缺件 | 每个镜头都有可取得的画面和声音决定；要补的声音已取定素材，缺件就停在这一步并在制作单写明缺什么 | [§2](references/production.md#2-镜头设计) |
+| 3 时间源 | `timeline.json` 或 EDL；真实旁白块 | `production_timeline.py validate` 通过（不写文件，制作时再 export／check）；`check_readability.py` 的提示已处理或写了理由 | [§3](references/production.md#3-按声音角色确定真实时间)、[生产事件与工具](references/events-and-tools.md) |
 | 4 风险片段验证 | 覆盖最不确定处的一段连续片段 | 开篇、关键交接和音乐成立；已验证的方向和局部任务跳过此步 | [§4](references/production.md#4-制作与修订) |
 | 5 全片制作 | 成片与渲染回执 | 计划的声音全部入轨；全片能连续播放 | [§4](references/production.md#4-制作与修订) |
 | 6 测量与独立评审 | `qa/summary.md`、三张联系表、评审意见 | 响度达标；P0 已修，最多再修一轮复查 | [§5](references/production.md#5-检查和交付)、[独立评审](references/independent-review.md) |

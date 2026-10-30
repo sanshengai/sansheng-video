@@ -12,6 +12,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 COMMON = ["一句话主张", "观看情境", "术语", "段落表"]
+FILM_LINE = re.compile(r"^\s*(?:[-*+]\s*)?第\s*(\d+)\s*条\s*[:：]\s*(.*)$")
 REQUIRED = {
     "new": COMMON + ["结构候选", "视觉母题与强调色"],
     "continue": COMMON + ["已认可组合"],
@@ -132,9 +133,12 @@ def check_text(text, mode="new", platform=None, profile_dir=None):
 
     terms = sections.get("术语")
     if terms and not is_empty(terms) and _norm(terms) != "无":
-        items = [t for t in re.split(r"[,，、\n]", terms) if re.sub(r"^[\s\-*+•\d.、)]+", "", t).strip()]
-        if len(items) > 3:
-            notices.append("术语共 %d 个，模板建议 1–3 个" % len(items))
+        films = [m for m in (FILM_LINE.match(line) for line in terms.splitlines()) if m]
+        groups = [(f"第 {m.group(1)} 条", m.group(2)) for m in films] if films else [("", terms)]
+        for label, body in groups:
+            items = [t for t in re.split(r"[,，、\n]", body) if re.sub(r"^[\s\-*+•\d.、)]+", "", t).strip()]
+            if len(items) > 3:
+                notices.append("%s术语共 %d 个，模板建议每条 1–3 个" % (label, len(items)))
     return {"missing": missing, "notices": notices, "mode": mode, "platform": plat}
 
 

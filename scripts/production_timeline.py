@@ -208,11 +208,8 @@ def products(timeline, narration=None, promotion_plan=None, selection_plan=None)
     return outputs
 
 
-def export(source, destination, dependencies=(), refresh=False):
-    source, destination = Path(source).resolve(), Path(destination).resolve()
-    source_bytes = source.read_bytes()
-    source_hash = hashlib.sha256(source_bytes).hexdigest()
-    timeline = json.loads(source_bytes)
+def resolve(source, timeline):
+    """Resolve source-relative evidence and build products; shared by export and validate."""
     narration, narration_inputs = None, {}
     if timeline.get("narration") is not None:
         voice = timeline["narration"]
@@ -236,6 +233,22 @@ def export(source, destination, dependencies=(), refresh=False):
         outputs = products(timeline, narration, promotion_plan)
     else:
         outputs = products(timeline, narration) if narration is not None else products(timeline)
+    return outputs, narration_inputs, promotion_inputs, selection_inputs
+
+
+def validate_source(source):
+    """Planning-stage check: same validation as export, writes nothing and needs no dependencies."""
+    source = Path(source).resolve()
+    outputs, *_ = resolve(source, json.loads(source.read_bytes()))
+    return {"status": "valid_not_exported", "outputs": sorted(outputs)}
+
+
+def export(source, destination, dependencies=(), refresh=False):
+    source, destination = Path(source).resolve(), Path(destination).resolve()
+    source_bytes = source.read_bytes()
+    source_hash = hashlib.sha256(source_bytes).hexdigest()
+    timeline = json.loads(source_bytes)
+    outputs, narration_inputs, promotion_inputs, selection_inputs = resolve(source, timeline)
     inputs = {source, Path(__file__).resolve(), Path(__file__).with_name("motion_review_schedule.py").resolve()}
     inputs.add(Path(__file__).with_name("production_sound.py").resolve())
     inputs.add(Path(__file__).with_name("production_sound_review.py").resolve())
@@ -305,9 +318,15 @@ def main():
     build.add_argument("--refresh", action="store_true")
     verify = subs.add_parser("check")
     verify.add_argument("receipt", type=Path)
+    plan = subs.add_parser("validate", help="planning-stage check; writes nothing")
+    plan.add_argument("source", type=Path)
     args = parser.parse_args()
-    result = (export(args.source, args.destination, args.dependency, args.refresh)
-              if args.command == "export" else check(args.receipt))
+    if args.command == "export":
+        result = export(args.source, args.destination, args.dependency, args.refresh)
+    elif args.command == "validate":
+        result = validate_source(args.source)
+    else:
+        result = check(args.receipt)
     print(encoded(result), end="")
 
 

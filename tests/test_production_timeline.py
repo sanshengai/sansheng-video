@@ -203,6 +203,23 @@ class ProductionTimelineTests(unittest.TestCase):
             with self.subTest(bad=bad), self.assertRaises(ValueError):
                 production.products(data)
 
+    def test_validate_subcommand_writes_nothing_and_rejects_what_export_rejects(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            good, bad = root / 'good.json', root / 'bad.json'
+            good.write_text(json.dumps(timeline()))
+            broken = timeline()
+            broken['events'][0]['end'] = 5
+            bad.write_text(json.dumps(broken))
+            cli = [sys.executable, str(SCRIPTS / 'production_timeline.py'), 'validate']
+            ok = subprocess.run(cli + [str(good)], capture_output=True, text=True)
+            self.assertEqual(0, ok.returncode, ok.stderr)
+            self.assertEqual('valid_not_exported', json.loads(ok.stdout)['status'])
+            self.assertEqual({'good.json', 'bad.json'}, {p.name for p in root.iterdir()})
+            rejected = subprocess.run(cli + [str(bad)], capture_output=True, text=True)
+            self.assertNotEqual(0, rejected.returncode)
+            self.assertIn('outside its shot', rejected.stderr)
+
     def test_stale_input_dependency_generated_output_and_missing_evidence(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp).resolve()

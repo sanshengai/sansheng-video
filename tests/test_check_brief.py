@@ -106,6 +106,16 @@ class CheckBriefTest(unittest.TestCase):
         self.assertEqual(code, 0, r)
         self.assertTrue(any("术语" in n for n in r["notices"]))
 
+    def test_series_terms_counted_per_film(self):
+        ok = brief(override={"术语": "第 1 条：离线同步\n第 2 条：语音转写\n第 3 条：模板库、模板市场"})
+        code, res = self.run_cli(ok, "--mode", "series", "--platform", "xhs")
+        self.assertEqual(code, 0)
+        self.assertEqual(res["notices"], [])
+        crowded = brief(override={"术语": "第 1 条：甲、乙、丙、丁\n第 2 条：戊"})
+        code, res = self.run_cli(crowded, "--mode", "series", "--platform", "xhs")
+        self.assertEqual(code, 0)
+        self.assertTrue(any("第 1 条" in n for n in res["notices"]), res["notices"])
+
     def test_profile_feed_platforms_respected(self):
         text = brief(drop=["开头 3 秒"])
         code, r = self.run_cli(text, "--platform", "抖音", feed=("xhs",))

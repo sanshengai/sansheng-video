@@ -3,7 +3,7 @@
 
 全部是提示级，不拦截：正常运行退出码为 0；输入读不了或不是 JSON 时退出码为 2。
 用法：python3 check_readability.py timeline.json [--brief brief.md]
-      [--audience adult|learners] [--profile-dir 目录] [--json]
+      [--audience adult|learners] [--profile-dir 目录] [--film N] [--json]
 读速上限可由 profile 的 delivery.caption_cps（default／learners）覆盖。
 """
 import argparse
@@ -148,10 +148,19 @@ def section(md, title):
     return rest[:n.start()] if n else rest
 
 
-def parse_terms(body):
+FILM_LINE = re.compile(r'^\s*(?:[-*+]\s*)?第\s*(\d+)\s*条\s*[:：]\s*(.*)$')
+
+
+def parse_terms(body, film=None):
+    """拆出术语。系列制作单按「第 N 条：术语」逐条写，给 film 时只取那一条。"""
     body = body.strip()
     if not body or re.sub(r'[\s。.\-*「」]', '', body) == '无':
         return []
+    lines = body.splitlines()
+    if any(FILM_LINE.match(line) for line in lines):
+        picked = [m.group(2) for m in map(FILM_LINE.match, lines)
+                  if m and (film is None or int(m.group(1)) == film)]
+        body = '\n'.join(picked)
     terms = []
     for part in re.split(r'[,，、;；\n]+', body):
         part = re.sub(r'^\s*(?:[-*+]|\d+[.、)])\s*', '', part).strip()
@@ -177,26 +186,42 @@ def check_terms(terms, events, shots):
             for t in terms if t.lower() not in blob]
 
 
+NEGATION = re.compile(r'(非|不是|不含|无|不面向)$')
+
+
+def _learner_word(text):
+    """返回文中第一个未被否定的学生少儿词；「非学生」「不面向少儿」不算。"""
+    for w in LEARNER_WORDS:
+        for m in re.finditer(re.escape(w), text):
+            if not NEGATION.search(text[max(0, m.start() - 4):m.start()]):
+                return w
+    return None
+
+
 def pick_audience(arg, brief_text):
     if arg:
         return arg, '命令行 --audience'
     if brief_text is not None:
         ctx = section(brief_text, '观看情境')
-        for w in LEARNER_WORDS:
-            if w in ctx:
-                return 'learners', f'制作单「观看情境」含「{w}」'
+        line = re.search(r'受众\s*[:：]\s*([^\n]+)', ctx)
+        if line:
+            w = _learner_word(line.group(1))
+            return ('learners', f'制作单「受众：」含「{w}」') if w else ('adult', '制作单「受众：」未写学生少儿')
+        w = _learner_word(ctx)
+        if w:
+            return 'learners', f'制作单「观看情境」含「{w}」'
         return 'adult', '制作单「观看情境」未提学生少儿，默认成人'
     return 'adult', '未给 --audience 与 --brief，默认成人'
 
 
-def run(timeline, brief_text=None, audience=None, limits=None):
+def run(timeline, brief_text=None, audience=None, limits=None, film=None):
     aud, src = pick_audience(audience, brief_text)
     events = timeline.get('events') if isinstance(timeline, dict) else None
     shots = timeline.get('shots') if isinstance(timeline, dict) else None
     canvas = timeline.get('canvas') if isinstance(timeline, dict) else None
     notices = check_captions(events, aud, limits) + check_reads(shots, canvas)
     if brief_text is not None:
-        notices += check_terms(parse_terms(section(brief_text, '术语')), events, shots)
+        notices += check_terms(parse_terms(section(brief_text, '术语'), film), events, shots)
     notices.sort(key=lambda n: (n['at'] is None, n['at'] or 0))
     return {'audience': aud, 'audience_source': src, 'notices': notices, 'count': len(notices)}
 
@@ -207,6 +232,7 @@ def main(argv=None):
     ap.add_argument('--brief')
     ap.add_argument('--audience', choices=('adult', 'learners'))
     ap.add_argument('--profile-dir')
+    ap.add_argument('--film', type=int, help='系列制作单里只核对第 N 条的术语')
     ap.add_argument('--json', action='store_true')
     a = ap.parse_args(argv)
     try:
@@ -228,7 +254,7 @@ def main(argv=None):
     except (OSError, ValueError) as exc:
         print(f'profile 读取失败：{exc}', file=sys.stderr)
         return 2
-    res = run(timeline, brief_text, a.audience, read_speed_limits(prof['configuration'] if prof else None))
+    res = run(timeline, brief_text, a.audience, read_speed_limits(prof['configuration'] if prof else None), a.film)
     if a.json:
         print(json.dumps({'audience': res['audience'], 'notices': res['notices'],
                           'count': res['count']}, ensure_ascii=False, indent=2))
