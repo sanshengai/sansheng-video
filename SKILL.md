@@ -45,6 +45,7 @@ metadata:
 | 新 HTML 镜头和渲染 | [HyperFrames 执行](references/hyperframes.md)，依项目锁核实实际 CLI help |
 | 音画统一、字幕与真实旁白锚点 | [生产事件与工具](references/events-and-tools.md) |
 | 角色表演、生成镜头及连续片段 | [生成镜头](references/generated-shots.md)；角色对话、数字人口播或口型／接话问题，同时读 [配音的对话表演](references/tts.md#角色对话的表演)，按真实音频输入能力选路径 |
+| 通过 Muse 编排生成、参考图交接或逐镜返工 | [Muse 结构化交接](references/muse-handoff.md)：影片与镜头两层请求、参考用途、首尾状态及真实输入回执；不假定工具能力 |
 | 生成片段的场景光照、色彩、空间声音与质量归因 | [生成片段的视听设计](references/generated-audiovisual.md)：沿项目角色与预算，落实到首帧、镜头请求和同一混音时间线 |
 | 裁剪、分段装配、原声与响度 | [媒体编辑](references/media-editing.md) |
 | 按需查动效、取代码与配声音 | [动效与音效](references/motion-and-sound.md)：镜头设计时触发，Motion Prompt 检索／缓存与 Openverse 下载接入原时间线 |

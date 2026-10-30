@@ -2,6 +2,8 @@
 
 ## [未发布]
 
+- Add an optional Muse handoff template connecting film intent, reference roles, shot start/action/end states and adjacent edits. Distinguish planning text from actual generator requests, preserve native audio evidence and scope revisions to observed defects without promising provider capabilities.
+
 ## [2.3.1] -- 2026-10-30
 
 - 修正解说覆盖的连续性要求：跨配音块不得重置镜头入点造成短回播，按实际源区间和最终切点复核；原生声按场景连续保留与避让，不能教学默认静音或全片统一极低增益。产品专属标题和知识区规则仍由内容 Skill 管理。
