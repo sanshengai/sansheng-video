@@ -21,6 +21,6 @@
 
 ## 工具与许可
 
-HyperFrames 作为独立安装的运行依赖，不捆绑其包和字体、音乐等素材。实际版本和许可见依赖清单。`validate_edl.py` 衍生自 guigulaoshi/music-video-director-skill（MIT）；`normalize_loudness.py` 和 `check_merge_compat.py` 的借鉴来源及修改记录保留在文件头。完整许可见仓根第三方说明。
+HyperFrames 作为独立安装的运行依赖，不捆绑其包和字体、音乐等素材。实际版本和许可见依赖清单。`validate_edl.py` 衍生自 guigulaoshi/music-video-director-skill（MIT）；`normalize_loudness.py` 和 `check_merge_compat.py` 的借鉴来源及修改记录保留在文件头。完整许可见仓根第三方说明。干净环境测试与发布验证记录见[验证说明](verification.md)。
 
 本包提供编导工作法和真实工具，不是任意内容一键大片生成器。确定性检查仅覆盖抽样时刻；工程检查不替代视听判断。本地 TTS 是可选依赖，付费服务、生成视频、复杂 3D 与上传仍需额外工具与实际授权。使用宿主额外工具时按其实际授权和输入输出验证，不因提示词写了能力就宣称已完成。

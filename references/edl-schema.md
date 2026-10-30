@@ -6,7 +6,7 @@
 > `scripts/assemble_edl.py` 消费，结构检查后仍需审看实际成片。
 >
 > 概念溯源：转译自 guigulaoshi/music-video-director-skill 的 cuts/EDL（MIT，
-> 锁定 commit `06abf674`，见 [UPSTREAM-REFERENCES.md](sources.md)）。
+> 锁定 commit `06abf674`，见[来源与采用](sources.md)）。
 > 上游 beats 字段转译为可选 word_ts；只有实际验证的词级对齐来源才能填写。
 >
 > 🔴 **命名红线（2026-06-07）**：这里的「EDL」= sansheng-video 自创 JSON（秒 / `scenes` / `source` 的 ffmpeg concat 决策表），**≠ 业界 CMX3600 `.edl` 文本**。**严禁把本 JSON 直接喂 DaVinci MCP `timeline import_timeline_checked {format:edl}`（格式不兼容必失败）**——后者只吃标准 CMX3600/AAF/FCPXML/DRT/OTIO。两边同名「EDL」是完全不同的东西。要进达芬奇 timeline 需另写 JSON→CMX3600 桥（秒×fps 转源时码 + 事件号 + 源名），属低优先 backlog（详见 [media-editing.md](media-editing.md) §v2.36 增订 §3）。
@@ -133,7 +133,7 @@ brief 或既有剪辑说明 → 检查素材 → 写 edl.json
 
 ### 2. 节奏与视觉审查
 
-依据 brief 判断信息密度、镜头变化、字幕可读性和配乐关系，可参考 [scene-mix-rule.md](visual-craft.md)。不由 `section` 字段推出固定组件数量、明暗配额或 scene 时长跨度；该字段不参与这里的配比机检。
+依据 brief 判断信息密度、镜头变化、字幕可读性和配乐关系，可参考[镜头与视觉机制](visual-craft.md)。不由 `section` 字段推出固定组件数量、明暗配额或 scene 时长跨度；该字段不参与这里的配比机检。
 
 ### 3. 可选的词级对齐
 
