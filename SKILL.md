@@ -75,7 +75,7 @@ metadata:
 
 ## 按需资料
 
-**阶段 1**　必读[制作单模板](references/brief-template.md)和[数字默认值与套路清单](references/craft-defaults.md)。宣传片读[宣传片方法](references/promotion-film.md)，从作品目录选材读[真实作品选材](references/promotion-selection.md)，介绍真实网页读[真实网页介绍](references/web-walkthrough.md)；知识、城市／历史、角色系列读[知识解释与系列表达](references/knowledge-explainers.md)；面向发布的片子同时考虑[封面与首帧](references/video-covers.md)。
+**阶段 1**　必读[制作单模板](references/brief-template.md)和[数字默认值与套路清单](references/craft-defaults.md)。宣传片读[宣传片方法](references/promotion-film.md)，从作品目录选材读[真实作品选材](references/promotion-selection.md)，介绍真实网页读[真实网页介绍](references/web-walkthrough.md)；知识、城市／历史、角色系列读[知识解释与系列表达](references/knowledge-explainers.md)，数学与物理推导、精确几何／函数／实验图解读[数理推导与图解动画](references/stem-explainers.md)；面向发布的片子同时考虑[封面与首帧](references/video-covers.md)。
 
 **阶段 2**　镜头、空间、材质与运动读[视觉机制](references/visual-craft.md)；新作定风格、找绘制或镜头实现查 [Lemo 风格与实现](references/lemo-opuscar.md)；段落组织、对象连续或音画编排卡住时查[视频案例参考](references/opus-video-cases.md)；动效术语、代码与配声读[动效与音效](references/motion-and-sound.md)。素材、品牌与许可读[资源配置](references/assets-and-profile.md)，音效缺件走 [Openverse 音效](references/openverse-sfx.md)，真实 B-roll 缺件走[在线画面素材](references/stock-footage.md)。
 

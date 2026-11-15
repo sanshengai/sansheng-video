@@ -17,6 +17,7 @@
 | [win4r/video-director](https://github.com/win4r/video-director) | 计划用数字写、数字是默认值且偏离写理由；制作单固定标题；可读性与安全区默认值；干净上下文评审先复述主张再列缺陷；修订卡与范围外不变的证明；交付清单 | 固定4747e5c153509ef7f8f7fd1a0aad6acfda36280d；方法改写为中文模板与检查，数字先作提示、按真实片校准；`qa_video.py` 原样放入 vendor 由适配器调用（MIT）；不采用其评分、固定高潮比例与英文语境的读速 |
 | [WaterDJiang/Wattter_openSkills](https://github.com/WaterDJiang/Wattter_openSkills) | 工程版本、素材与渲染关联、帧检查 | 复用本项目单套机制 |
 | [Vincentwei1021/video-shotcraft](https://github.com/Vincentwei1021/video-shotcraft) | 镜头卡、构图、衔接和可编辑性 | 合并流程，不新建工作台 |
+| [ManimCommunity/manim](https://github.com/ManimCommunity/manim)、[motion-canvas/motion-canvas](https://github.com/motion-canvas/motion-canvas) | 公式项级变形、色彩代数绑定、预采样动点轨迹，以及单变量状态同源驱动图形与读数 | 教学表达机制内化为自写 `scripts/stem_kit.py` 与 `references/stem-explainers.md`；未复制上游源码，不安装或捆绑 Manim、LaTeX、Motion Canvas 运行时 |
 
 来源未确认的 archival-doc 未安装、未捆绑、未计入能力。借鉴方法不代表逐项复制上游代码或已达到其成片质量。
 
