@@ -2,6 +2,8 @@
 
 ## [未发布]
 
+- 生成镜头请求升级为「台账 IR + 按入口/镜型编译 + 跨字段矛盾机检」双层架构（`scripts/lint_video_prompt.py`、`scripts/assemble_shot_requests.py`、`references/shot-request-template.md`、`references/muse-handoff.md`、`SKILL.md`）：① 新增零外部依赖纯标准库 `lint_video_prompt.py` 拦截 8 类真实翻车冲突（昼夜光线矛盾、静止机位配运镜/出画位移、室内镜混户外/村舍词、禁声镜混人声诱因、无字锁配读卷写字、`choose from:` 菜单音效、`CUTS TO` 泄漏与超长注意力稀释），附完整正反例与正则变异单测；② `assemble_shot_requests.py` 保留 `legacy` 默认输出不变，新增 `--profile`（`muse-i2v-still` / `muse-i2v-action` / `muse-t2v` / `grok-r2v`）与 `--lint` 闸门，支持 I2V 剥离长篇户外设定、`0–4s` 主动作提前收口与 `4–10s` 终态保持、环境微动白名单、`grok-r2v` 禁用 `slow` 校验，以及四类镜头（含本地确定性动效）分流边界。（MINOR：新增兼容可选工具、编译参数与文档规范，旧 `legacy` 用法保持不变）
+
 - 局部返修、首帧嵌封面与生成片段声音衔接补充三条实测工艺（`references/multi-aspect-revisions.md`、`references/video-covers.md`、`references/generated-audiovisual.md`）：① 局部画面层返修须做整段目标时间窗的真实浏览器连续覆盖检查（防首卡前或卡间留白）、母片结构切点预埋关键帧配合未变尾段流拷贝、以及复用压缩 AAC 音轨时先编无声视频再合流原音轨（防 `-frames:v` 截断超出数毫秒的最后一个音频包）；② 短封面替换固定片头时预埋片头边界关键帧，并用 `duration_change_seconds` 回执强绑定学习条／章节等下游时间消费者；③ 多镜切点采用护词尾的 30 ms 原声短正弦淡变与自适应等功率环境交叉淡化，并给出非对白原生动作声按镜放开降噪门的信噪比、高频嘶声占比与静音后 ASR 机筛基线。（PATCH：补充工艺判据，原有契约不变）
 
 - 新增「数理推导与图解动画」`references/stem-explainers.md` 与 `scripts/stem_kit.py`（纯标准库，零额外依赖）：提供带 `data-term` 项级锚点的离线确定性公式编译（分式、根号、上下标与数学符号，拒绝未知命令和重复锚点）、保持几何等比例与横竖安全区约束的 `Plane2D` 坐标系及 SVG 原语（坐标轴、函数／轨迹曲线、多边形、正交校验直角框、平行度量线、比例物理矢量箭头）、基于 `Fraction` 精确有理算术的数理事实与安全区闸门 `verify`（检验一元一次方程变形链等价性、直角三角形正交与面积守恒、参数恒等式及安全区边界），以及规避 HyperFrames `tl.seek(t)` 跳过根回调问题的 `StemRuntime.bindClock` 纯时间驱动辅助器；`SKILL.md` 仅增加一处按需路由。（MINOR：新增兼容可选工具与参考）

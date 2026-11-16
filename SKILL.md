@@ -79,7 +79,7 @@ metadata:
 
 **阶段 2**　镜头、空间、材质与运动读[视觉机制](references/visual-craft.md)；新作定风格、找绘制或镜头实现查 [Lemo 风格与实现](references/lemo-opuscar.md)；段落组织、对象连续或音画编排卡住时查[视频案例参考](references/opus-video-cases.md)；动效术语、代码与配声读[动效与音效](references/motion-and-sound.md)。素材、品牌与许可读[资源配置](references/assets-and-profile.md)，音效缺件走 [Openverse 音效](references/openverse-sfx.md)，真实 B-roll 缺件走[在线画面素材](references/stock-footage.md)。
 
-**生成镜头**　角色表演与连续片段读[生成镜头](references/generated-shots.md)，角色对话或口型同时读[配音的对话表演](references/tts.md#角色对话的表演)；追求大片感的逐镜叙事短片读[电影感生成短片](references/cinematic-generated-film.md)（生成前三道关卡）；三份分工：[生成镜头](references/generated-shots.md)管流程（文件即记忆、关卡、验收、返修与按类别回写），[镜头请求契约](references/shot-request-template.md)管请求结构（全片锁／段落锁／单镜三层、字段、返修分型，与入口无关），每个生成入口各一张适配卡写差异和实测（已有 [Muse](references/muse-handoff.md)；新入口先按契约第四节补卡，不另写一套模板）；光照、色彩、空间声音，以及配乐和音效该原生生成还是后期做，读[生成片段的视听设计](references/generated-audiovisual.md)。
+**生成镜头**　角色表演与连续片段读[生成镜头](references/generated-shots.md)，角色对话或口型同时读[配音的对话表演](references/tts.md#角色对话的表演)；追求大片感的逐镜叙事短片读[电影感生成短片](references/cinematic-generated-film.md)（生成前三道关卡）；三份分工：[生成镜头](references/generated-shots.md)管流程（文件即记忆、关卡、验收、返修与按类别回写），[镜头请求契约](references/shot-request-template.md)管请求结构（台账 IR 与 `--profile` 编译输出、`--lint` 跨字段矛盾机检 `scripts/lint_video_prompt.py`、四类镜头分流、返修分型，与入口无关），每个生成入口各一张适配卡写差异和实测（已有 [Muse](references/muse-handoff.md)；新入口先按契约第四节补卡，不另写一套模板）；光照、色彩、空间声音，以及配乐和音效该原生生成还是后期做，读[生成片段的视听设计](references/generated-audiovisual.md)。
 
 **阶段 3**　必读[生产事件与工具](references/events-and-tools.md)；新增配音读 [TTS 选型与制作](references/tts.md)；真实媒体按场景剪辑用 [EDL 结构](references/edl-schema.md)。
 

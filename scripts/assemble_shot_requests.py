@@ -1,33 +1,49 @@
 """Assemble structured shot requests from one shot table: film locks + per-shot content.
 
-The output is plain request text for a chat/web generator; it does not call any service.
-Changing a lock and re-running regenerates every request, so locks stay verbatim across shots.
-Field order follows references/shot-request-template.md.
+Supports both legacy 15-block IR output (`profile="legacy"`, default) and
+model-distilled profiles (`muse-i2v-still`, `muse-i2v-action`, `muse-t2v`, `grok-r2v`)
+with optional `--lint` cross-field contradiction checking via `lint_video_prompt.py`.
 """
+from __future__ import annotations
+
 from pathlib import Path
 import argparse
 import json
+import re
+import sys
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
+
+from lint_video_prompt import lint_shot_prompt
 
 SHOT_FIELDS = ("id", "segment", "first_frame", "action", "camera", "ambient", "end_state",
                "ambience", "foley")
 WINDOWS = ("0-3s", "3-7s", "7-10s")
 MUSIC_NONE = "none (no background music; the score is added in post)"
+PROFILES = ("legacy", "muse-i2v-still", "muse-i2v-action", "muse-t2v", "grok-r2v")
+_GROK_SLOW_RE = re.compile(r"\bslow(?:ly|er|est|ing)?\b", re.I)
 
 
-def load(path):
-    data = json.loads(Path(path).read_text())
+def load(path, profile="legacy"):
+    data = json.loads(Path(path).read_text(encoding="utf-8"))
     locks, segments, shots = data["locks"], data.get("segments", {}), data["shots"]
     seen = set()
+    req_fields = SHOT_FIELDS if profile == "legacy" else ("id", "segment", "camera", "ambient", "ambience")
     for shot in shots:
-        missing = [k for k in SHOT_FIELDS if not shot.get(k)]
-        if locks.get("native_music") and not shot.get("music_dynamic"):
-            missing.append("music_dynamic")
+        missing = [k for k in req_fields if not shot.get(k)]
+        if profile == "legacy":
+            if locks.get("native_music") and not shot.get("music_dynamic"):
+                missing.append("music_dynamic")
+        elif profile != "muse-i2v-still" and not shot.get("action"):
+            missing.append("action")
         if missing:
             raise ValueError(f"{shot.get('id', '?')} 缺字段：{', '.join(missing)}")
         if shot["id"] in seen:
             raise ValueError(f"镜头编号重复：{shot['id']}")
         seen.add(shot["id"])
-        if len(shot["action"]) != len(WINDOWS):
+        if profile == "legacy" and len(shot["action"]) != len(WINDOWS):
             raise ValueError(f"{shot['id']} 的 action 须为 {len(WINDOWS)} 段")
         world, music = resolve(shot, segments)
         if world not in locks["worlds"]:
@@ -66,6 +82,51 @@ def cast_line(shot, locks):
             f"Exactly {total} {word.lower()} in frame: {who}.")
 
 
+def _format_action_windows(shot):
+    act = shot.get("action") or ""
+    end_state = (shot.get("end_state") or "").strip().rstrip(".")
+    if isinstance(act, str):
+        main = act.strip().rstrip(".")
+        tail = end_state or "holds the exact end pose and framing without new movement"
+        return main, tail
+    parts = [str(x).strip().rstrip(".") for x in act if str(x).strip()]
+    if len(parts) == 1:
+        main = parts[0]
+        tail = end_state or "holds the exact end pose and framing without new movement"
+    elif len(parts) == 2:
+        main, tail = parts[0], end_state or parts[1]
+    else:
+        main = "; ".join(parts[:-1])
+        tail = end_state or parts[-1]
+    return main, tail
+
+
+def _short_char_anchors(shot, locks):
+    if shot.get("wide_or_back"):
+        return ""
+    char_map = locks.get("video_characters") or locks.get("characters") or {}
+    items = []
+    for c in shot.get("characters", []):
+        cname = locks.get("names", {}).get(c, c.upper())
+        desc = (char_map.get(c) or "").strip().rstrip(".")
+        if desc:
+            items.append(f"{cname} ({desc})")
+    return "; ".join(items)
+
+
+def _audio_line(shot):
+    amb = (shot.get("ambience") or "quiet room tone").strip().rstrip(".")
+    foley = (shot.get("foley") or "none").strip().rstrip(".")
+    snd = f"{amb}; {foley}" if foley and foley.lower() != "none" else amb
+    return f"Audio: {snd} only; no music, no speech, no human vocalizations."
+
+
+def _guard_line(shot):
+    base = "Single continuous shot with no cuts; no readable writing anywhere; held props stay in hand"
+    extra = (shot.get("guard") or "").strip().rstrip(".")
+    return f"Guard: {base}" + (f"; {extra}." if extra else ".")
+
+
 def request(shot, locks, segments, style="default"):
     world, music = resolve(shot, segments)
     cast, count = cast_line(shot, locks)
@@ -99,14 +160,125 @@ def request(shot, locks, segments, style="default"):
     return "\n".join(lines)
 
 
+def compile_request(shot, locks, segments, style="default", profile="legacy"):
+    """Compile an IR shot into a model-ready prompt according to `profile`."""
+    if profile == "legacy":
+        return request(shot, locks, segments, style=style)
+    if profile not in PROFILES:
+        raise ValueError(f"未知编译 profile：{profile}")
+
+    world, _ = resolve(shot, segments)
+    _, count_end = cast_line(shot, locks)
+    char_anchors = _short_char_anchors(shot, locks)
+    pos = (shot.get("spatial_anchor") or shot.get("first_frame") or "").strip().rstrip(".")
+
+    if profile in ("muse-i2v-still", "muse-i2v-action"):
+        lock_parts = ["Exact start image as frame 1, keep exact composition and lighting"]
+        if pos:
+            lock_parts.append(pos)
+        if char_anchors:
+            lock_parts.append(char_anchors)
+        lock_parts.append(count_end.rstrip("."))
+        lines = [
+            "Ref Lock: " + "; ".join(lock_parts) + ".",
+            f"Camera: {sentence(shot['camera'])}",
+        ]
+        if profile == "muse-i2v-still":
+            lines.append("Timeline: 0-10s all figures hold exact start poses with subtle breathing only, mouths closed.")
+        else:
+            main, tail = _format_action_windows(shot)
+            lines.append(f"Timeline: 0-4s {main}; 4-10s {tail}.")
+        lines.append(f"Ambient: {sentence(shot['ambient'])} Nothing else moves.")
+        lines.append(_guard_line(shot))
+        lines.append(_audio_line(shot))
+        return "\n".join(lines)
+
+    if profile == "muse-t2v":
+        main, tail = _format_action_windows(shot)
+        lines = [
+            f"Shot & Style: {sentence(locks['style'][style])} {sentence(locks['worlds'][world])}",
+            f"Scene: {sentence(shot.get('first_frame') or '')}" + (f" {char_anchors}." if char_anchors else ""),
+            f"Camera: {sentence(shot['camera'])}",
+            f"Timeline: 0-4s {main}; 4-10s {tail}.",
+            f"Ambient: {sentence(shot['ambient'])}",
+            _guard_line(shot),
+            _audio_line(shot),
+        ]
+        return "\n".join(line for line in lines if line.strip())
+
+    # grok-r2v
+    main, tail = _format_action_windows(shot)
+    for field_name, val in (("camera", shot["camera"]), ("action", main), ("end_state", tail)):
+        if _GROK_SLOW_RE.search(val):
+            raise ValueError(f"{shot['id']} grok-r2v 禁用 slow 类运动词（出现在 {field_name}）：{val!r}")
+    cast, _ = cast_line(shot, locks)
+    lines = [f"CAST: {cast}"]
+    if shot.get("refs"):
+        refs = locks.get("refs", {})
+        lines.append("REFERENCES: " + "; ".join(
+            f"image {i} = {r} ({refs[r]['use']})" for i, r in enumerate(shot["refs"], 1)))
+    if char_anchors:
+        lines.append(f"CHARACTERS: {char_anchors}.")
+    lines.append(f"CAMERA: {sentence(shot['camera'])}")
+    lines.append(f"ACTION: {main}. {tail}; hold expression and posture for ~1s after final word.")
+    lines.append(f"AMBIENT: {sentence(shot['ambient'])}")
+    dialogue = (shot.get("dialogue") or "").strip()
+    amb = (shot.get("ambience") or "quiet room tone").strip().rstrip(".")
+    foley = (shot.get("foley") or "none").strip().rstrip(".")
+    audio_parts = [f"Ambience: {amb}"]
+    if foley and foley.lower() != "none":
+        audio_parts.append(f"Foley: {foley}")
+    if dialogue:
+        audio_parts.append(f"Dialogue: {dialogue}")
+    else:
+        audio_parts.append("Dialogue: none")
+    audio_parts.append("Music: none")
+    lines.append("AUDIO: " + "; ".join(audio_parts) + ".")
+    return "\n".join(lines)
+
+
+def _lint_mode_for(profile):
+    return {
+        "legacy": "legacy",
+        "muse-i2v-still": "i2v-still",
+        "muse-i2v-action": "i2v-action",
+        "muse-t2v": "t2v",
+        "grok-r2v": "r2v-dialogue",
+    }[profile]
+
+
+def shot_dict_for_lint(shot, locks, segments, style="default", profile="legacy"):
+    world, _ = resolve(shot, segments)
+    main, tail = _format_action_windows(shot)
+    compiled = compile_request(shot, locks, segments, style=style, profile=profile)
+    start_txt = shot.get("first_frame") or ""
+    if profile in ("legacy", "muse-t2v"):
+        start_txt = f"{locks['worlds'][world]} {start_txt}".strip()
+    return {
+        "id": shot["id"],
+        "raw_prompt": compiled,
+        "start": start_txt,
+        "light": shot.get("light") or (locks["worlds"][world] if profile == "muse-t2v" else ""),
+        "camera": shot["camera"],
+        "action": f"{main} {tail}".strip() if profile != "muse-i2v-still" else "hold exact start pose, mouths closed",
+        "ambient": shot["ambient"],
+        "guard": shot.get("guard") or "",
+        "audio": _audio_line(shot) if profile != "grok-r2v" else (shot.get("ambience") or ""),
+        "indoor": shot.get("indoor"),
+        "no_speech": profile != "grok-r2v" or not bool((shot.get("dialogue") or "").strip()),
+    }
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("table")
     ap.add_argument("--out", required=True, help="输出目录；每个 batch 一个 txt")
     ap.add_argument("--shots", help="只拼这些镜头，逗号分隔，如 S13,S35")
     ap.add_argument("--style", default="default", help="locks.style 中的变体名")
+    ap.add_argument("--profile", default="legacy", choices=PROFILES, help="输出编译模式")
+    ap.add_argument("--lint", action="store_true", help="拼装后运行跨字段矛盾校验，有 error 则退出码 1")
     args = ap.parse_args()
-    data = load(args.table)
+    data = load(args.table, profile=args.profile)
     locks, segments = data["locks"], data.get("segments", {})
     if args.style not in locks["style"]:
         raise SystemExit(f"未定义的风格变体：{args.style}")
@@ -114,6 +286,19 @@ def main():
     shots = [s for s in data["shots"] if wanted is None or s["id"] in wanted]
     if wanted and len(shots) != len(wanted):
         raise SystemExit(f"找不到镜头：{', '.join(sorted(wanted - {s['id'] for s in shots}))}")
+    lint_errors = []
+    if args.lint:
+        mode = _lint_mode_for(args.profile)
+        for s in shots:
+            issues = lint_shot_prompt(shot_dict_for_lint(s, locks, segments, args.style, args.profile), mode=mode)
+            for issue in issues:
+                if issue["severity"] == "error":
+                    lint_errors.append(f"{s['id']} ({issue['code']}): {issue['message']}")
+        if lint_errors:
+            for err in lint_errors:
+                print(f"[LINT ERROR] {err}", file=sys.stderr)
+            raise SystemExit(1)
+
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     batches = {}
@@ -130,10 +315,10 @@ def main():
         body = head + "\n\n".join(
             f"===== {s['id']} ({s.get('seconds', '?')}s)"
             + (f" refs: {', '.join(s['refs'])}" if s.get("refs") else "") + " =====\n"
-            + request(s, locks, segments, args.style) for s in group)
+            + compile_request(s, locks, segments, args.style, profile=args.profile) for s in group)
         name = f"{key}-{args.style}.txt" if args.style != "default" else f"{key}.txt"
-        (out / name).write_text(body + "\n")
-    print(json.dumps({"shots": len(shots), "files": len(batches), "style": args.style}, ensure_ascii=False))
+        (out / name).write_text(body + "\n", encoding="utf-8")
+    print(json.dumps({"shots": len(shots), "files": len(batches), "style": args.style, "profile": args.profile}, ensure_ascii=False))
 
 
 if __name__ == "__main__":

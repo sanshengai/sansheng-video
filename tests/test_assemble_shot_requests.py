@@ -95,3 +95,68 @@ def test_batch_file_lists_references_once_in_order(tmp_path):
     text = (out / "B1.txt").read_text()
     assert text.startswith("REFERENCES (attach in this order):\n- girl: g.png | identity\n- field: f.png | scene\n")
     assert "===== S02 (?s) refs: field =====" in text
+
+
+
+def test_distilled_muse_i2v_profiles_omit_style_world_and_cuts_to(tmp_path):
+    locks = dict(LOCKS, names={"girl": "MINA"}, video_characters={"girl": "girl in blue overalls, red ribbon"})
+    s_still = shot(
+        id="S10",
+        first_frame="standing left of well",
+        action="",
+        camera="Locked-off tripod medium shot, zero pan, tilt, zoom or dolly",
+        ambient="hair and grass stirring lightly",
+        end_state="",
+        ambience="soft evening wind",
+        foley="none",
+        next="next shot starts inside the well",
+        indoor=False,
+    )
+    still_txt = asr.compile_request(s_still, locks, {"field": {"world": "field"}}, profile="muse-i2v-still")
+    assert still_txt.startswith("Ref Lock: Exact start image as frame 1")
+    assert "MINA (girl in blue overalls, red ribbon)" in still_txt
+    assert "0-10s all figures hold exact start poses" in still_txt
+    assert "CUTS TO" not in still_txt and "STYLE:" not in still_txt and "WORLD:" not in still_txt and "FIELD-LOCK" not in still_txt
+    assert "no music, no speech, no human vocalizations" in still_txt
+
+    s_act = shot(
+        id="S11",
+        first_frame="leaning over well rim",
+        action=["MINA lowers the red spool gently", "holds the lowered hand still"],
+        camera="Slow steady dolly-in (~15% scale increase) 0-4s, stops and holds 4-10s",
+        ambient="leaves drifting across lane",
+        end_state="hand steady over rim",
+        ambience="light wind",
+        foley="rope creak at 2s",
+        next="next shot inside well",
+    )
+    act_txt = asr.compile_request(s_act, locks, {"field": {"world": "field"}}, profile="muse-i2v-action")
+    assert "Timeline: 0-4s MINA lowers the red spool gently; 4-10s hand steady over rim." in act_txt
+    assert "CUTS TO" not in act_txt
+
+
+def test_grok_r2v_rejects_slow_and_cli_lint_blocks_conflicts(tmp_path):
+    s_slow = shot(
+        id="G01",
+        camera="Slow push-in toward desk",
+        action="walks forward",
+        end_state="stops at desk",
+        dialogue="MINA: Good morning.",
+    )
+    with pytest.raises(ValueError, match="slow"):
+        asr.compile_request(s_slow, LOCKS, {"field": {"world": "field"}}, profile="grok-r2v")
+
+    bad_shot = shot(
+        id="B01",
+        camera="Locked-off tripod medium shot",
+        action="Slow push-in while riders gallop away",
+        end_state="empty road",
+        ambience="wind",
+        foley="none",
+    )
+    p = table(tmp_path, [bad_shot])
+    out = tmp_path / "lint_out"
+    sys.argv = ["x", str(p), "--out", str(out), "--profile", "muse-i2v-action", "--lint"]
+    with pytest.raises(SystemExit) as exc:
+        asr.main()
+    assert exc.value.code == 1
