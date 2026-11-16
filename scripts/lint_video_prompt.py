@@ -2,7 +2,7 @@
 """Cross-field contradiction and bloat linter for AI video generation prompts.
 
 Pure standard library; shared by sansheng-video (assemble_shot_requests.py)
-and downstream product pipelines (e.g. sandy-yiye-subject).
+and downstream product pipelines (e.g. batch episode pipelines).
 """
 from __future__ import annotations
 
