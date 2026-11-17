@@ -2,6 +2,8 @@
 
 ## [未发布]
 
+- 批量系列归档与工程空间治理补齐三项规范（`references/production.md`）：① 多子系列合编进同一成品目录或看板须按全局连续集号编排，并在看板聚合时对 `(系列, 季, 集)` 键重复覆盖与标题冲突直接抛错、校验集数守恒；② 跨系列复用的渲染器依赖与通用音画资产须独立放 `_shared/` 或通过环境变量/CLI 注入，禁硬编码绑定前序单集临时目录，且公开脚本禁用个人主目录绝对路径；③ macOS APFS 上成片搬运统一 `/bin/cp -c -p` 并定期用 `clone_dedupe.py` 原地转克隆，定版验收后优先回收分段渲染，分句原始 `WAV` 经裸 PCM SHA-256 校验一致后无损压缩为 `FLAC` 再回收可重拼的整集 `narration-body.wav`。（PATCH：补充批量系列工程与清理规范，原有单条契约不变）
+
 - 新增 HyperFrames 开渲前真实浏览器 DOM/SVG 几何预检脚本与横转竖防漂移规则（`scripts/audit_svg_dom_layout.mjs`、`references/hyperframes.md`、`references/multi-aspect-revisions.md`）：① 基于 Playwright headless Chromium 在 `document.fonts.ready` + `tl.progress(1)` 后用 SVG `getBBox()` 与 DOM `getBoundingClientRect()` 实测顶栏碰撞、`.stage` 高度溢出、`viewBox` 裁字、圆角框溢字、`<text>` 重叠与未遮罩线段穿字，内置 4 类变异负样本 `--self-test`；② `multi-aspect-revisions.md` 补充横转竖禁用 `trim=start_frame=`（改秒级 `trim=start=:end=` + 首帧 MAD 门与尾帧防白闪校验）及竖版字幕卡片底座常驻壳层约定。（MINOR：新增兼容独立预检工具与规范，不破坏既有渲染调用）
 
 - 生成镜头请求升级为「台账 IR + 按入口/镜型编译 + 跨字段矛盾机检」双层架构（`scripts/lint_video_prompt.py`、`scripts/assemble_shot_requests.py`、`references/shot-request-template.md`、`references/muse-handoff.md`、`SKILL.md`）：① 新增零外部依赖纯标准库 `lint_video_prompt.py` 拦截 8 类真实翻车冲突（昼夜光线矛盾、静止机位配运镜/出画位移、室内镜混户外/村舍词、禁声镜混人声诱因、无字锁配读卷写字、`choose from:` 菜单音效、`CUTS TO` 泄漏与超长注意力稀释），附完整正反例与正则变异单测；② `assemble_shot_requests.py` 保留 `legacy` 默认输出不变，新增 `--profile`（`muse-i2v-still` / `muse-i2v-action` / `muse-t2v` / `grok-r2v`）与 `--lint` 闸门，支持 I2V 剥离长篇户外设定、`0–4s` 主动作提前收口与 `4–10s` 终态保持、环境微动白名单、`grok-r2v` 禁用 `slow` 校验，以及四类镜头（含本地确定性动效）分流边界。（MINOR：新增兼容可选工具、编译参数与文档规范，旧 `legacy` 用法保持不变）
