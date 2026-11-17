@@ -33,6 +33,13 @@ python3 "$SKILL/scripts/render_production.py" check "$PROJECT/renders/draft.rend
 
 `--quality high` 用于最终文件，另起输出名；已有文件需明确 --refresh 才覆盖。适配器核对构建、运行包、浏览器和最终媒体，保留真实日志与回执。它不自动安装依赖，不证明人已看过或听过。
 
+- **批量 SVG／纯矢量板开渲前先过真实 Chromium DOM/SVG 几何预检**：多集图表动画不能仅靠源码正则检查（正则无法算出字体实际渲染宽度与多行折行）。在送入 HyperFrames 逐帧渲染前，须在 headless Chromium 里 `document.fonts.ready` 后把 timeline seek 到终态，调用 `getBBox()` 与 `getBoundingClientRect()` 校验：① `.topbar` `.hdr-lockup` 与 `.era-pill` 不碰车；② `.stage` 不溢出 810px 安全区；③ `<svg>` 内文本不裁出 `viewBox` 或溢出所属圆角框；④ `<text>` 之间、未遮罩 `<line>`/`<polygon>` 与文字之间无碰撞（先修 spec 再渲染）：
+
+```sh
+node "$SKILL/scripts/audit_svg_dom_layout.mjs" --html "$PROJECT/hf_plates_dir"
+node "$SKILL/scripts/audit_svg_dom_layout.mjs" --self-test
+```
+
 跨机器恢复需要重新建立本机路径和构建／渲染回执；绝对路径回执不是可移植工程格式。保留相对资源、源文件和 package-lock 后在新环境重建，而非直接把旧回执当新机器证据。
 
 更复杂的 HF API 先查已安装包及其对应官方技术资料，技术层按需加载；没有这类技能时不要求另装一套总控。

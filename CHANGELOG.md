@@ -2,6 +2,8 @@
 
 ## [未发布]
 
+- 新增 HyperFrames 开渲前真实浏览器 DOM/SVG 几何预检脚本与横转竖防漂移规则（`scripts/audit_svg_dom_layout.mjs`、`references/hyperframes.md`、`references/multi-aspect-revisions.md`）：① 基于 Playwright headless Chromium 在 `document.fonts.ready` + `tl.progress(1)` 后用 SVG `getBBox()` 与 DOM `getBoundingClientRect()` 实测顶栏碰撞、`.stage` 高度溢出、`viewBox` 裁字、圆角框溢字、`<text>` 重叠与未遮罩线段穿字，内置 4 类变异负样本 `--self-test`；② `multi-aspect-revisions.md` 补充横转竖禁用 `trim=start_frame=`（改秒级 `trim=start=:end=` + 首帧 MAD 门与尾帧防白闪校验）及竖版字幕卡片底座常驻壳层约定。（MINOR：新增兼容独立预检工具与规范，不破坏既有渲染调用）
+
 - 生成镜头请求升级为「台账 IR + 按入口/镜型编译 + 跨字段矛盾机检」双层架构（`scripts/lint_video_prompt.py`、`scripts/assemble_shot_requests.py`、`references/shot-request-template.md`、`references/muse-handoff.md`、`SKILL.md`）：① 新增零外部依赖纯标准库 `lint_video_prompt.py` 拦截 8 类真实翻车冲突（昼夜光线矛盾、静止机位配运镜/出画位移、室内镜混户外/村舍词、禁声镜混人声诱因、无字锁配读卷写字、`choose from:` 菜单音效、`CUTS TO` 泄漏与超长注意力稀释），附完整正反例与正则变异单测；② `assemble_shot_requests.py` 保留 `legacy` 默认输出不变，新增 `--profile`（`muse-i2v-still` / `muse-i2v-action` / `muse-t2v` / `grok-r2v`）与 `--lint` 闸门，支持 I2V 剥离长篇户外设定、`0–4s` 主动作提前收口与 `4–10s` 终态保持、环境微动白名单、`grok-r2v` 禁用 `slow` 校验，以及四类镜头（含本地确定性动效）分流边界。（MINOR：新增兼容可选工具、编译参数与文档规范，旧 `legacy` 用法保持不变）
 
 - 局部返修、首帧嵌封面与生成片段声音衔接补充三条实测工艺（`references/multi-aspect-revisions.md`、`references/video-covers.md`、`references/generated-audiovisual.md`）：① 局部画面层返修须做整段目标时间窗的真实浏览器连续覆盖检查（防首卡前或卡间留白）、母片结构切点预埋关键帧配合未变尾段流拷贝、以及复用压缩 AAC 音轨时先编无声视频再合流原音轨（防 `-frames:v` 截断超出数毫秒的最后一个音频包）；② 短封面替换固定片头时预埋片头边界关键帧，并用 `duration_change_seconds` 回执强绑定学习条／章节等下游时间消费者；③ 多镜切点采用护词尾的 30 ms 原声短正弦淡变与自适应等功率环境交叉淡化，并给出非对白原生动作声按镜放开降噪门的信噪比、高频嘶声占比与静音后 ASR 机筛基线。（PATCH：补充工艺判据，原有契约不变）
