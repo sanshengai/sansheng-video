@@ -87,3 +87,68 @@ def test_mutations_stop_rejecting_defects():
     bad_vocal = {"action": "Crowd cheers.", "audio": "Wind only; no speech."}
     with mock.patch.object(lvp, "VOCAL_TRIGGER_RE", never):
         assert "no_speech_vocal_trigger" not in {x["code"] for x in lvp.lint_shot_prompt(bad_vocal)}
+
+
+def test_nobody_speaks_is_negated_while_positive_vocal_still_triggers():
+    clean_silent = {
+        "action": "Action: Real-time continuous take. Maya closes the cardboard tube quietly.",
+        "voice": "Speech: Nobody speaks; all lips stay closed.",
+        "audio": "Audio: Quiet sea breeze and cardboard rustle only. No music, no speech, no human vocalizations.",
+        "no_speech": True,
+    }
+    assert lvp.lint_shot_prompt(clean_silent, mode="i2v-action") == []
+    bad_silent = dict(
+        clean_silent,
+        action="Action: Real-time continuous take. Everyone in the circle talks and smiles at once.",
+    )
+    assert "no_speech_vocal_trigger" in {x["code"] for x in lvp.lint_shot_prompt(bad_silent, mode="i2v-action")}
+
+
+def test_cinematography_lint_warnings_and_mutations():
+    # 1. Vague buzzwords without concrete light/optics warn in keyframe & t2v modes
+    vague_kf = {
+        "id": "KF01",
+        "raw_prompt": "Photorealistic cinematic film still, natural light, a merchant standing by a wooden gate.",
+    }
+    assert "vague_style_without_optics" in {x["code"] for x in lvp.lint_keyframe_prompt(vague_kf)}
+
+    concrete_kf = {
+        "id": "KF02",
+        "raw_prompt": (
+            "Photorealistic cinematic film still, warm late-afternoon side sunlight through timber eaves, "
+            "subtle 35mm film grain, light airborne dust, 35mm medium shot of a merchant by a wooden gate."
+        ),
+    }
+    assert lvp.lint_keyframe_prompt(concrete_kf) == []
+
+    # 2. Close-up paired with ultra-wide lens warns
+    bad_lens = {"id": "KF03", "raw_prompt": "Close-up portrait of a general, shot on 14mm ultra-wide lens, side light."}
+    assert "closeup_ultrawide_conflict" in {x["code"] for x in lvp.lint_keyframe_prompt(bad_lens)}
+
+    # 3. Dynamic camera move paired with static composition lock warns
+    bad_move_lock = {
+        "id": "V01",
+        "start": "Exact start image as frame 1, keep exact composition and lighting.",
+        "camera": "Single slow dolly-in from frame 1 through second 10.",
+        "action": "0-7s: officer raises one hand steadily.",
+        "audio": "Soft wind only; no music, no speech, no human vocalizations.",
+    }
+    assert "static_composition_vs_camera_move" in {x["code"] for x in lvp.lint_shot_prompt(bad_move_lock, mode="i2v-continuous")}
+
+    clean_continuous = dict(
+        bad_move_lock,
+        start="Exact start image as frame 1, keep scene, subjects and lighting consistent.",
+    )
+    assert lvp.lint_shot_prompt(clean_continuous, mode="i2v-continuous") == []
+
+    # Mutation tests prove each new detector actually rejects defects
+    never = re.compile(r"(?!x)x")
+    with mock.patch.object(lvp, "VAGUE_STYLE_BUZZ_RE", never):
+        assert "vague_style_without_optics" not in {x["code"] for x in lvp.lint_keyframe_prompt(vague_kf)}
+    with mock.patch.object(lvp, "ULTRAWIDE_LENS_RE", never):
+        assert "closeup_ultrawide_conflict" not in {x["code"] for x in lvp.lint_keyframe_prompt(bad_lens)}
+    with mock.patch.object(lvp, "STATIC_COMPOSITION_LOCK_RE", never):
+        assert "static_composition_vs_camera_move" not in {
+            x["code"] for x in lvp.lint_shot_prompt(bad_move_lock, mode="i2v-continuous")
+        }
+

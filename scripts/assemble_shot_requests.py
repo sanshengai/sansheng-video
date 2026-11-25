@@ -16,27 +16,48 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
-from lint_video_prompt import lint_shot_prompt
+from lint_video_prompt import CAM_MOVE_RE, lint_shot_prompt, strip_negated_clauses
 
 SHOT_FIELDS = ("id", "segment", "first_frame", "action", "camera", "ambient", "end_state",
                "ambience", "foley")
 WINDOWS = ("0-3s", "3-7s", "7-10s")
 MUSIC_NONE = "none (no background music; the score is added in post)"
-PROFILES = ("legacy", "muse-i2v-still", "muse-i2v-action", "muse-t2v", "grok-r2v")
+PROFILES = ("legacy", "keyframe", "muse-i2v-still", "muse-i2v-action", "muse-i2v-continuous", "muse-t2v", "grok-r2v")
 _GROK_SLOW_RE = re.compile(r"\bslow(?:ly|er|est|ing)?\b", re.I)
+STYLE_KEYFRAME_ORDER = ("anchor", "light", "color", "texture", "composition", "mood")
+STYLE_VIDEO_ORDER = ("anchor", "light", "color", "texture", "motion", "mood")
+
+
+def format_style(style_entry, *, for_video: bool = False) -> str:
+    """Render locks.style[name] from either a legacy string or a structured 5-decision dict.
+
+    When `for_video=True`, static `composition` is stripped automatically so it never fights camera motion.
+    """
+    if isinstance(style_entry, str):
+        return style_entry.strip()
+    if not isinstance(style_entry, dict):
+        raise ValueError(f"风格定义须为字符串或结构化对象：{style_entry!r}")
+    order = STYLE_VIDEO_ORDER if for_video else STYLE_KEYFRAME_ORDER
+    parts = [str(style_entry[k]).strip().rstrip(".,;") for k in order if str(style_entry.get(k, "")).strip()]
+    return "; ".join(parts)
 
 
 def load(path, profile="legacy"):
     data = json.loads(Path(path).read_text(encoding="utf-8"))
     locks, segments, shots = data["locks"], data.get("segments", {}), data["shots"]
     seen = set()
-    req_fields = SHOT_FIELDS if profile == "legacy" else ("id", "segment", "camera", "ambient", "ambience")
+    if profile == "legacy":
+        req_fields = SHOT_FIELDS
+    elif profile == "keyframe":
+        req_fields = ("id", "segment", "first_frame")
+    else:
+        req_fields = ("id", "segment", "camera", "ambient", "ambience")
     for shot in shots:
         missing = [k for k in req_fields if not shot.get(k)]
         if profile == "legacy":
             if locks.get("native_music") and not shot.get("music_dynamic"):
                 missing.append("music_dynamic")
-        elif profile != "muse-i2v-still" and not shot.get("action"):
+        elif profile not in ("muse-i2v-still", "muse-i2v-continuous", "keyframe") and not shot.get("action"):
             missing.append("action")
         if missing:
             raise ValueError(f"{shot.get('id', '?')} 缺字段：{', '.join(missing)}")
@@ -135,7 +156,7 @@ def request(shot, locks, segments, style="default"):
     if shot.get("refs"):
         lines.append("REFERENCES: " + "; ".join(
             f"image {i} = {r} ({refs[r]['use']})" for i, r in enumerate(shot["refs"], 1)))
-    lines.append(f"STYLE: {locks['style'][style]}")
+    lines.append(f"STYLE: {format_style(locks['style'][style], for_video=False)}")
     lines += [f"CHARACTER {locks.get('names', {}).get(c, c.upper())}: {locks['characters'][c]}"
               for c in shot.get("characters", [])]
     lines += [f"WORLD: {locks['worlds'][world]}", f"FORMAT: {locks['format']}",
@@ -172,8 +193,37 @@ def compile_request(shot, locks, segments, style="default", profile="legacy"):
     char_anchors = _short_char_anchors(shot, locks)
     pos = (shot.get("spatial_anchor") or shot.get("first_frame") or "").strip().rstrip(".")
 
-    if profile in ("muse-i2v-still", "muse-i2v-action"):
-        lock_parts = ["Exact start image as frame 1, keep exact composition and lighting"]
+    if profile == "keyframe":
+        style_txt = format_style(locks["style"][style], for_video=False)
+        full_chars = []
+        for c in shot.get("characters", []):
+            cname = locks.get("names", {}).get(c, c.upper())
+            desc = (locks.get("characters", {}).get(c) or "").strip().rstrip(".")
+            if desc:
+                full_chars.append(f"{cname}: {desc}")
+        lines = [
+            f"Scene: {sentence(shot['first_frame'])}",
+            f"World: {sentence(locks['worlds'][world])}",
+            f"Style: {sentence(style_txt)}",
+        ]
+        if shot.get("light"):
+            lines.append(f"Light: {sentence(shot['light'])}")
+        if shot.get("composition"):
+            lines.append(f"Composition: {sentence(shot['composition'])}")
+        if full_chars:
+            lines.append("Characters: " + "; ".join(full_chars) + ".")
+        extra_guard = (shot.get("guard") or "").strip().rstrip(".")
+        guard_txt = "Single continuous scene from one camera; no text, captions, signs, logos or watermark"
+        lines.append(f"Guard: {guard_txt}" + (f"; {extra_guard}." if extra_guard else "."))
+        return "\n".join(line for line in lines if line.strip())
+
+    if profile in ("muse-i2v-still", "muse-i2v-action", "muse-i2v-continuous"):
+        cam_has_move = bool(CAM_MOVE_RE.search(strip_negated_clauses(shot.get("camera") or "")))
+        if profile == "muse-i2v-continuous" or (profile == "muse-i2v-action" and cam_has_move):
+            lock_head = "Exact start image as frame 1, keep scene, subjects and lighting consistent"
+        else:
+            lock_head = "Exact start image as frame 1, keep exact composition and lighting"
+        lock_parts = [lock_head]
         if pos:
             lock_parts.append(pos)
         if char_anchors:
@@ -185,6 +235,12 @@ def compile_request(shot, locks, segments, style="default", profile="legacy"):
         ]
         if profile == "muse-i2v-still":
             lines.append("Timeline: 0-10s all figures hold exact start poses with subtle breathing only, mouths closed.")
+        elif profile == "muse-i2v-continuous":
+            if shot.get("action"):
+                main, _ = _format_action_windows(shot)
+                lines.append(f"Timeline: 0-7s starting at frame 1, {main}, unfolding evenly through second 7.")
+            else:
+                lines.append("Timeline: 0-10s keep the scene and subjects consistent as the camera moves steadily.")
         else:
             main, tail = _format_action_windows(shot)
             lines.append(f"Timeline: 0-4s {main}; 4-10s {tail}.")
@@ -195,8 +251,9 @@ def compile_request(shot, locks, segments, style="default", profile="legacy"):
 
     if profile == "muse-t2v":
         main, tail = _format_action_windows(shot)
+        style_txt = format_style(locks["style"][style], for_video=True)
         lines = [
-            f"Shot & Style: {sentence(locks['style'][style])} {sentence(locks['worlds'][world])}",
+            f"Shot & Style: {sentence(style_txt)} {sentence(locks['worlds'][world])}",
             f"Scene: {sentence(shot.get('first_frame') or '')}" + (f" {char_anchors}." if char_anchors else ""),
             f"Camera: {sentence(shot['camera'])}",
             f"Timeline: 0-4s {main}; 4-10s {tail}.",
@@ -240,8 +297,10 @@ def compile_request(shot, locks, segments, style="default", profile="legacy"):
 def _lint_mode_for(profile):
     return {
         "legacy": "legacy",
+        "keyframe": "keyframe",
         "muse-i2v-still": "i2v-still",
         "muse-i2v-action": "i2v-action",
+        "muse-i2v-continuous": "i2v-continuous",
         "muse-t2v": "t2v",
         "grok-r2v": "r2v-dialogue",
     }[profile]
@@ -252,8 +311,19 @@ def shot_dict_for_lint(shot, locks, segments, style="default", profile="legacy")
     main, tail = _format_action_windows(shot)
     compiled = compile_request(shot, locks, segments, style=style, profile=profile)
     start_txt = shot.get("first_frame") or ""
-    if profile in ("legacy", "muse-t2v"):
+    if profile in ("legacy", "muse-t2v", "keyframe"):
         start_txt = f"{locks['worlds'][world]} {start_txt}".strip()
+    if profile == "keyframe":
+        return {
+            "id": shot["id"],
+            "raw_prompt": compiled,
+            "start": start_txt,
+            "light": shot.get("light") or "",
+            "camera": shot.get("composition") or "",
+            "guard": shot.get("guard") or "",
+            "indoor": shot.get("indoor"),
+            "no_speech": False,
+        }
     return {
         "id": shot["id"],
         "raw_prompt": compiled,

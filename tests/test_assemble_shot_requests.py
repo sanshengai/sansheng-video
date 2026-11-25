@@ -160,3 +160,50 @@ def test_grok_r2v_rejects_slow_and_cli_lint_blocks_conflicts(tmp_path):
     with pytest.raises(SystemExit) as exc:
         asr.main()
     assert exc.value.code == 1
+
+
+def test_structured_style_splits_keyframe_composition_from_video_motion():
+    structured_locks = dict(
+        LOCKS,
+        style={
+            "default": {
+                "anchor": "Oriental historical realism",
+                "light": "Directional warm oil-lamp side light with cool ambient shadows",
+                "color": "Restrained low-saturation earth and indigo",
+                "texture": "Subtle 35mm film grain and light airborne dust",
+                "composition": "35mm medium framing with timber pillar foreground frame",
+                "motion": "Measured steady camera motion",
+                "mood": "Quiet historical tension",
+            }
+        },
+        names={"girl": "MINA"},
+        video_characters={"girl": "young woman in blue linen coat"},
+    )
+    s = shot(
+        id="S20",
+        first_frame="MINA stands beside a timber table inside a lamplit hall",
+        camera="Single slow dolly-in from frame 1 through second 10, even pace",
+        action=["MINA gently places the sealed letter on the table"],
+        ambient="oil lamp flame swaying softly in draft",
+        end_state="hand resting beside letter",
+        ambience="quiet indoor room tone",
+        foley="soft paper contact",
+    )
+    kf = asr.compile_request(s, structured_locks, {"field": {"world": "field"}}, profile="keyframe")
+    assert "timber pillar foreground frame" in kf
+    assert "Subtle 35mm film grain" in kf
+    assert "Measured steady camera motion" not in kf
+
+    t2v = asr.compile_request(s, structured_locks, {"field": {"world": "field"}}, profile="muse-t2v")
+    assert "timber pillar foreground frame" not in t2v
+    assert "Measured steady camera motion" in t2v
+
+    cont = asr.compile_request(s, structured_locks, {"field": {"world": "field"}}, profile="muse-i2v-continuous")
+    assert "keep scene, subjects and lighting consistent" in cont
+    assert "keep exact composition" not in cont
+    assert "0-7s starting at frame 1" in cont
+    assert asr.lint_shot_prompt(
+        asr.shot_dict_for_lint(s, structured_locks, {"field": {"world": "field"}}, profile="muse-i2v-continuous"),
+        mode="i2v-continuous",
+    ) == []
+

@@ -15,17 +15,19 @@ from pathlib import Path
 DEFAULT_MAX_WORDS: dict[str, int] = {
     "i2v-still": 100,
     "i2v-action": 120,
+    "i2v-continuous": 120,
     "t2v": 150,
     "r2v-dialogue": 150,
+    "keyframe": 220,
     "legacy": 320,
 }
 
 # Strip negated phrases ("no speech, no dialogue", "zero pan, tilt, zoom or dolly")
 # while stopping before positive clauses (", riders gallop away", "; at most one...").
 _NEG_FRAG = re.compile(
-    r"\b(?:no|without|never|nor|zero|not\s+any)\b"
+    r"\b(?:no|nobody|without|never|nor|zero|not\s+any)\b"
     r"(?:(?!\b(?:and|but|while|whereas|however|then|with|where|which|that|as)\b)[^.;,]){0,60}"
-    r"(?:\s*,\s*(?:(?:or|nor|and)\s+)?(?:no\s+|without\s+)?"
+    r"(?:\s*,\s*(?:(?:or|nor|and)\s+)?(?:no\s+|nobody\s+|without\s+)?"
     r"(?!(?:a|an|the|his|her|their|some|people|figures|soldiers|riders|men|women|officials)\b)"
     r"(?:[\w'/-]+\s+){0,2}[\w'/-]+){0,6}",
     re.I,
@@ -105,6 +107,34 @@ READ_WRITE_ACTION_RE = re.compile(
 MENU_AUDIO_RE = re.compile(r"\b(?:choose\s+from|pick\s+one\s+of|select\s+from)\s*:", re.I)
 CUTS_TO_RE = re.compile(r"\bCUTS\s+TO\s*:|\bnext\s+shot\s+starts\b", re.I)
 SPEECH_DENY_RE = re.compile(r"\b(?:no\s+speech|no\s+dialogue|no\s+narration|no\s+human\s+vocalizations)\b", re.I)
+
+# Cinematography & keyframe quality cues (warning-level structural lint)
+VAGUE_STYLE_BUZZ_RE = re.compile(
+    r"(?:\b(?:cinematic|photorealistic|high\s+quality|masterpiece|natural\s+light)\b|电影感|高级感|质感拉满)",
+    re.I,
+)
+CONCRETE_OPTICS_OR_LIGHT_RE = re.compile(
+    r"(?:\b(?:backlit|backlight(?:ing)?|side[\s-]?lit|side\s+light|rim\s+light(?:ing)?|key\s+light|"
+    r"window\s+light|sunlight|golden\s+light|oil\s+lamp|lamplight|lamplit|torchlight|candlelight|"
+    r"tungsten|neon|overcast|dappled|shadow(?:s)?|volumetric|high\s+contrast|low\s+contrast|"
+    r"35mm|50mm|85mm|24mm|28mm|anamorphic|shallow\s+depth\s+of\s+field|depth\s+of\s+field|bokeh|"
+    r"film\s+grain|halation|soft\s+focus|mist|fog|haze|dust\s+motes|airborne\s+dust|smoke|foreground)\b"
+    r"|逆光|侧光|侧逆光|轮廓光|窗光|油灯|烛光|霓虹|体积光|阴影|明暗|胶片颗粒|柔焦|光晕|浅景深|薄雾|水汽|沙尘|前景)",
+    re.I,
+)
+CLOSEUP_SHOT_RE = re.compile(
+    r"(?:\b(?:extreme\s+close[\s-]?up|close[\s-]?up|tight\s+portrait|ecu)\b|特写|近景)",
+    re.I,
+)
+ULTRAWIDE_LENS_RE = re.compile(
+    r"(?:\b(?:ultra[\s-]?wide|fisheye|14mm|16mm|18mm)\b|超广角|鱼眼)",
+    re.I,
+)
+STATIC_COMPOSITION_LOCK_RE = re.compile(
+    r"(?:\b(?:keep\s+exact\s+composition|composition\s+unchanged|frame\s+edges\s+identical|framing\s+identical)\b"
+    r"|保持构图不变|构图不变)",
+    re.I,
+)
 
 
 def strip_negated_clauses(text: str) -> str:
@@ -235,10 +265,13 @@ def lint_shot_prompt(
                 "message": "Indoor shot contains outdoor landscape/village/hut anchor or negative-list terms.",
             })
 
-    # 4. No-speech vocal trigger pollution
+    # 4. No-speech vocal trigger pollution (skip still keyframes unless explicitly marked no_speech)
     no_speech = shot.get("no_speech")
     if no_speech is None:
-        no_speech = mode != "r2v-dialogue" or bool(SPEECH_DENY_RE.search(f"{audio} {voice} {combined}"))
+        if mode == "keyframe":
+            no_speech = False
+        else:
+            no_speech = mode != "r2v-dialogue" or bool(SPEECH_DENY_RE.search(f"{audio} {voice} {combined}"))
     if no_speech:
         vocal_scope = " ".join(p for p in (start, action, audio, voice) if p) or combined
         vocal_clean = strip_negated_clauses(vocal_scope)
@@ -278,7 +311,33 @@ def lint_shot_prompt(
             "message": "Compiled shot prompt contains CUTS TO / next-shot preview that induces early scene cuts.",
         })
 
-    # 8. Word budget warning
+    # 8. Cinematography & optical quality warnings
+    if mode in ("keyframe", "t2v"):
+        if VAGUE_STYLE_BUZZ_RE.search(combined) and not CONCRETE_OPTICS_OR_LIGHT_RE.search(combined):
+            findings.append({
+                "code": "vague_style_without_optics",
+                "severity": "warning",
+                "message": "Prompt relies on vague style buzzwords (e.g. 'cinematic'/'natural light') without concrete light direction, lens, or atmospheric texture.",
+            })
+
+    optics_clean = strip_negated_clauses(combined)
+    if CLOSEUP_SHOT_RE.search(optics_clean) and ULTRAWIDE_LENS_RE.search(optics_clean):
+        findings.append({
+            "code": "closeup_ultrawide_conflict",
+            "severity": "warning",
+            "message": "Close-up/portrait shot uses an ultra-wide lens that distorts faces; switch to 35mm, 50mm or 85mm.",
+        })
+
+    if mode in ("i2v-still", "i2v-action", "i2v-continuous", "t2v", "r2v-dialogue"):
+        has_move = cam_move or act_move or (not camera and bool(CAM_MOVE_RE.search(optics_clean)))
+        if has_move and STATIC_COMPOSITION_LOCK_RE.search(strip_negated_clauses(f"{start} {raw_prompt}")):
+            findings.append({
+                "code": "static_composition_vs_camera_move",
+                "severity": "warning",
+                "message": "Moving camera conflicts with static composition lock ('keep exact composition'/'frame edges identical'); lock scene and lighting instead.",
+            })
+
+    # 9. Word budget warning
     limit = max_words if max_words is not None else DEFAULT_MAX_WORDS.get(mode, 120)
     words = _word_count(raw_prompt or combined)
     if words > limit:
@@ -289,6 +348,11 @@ def lint_shot_prompt(
         })
 
     return findings
+
+
+def lint_keyframe_prompt(shot: dict, *, max_words: int | None = None) -> list[dict]:
+    """Convenience wrapper to lint a still keyframe prompt for optical/lighting completeness and conflicts."""
+    return lint_shot_prompt(shot, mode="keyframe", max_words=max_words)
 
 
 def main(argv: list[str] | None = None) -> int:

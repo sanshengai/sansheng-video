@@ -9,34 +9,41 @@ metadata:
 
 # Video · 单入口视频制作
 
-负责从内容到可编辑成片的制作。默认用 HyperFrames 执行代码镜头，FFmpeg／EDL 处理真实媒体和声音。参考过的方法已合并在内部，不再启动另一个导演，也不让用户选择框架。
+负责从内容到可编辑成片的制作。先按**三条制作主线**分流，再只读对应路线资料，不把代码视频与 AI 生成视频的规则混用。参考过的方法已合并在内部，不再启动另一个导演，也不让用户选择框架。
 
 ## 每次先做
 
 1. 在 Skill 根运行 `python3 setup.py --show-profile`。新会话、接手旧工程、局部修改都要执行。返回配置时，读其中的 `context_file`；涉及素材且配置了 `media_library` 时，再读它的 `usage`。配置里的相对路径（`context_file`、`usage`、`tool` 等）一律以返回的 `root` 为根，不在本 Skill 目录下找。没有配置时，用项目自选的中性视觉，不套作者品牌。
-2. 判断任务类型，决定从哪里进入：
+2. **先选制作主线（三选一），只加载该线资料**：
 
-| 任务 | 从哪里进入 | 先写什么 |
+| 主线 | 适用场景 | 必读核心（仅读这几份） | 默认不要加载 |
+|---|---|---|---|
+| **路线 A · AI 生成视频** | 逐镜短片、漫剧、历史／绘本动画、角色表演（Muse / Seedance / 可灵 / Grok / Veo / Sora 等） | [生成流水线](references/generated-shots.md)、[电影感与视听设计](references/generated-audiovisual.md)、[镜头请求契约](references/shot-request-template.md)、对应入口适配卡（如 [Muse](references/muse-handoff.md)）；长片选材与揭示镜头加读 [电影感生成短片](references/cinematic-generated-film.md)。**首帧静图联动 `sansheng-image` 的 `board`（`storyboard-frame`）场景** | HyperFrames、Lemo、Opus 案例、宣传片、STEM、网页演示 |
+| **路线 B · 代码与图解动画** | 文章／课程转视频、产品宣传片、数理推导、网页演示、确定性动效卡片 | 下方 7 阶段主表 + [视觉机制](references/visual-craft.md) + [HyperFrames](references/hyperframes.md) + 对应题材页 | 生成视频 5 份文档与入口适配卡 |
+| **路线 C · 真实媒体与口播剪辑** | 已有真人口播、录屏、实拍 B-roll 剪辑与补音调色 | [媒体编辑](references/media-editing.md)、[EDL 结构](references/edl-schema.md) | 代码动画与生成镜头全链 |
+
+3. 判断任务入口形态：
+
+| 任务形态 | 从哪里进入 | 先写什么 |
 |---|---|---|
-| 新作或整体重做 | 阶段 1 | 制作单（`new`） |
+| 新作或整体重做 | 阶段 1（路线 A 同时定视觉圣经与风格模块） | 制作单（`new`） |
 | 续作，或在已认可样板上扩片 | 阶段 1 | 制作单（`continue`），先列已认可组合 |
 | 一次交付多条的系列或批量 | 阶段 1 | 制作单（`series`），再按[系列与批量扩展](references/production.md#系列与批量扩展) |
 | 已有工程局部修改 | 受影响的阶段 | [修订卡](references/production.md#修订卡)；沿用原引擎、内容和约定，不重选风格 |
-| 只处理素材、声音或字幕 | 对应阶段 | 不启动全链 |
-| 已有口播、录屏或 B-roll | [媒体编辑](references/media-editing.md) | 先检查实际素材，不补写文章 |
+| 只处理素材、声音、首帧或字幕 | 对应阶段 | 不启动全链 |
 
-3. 运行本包的相对路径脚本时，每次显式以 Skill 根为工作目录；终端不一定保留上次的 `cd`。
+4. 运行本包的相对路径脚本时，每次显式以 Skill 根为工作目录；终端不一定保留上次的 `cd`。
 
 内容的事实裁决不归本 Skill：已有文章可直接转视频，课程、角色和栏目规范由输入方提供。项目约定、作者偏好和其他 Skill 的借调关系以 profile 的 `context_file` 为准。
 
-## 阶段
+## 通用阶段（三条路线按需裁剪）
 
 | 阶段 | 交出什么 | 进入下一步的条件 | 读哪份 |
 |---|---|---|---|
-| 1 制作单 | `brief.md`，按[制作单模板](references/brief-template.md) | `check_brief.py` 无缺项；核心主张、结构或牵动全片的视觉方向已有作者判断，或作者已授权 Agent 自行决定（选择写进「自主决定」） | [制作流程 §1](references/production.md#1-内容变成影片) |
-| 2 镜头与素材声音 | 每镜 ID、目的、变化和声音决定；素材候选与缺件 | 每个镜头都有可取得的画面和声音决定；要补的声音已取定素材，缺件就停在这一步并在制作单写明缺什么 | [§2](references/production.md#2-镜头设计) |
+| 1 制作单 | `brief.md`，按[制作单模板](references/brief-template.md)（路线 A 同时锁定主风格模块与角色/场景资产） | `check_brief.py` 无缺项；核心主张、结构或牵动全片的视觉方向已有作者判断，或作者已授权 Agent 自行决定（选择写进「自主决定」） | [制作流程 §1](references/production.md#1-内容变成影片) |
+| 2 镜头与素材声音 | 每镜 ID、目的、变化和声音决定；路线 A 含首帧静图（`sansheng-image` `board`）与三态核对 | 每个镜头都有可取得的画面和声音决定；路线 A 经 `lint_video_prompt.py` 零 error 且首帧审阅通过；缺件就停在这一步并在制作单写明缺什么 | 路线 A 读 [生成镜头](references/generated-shots.md)；路线 B 读 [§2](references/production.md#2-镜头设计) |
 | 3 时间源 | `timeline.json` 或 EDL；真实旁白块 | `production_timeline.py validate` 通过（不写文件，制作时再 export／check）；`check_readability.py` 的提示已处理或写了理由 | [§3](references/production.md#3-按声音角色确定真实时间)、[生产事件与工具](references/events-and-tools.md) |
-| 4 风险片段验证 | 覆盖最不确定处的一段连续片段 | 开篇、关键交接和音乐成立；已验证的方向和局部任务跳过此步 | [§4](references/production.md#4-制作与修订) |
+| 4 风险片段验证 | 覆盖最不确定处的一段连续片段（路线 A 为 3–5 镜动态画风小样） | 开篇、关键交接、画风动态和音乐成立；已验证的方向和局部任务跳过此步 | [§4](references/production.md#4-制作与修订) |
 | 5 全片制作 | 成片与渲染回执 | 计划的声音全部入轨；全片能连续播放 | [§4](references/production.md#4-制作与修订) |
 | 6 测量与独立评审 | `qa/summary.md`、三张联系表、评审意见 | 响度达标；P0 已修，最多再修一轮复查 | [§5](references/production.md#5-检查和交付)、[独立评审](references/independent-review.md) |
 | 7 听审与交付 | 交付目录、交付报告 | 下面的交付清单逐条有证据 | [§5](references/production.md#交付报告) |
@@ -73,16 +80,23 @@ metadata:
 - 系列交付前，横向检查全部目标影片；批量出片前，对全部目标影片 × 全部画幅先跑一遍不出片的版式检查。
 - 已有决定持续有效，「不重复确认」指不重复问作者，不等于不再对照：扩片和续作仍要逐项对照已认可组合。普通构图、目录和实现细节自行完成，不交回作者。
 
-## 按需资料
+## 按需资料（按路线隔离读取）
 
-**阶段 1**　必读[制作单模板](references/brief-template.md)和[数字默认值与套路清单](references/craft-defaults.md)。宣传片读[宣传片方法](references/promotion-film.md)，从作品目录选材读[真实作品选材](references/promotion-selection.md)，介绍真实网页读[真实网页介绍](references/web-walkthrough.md)；知识、城市／历史、角色系列读[知识解释与系列表达](references/knowledge-explainers.md)，数学与物理推导、精确几何／函数／实验图解读[数理推导与图解动画](references/stem-explainers.md)；面向发布的片子同时考虑[封面与首帧](references/video-covers.md)。
+**路线 A · AI 生成视频（4 份正交分工，按需加读长片与风格包）**
+- **流程与关卡**：[生成镜头](references/generated-shots.md)（文件即记忆、首帧联动 `sansheng-image`、三态核对、0.5s 抽帧验片与按类复盘）；角色对话或口型另读 [配音的对话表演](references/tts.md#角色对话的表演)。
+- **电影感与视听**：[电影感与视听设计](references/generated-audiovisual.md)（5 个导演决定、光影/焦段光学速查、可复用风格模块与混搭规则、审美按层诊断表、原生声音与后期配乐分工、切点电平平滑）。
+- **提示词契约与编译**：[镜头请求契约](references/shot-request-template.md)（首帧 4 决定 vs 视频 Delta 分工、结构化风格锁、`assemble_shot_requests.py` 多档编译、`lint_video_prompt.py` 跨字段与摄影机检、多模型范式速查、技术+审美双轨返修）。
+- **入口适配卡**：每个生成入口一张卡，已有 [Muse](references/muse-handoff.md)（含连续 7 秒运动与网页实测）；新入口按契约补卡，不另写模板。
+- **可选专项**：1～10 分钟无对白／史诗叙事短片读 [电影感生成短片](references/cinematic-generated-film.md)（选材、大景尺度与揭示镜头）；日式手绘奇幻读 [日式手绘奇幻风格包](references/hand-drawn-fantasy-style.md)。
 
-**阶段 2**　镜头、空间、材质与运动读[视觉机制](references/visual-craft.md)；新作定风格、找绘制或镜头实现查 [Lemo 风格与实现](references/lemo-opuscar.md)；段落组织、对象连续或音画编排卡住时查[视频案例参考](references/opus-video-cases.md)；动效术语、代码与配声读[动效与音效](references/motion-and-sound.md)。素材、品牌与许可读[资源配置](references/assets-and-profile.md)，音效缺件走 [Openverse 音效](references/openverse-sfx.md)，真实 B-roll 缺件走[在线画面素材](references/stock-footage.md)。
+**路线 B · 代码与图解动画（仅代码视频任务读取）**
+- 视觉与动效：[视觉机制](references/visual-craft.md)、[HyperFrames 执行](references/hyperframes.md)、[动效与音效](references/motion-and-sound.md)；探索风格或段落编排查 [Lemo 风格与实现](references/lemo-opuscar.md)、[视频案例参考](references/opus-video-cases.md)。
+- 题材手册：宣传片读 [宣传片方法](references/promotion-film.md)、[真实作品选材](references/promotion-selection.md)、[证据与交付工具](references/promotion-evidence.md)；真实网页读 [真实网页介绍](references/web-walkthrough.md)；知识与系列表达读 [知识解释与系列表达](references/knowledge-explainers.md)；数理推导读 [数理推导与图解动画](references/stem-explainers.md)。
 
-**生成镜头**　角色表演与连续片段读[生成镜头](references/generated-shots.md)，角色对话或口型同时读[配音的对话表演](references/tts.md#角色对话的表演)；追求大片感的逐镜叙事短片读[电影感生成短片](references/cinematic-generated-film.md)（生成前三道关卡）；三份分工：[生成镜头](references/generated-shots.md)管流程（文件即记忆、关卡、验收、返修与按类别回写），[镜头请求契约](references/shot-request-template.md)管请求结构（台账 IR 与 `--profile` 编译输出、`--lint` 跨字段矛盾机检 `scripts/lint_video_prompt.py`、四类镜头分流、返修分型，与入口无关），每个生成入口各一张适配卡写差异和实测（已有 [Muse](references/muse-handoff.md)；新入口先按契约第四节补卡，不另写一套模板）；光照、色彩、空间声音，以及配乐和音效该原生生成还是后期做，读[生成片段的视听设计](references/generated-audiovisual.md)。
+**路线 C · 真实媒体与口播剪辑**
+- [媒体编辑](references/media-editing.md)、[EDL 结构](references/edl-schema.md)、[多画幅与局部反馈](references/multi-aspect-revisions.md)。
 
-**阶段 3**　必读[生产事件与工具](references/events-and-tools.md)；新增配音读 [TTS 选型与制作](references/tts.md)；真实媒体按场景剪辑用 [EDL 结构](references/edl-schema.md)。
-
-**阶段 4–5**　新 HTML 镜头和渲染读 [HyperFrames 执行](references/hyperframes.md)，依项目锁核实际 CLI help；裁剪、装配、原声与响度读[媒体编辑](references/media-editing.md)；横竖版或保留已认可部分做局部修订读[多画幅与局部反馈](references/multi-aspect-revisions.md)；宣传片卖点证据与品牌原件预览读[证据与交付工具](references/promotion-evidence.md)。
-
-**阶段 6–7**　评审按[独立评审](references/independent-review.md)；已接受的本地交付交给 `sansheng-distribute` 时读[发布交接](references/publish-handoff.md)，不重新渲染，也不要求写作技能介入；能力边界和借鉴来源见[来源与采用](references/sources.md)。
+**共享底座（三条路线共用，按当前阶段取用）**
+- 阶段 1：[制作单模板](references/brief-template.md)、[数字默认值与套路清单](references/craft-defaults.md)、[封面与首帧](references/video-covers.md)。
+- 阶段 2–3：[资源配置](references/assets-and-profile.md)、[生产事件与工具](references/events-and-tools.md)、[TTS 选型与制作](references/tts.md)；缺件才查 [Openverse 音效](references/openverse-sfx.md)、[在线画面素材](references/stock-footage.md)。
+- 阶段 6–7：[独立评审](references/independent-review.md)、[发布交接](references/publish-handoff.md)（交 `sansheng-distribute`）、[来源与采用](references/sources.md)。
