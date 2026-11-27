@@ -135,6 +135,22 @@ STATIC_COMPOSITION_LOCK_RE = re.compile(
     r"|保持构图不变|构图不变)",
     re.I,
 )
+# Drift-inducing cues that cause I2V models to hallucinate overflow, sunbeams, or exposure shifts
+# when paired with a locked architectural/still-life shot (architectural_lock / locked_still).
+LOCKED_STILL_DRIFT_RE = re.compile(
+    r"\b(?:"
+    r"water\s+ripples?|"
+    r"rippl(?:e|es|ing)\s+(?:softly\s+|gently\s+)?(?:across|on|in)\s+(?:the\s+)?(?:still\s+)?(?:water|trough|surface|pond|puddle)|"
+    r"shimmer(?:s|ing)?\s+(?:softly\s+|gently\s+)?(?:across|on)\s+(?:the\s+)?(?:still\s+)?water|"
+    r"(?:flowing|splashing|overflowing)\s+water|"
+    r"light\s+breath(?:es|ing)|breathing\s+light|"
+    r"sunbeams?|shafts?\s+of\s+(?:sun)?light|"
+    r"shadows?\s+(?:shift(?:s|ing)?|lengthen(?:s|ing)?|creep(?:s|ing)?|sweep(?:s|ing)?)|"
+    r"(?:sunset|sunrise)\s+(?:glow|deepen(?:s|ing)?|fade(?:s|ing)?|shift(?:s|ing)?|brighten(?:s|ing)?)|"
+    r"flickering\s+lanterns?"
+    r")\b",
+    re.I,
+)
 
 
 def strip_negated_clauses(text: str) -> str:
@@ -337,7 +353,22 @@ def lint_shot_prompt(
                 "message": "Moving camera conflicts with static composition lock ('keep exact composition'/'frame edges identical'); lock scene and lighting instead.",
             })
 
-    # 9. Word budget warning
+    # 9. Locked still-life drift triggers (water ripples, sunbeams, light breathing, sunset shifts)
+    if shot.get("architectural_lock") or shot.get("locked_still"):
+        drift_scope = " ".join(p for p in (action, ambient, raw_prompt) if p) or combined
+        drift_clean = strip_negated_clauses(drift_scope)
+        m = LOCKED_STILL_DRIFT_RE.search(drift_clean)
+        if m:
+            findings.append({
+                "code": "locked_still_drift_trigger",
+                "severity": "error",
+                "message": (
+                    f"Locked still-life shot contains drift-inducing cue '{m.group(0)}' "
+                    "(can trigger water overflow, moving sunbeams, or exposure shifts); use minimal airborne dust instead."
+                ),
+            })
+
+    # 10. Word budget warning
     limit = max_words if max_words is not None else DEFAULT_MAX_WORDS.get(mode, 120)
     words = _word_count(raw_prompt or combined)
     if words > limit:
@@ -360,6 +391,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("input", type=Path, help="JSON file (single shot dict or list of shot dicts) or plain .txt prompt")
     ap.add_argument("--mode", default="i2v-action", choices=sorted(DEFAULT_MAX_WORDS))
     ap.add_argument("--max-words", type=int, default=None)
+    ap.add_argument("--architectural-lock", action="store_true", help="Apply locked still-life drift-trigger checks.")
     ap.add_argument("--json", action="store_true", dest="as_json")
     args = ap.parse_args(argv)
 
@@ -374,6 +406,8 @@ def main(argv: list[str] | None = None) -> int:
     has_error = False
     for idx, item in enumerate(items):
         sid = item.get("id") or f"shot-{idx + 1}"
+        if args.architectural_lock and not item.get("architectural_lock"):
+            item = {**item, "architectural_lock": True}
         issues = lint_shot_prompt(item, mode=args.mode, max_words=args.max_words)
         if any(x["severity"] == "error" for x in issues):
             has_error = True

@@ -2,6 +2,11 @@
 
 ## [未发布]
 
+为锁机位静物/空景视频提示词新增防漂移静态拦截，在送入 I2V 生成前提前挡住易诱发溢水、扫光与亮度跳变的微动措辞。
+
+**新增**
+- **锁机位静物防漂移检查（`locked_still_drift_trigger`）**：`lint_video_prompt.py` 支持对标注 `architectural_lock` / `locked_still` 或传入 `--architectural-lock` 的镜头检查正向提示词中的水面涟漪、光线呼吸、光束移动、阴影推移、日落/日出变色与灯笼闪烁等高风险漂移诱因并报 error，同时保留否定从句豁免（如 `zero water ripples`、`zero sunbeams`）与微尘漂浮白名单；既有默认调用与非锁机位镜头完全向后兼容，附正反例与变异单测。
+
 ## [2.7.0] -- 2026-11-25
 
 - 三线路由重组与电影感摄影提示词升级（`SKILL.md`、`references/generated-audiovisual.md`、`references/shot-request-template.md`、`references/generated-shots.md`、`references/cinematic-generated-film.md`、`references/muse-handoff.md`、`scripts/lint_video_prompt.py`、`scripts/assemble_shot_requests.py`）：① `SKILL.md` 顶层改为「AI 生成视频 / 代码与图解动画 / 真实媒体剪辑」三条主线硬分流，去除“默认 HyperFrames”偏置，隔离低频专项上下文；② 生成视频 5 份核心文档保留原文件名实现跨仓零破坏，按职责正交去重，整合五个导演决定（光/色/质/构/动）、光学与焦段速查、6 套可复用风格模块与光色绑定混搭规则、按删层塌陷序排布的审美出片诊断表，以及跨模型（Muse / Seedance / Kling / Veo / Sora 等）首帧 4 决定 vs 视频 Delta 分工、前置权重、物理/声画因果与情绪克制写法，并回流连续 7 秒平稳运动实测；③ `assemble_shot_requests.py` 支持结构化 5 层 `locks.style`、新增 `--profile keyframe` 与 `--profile muse-i2v-continuous`（视频档自动剥离静止构图锁）；`lint_video_prompt.py` 新增 `i2v-continuous` / `keyframe` 模式、`lint_keyframe_prompt` 与 3 项摄影级预警（空泛风格词缺光学要素、近景/特写配超广角、运动镜混入静止构图锁）及对应反例与变异单测。（MINOR：新增兼容路由、摄影编译档与预警检查，既有旧路径与 `legacy` 用法保持兼容）

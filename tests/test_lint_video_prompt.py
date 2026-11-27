@@ -152,3 +152,43 @@ def test_cinematography_lint_warnings_and_mutations():
             x["code"] for x in lvp.lint_shot_prompt(bad_move_lock, mode="i2v-continuous")
         }
 
+
+def test_locked_still_drift_trigger_catches_bad_allows_negated_and_mutates():
+    bad_water = {
+        "id": "S01",
+        "architectural_lock": True,
+        "camera": "Locked-off tripod wide shot.",
+        "action": "Hold courtyard static; gentle ripple shimmers softly across the still water surface inside the trough.",
+        "audio": "Quiet wind only; no music, no speech.",
+    }
+    issues = lvp.lint_shot_prompt(bad_water, mode="i2v-still")
+    assert any(x["code"] == "locked_still_drift_trigger" and x["severity"] == "error" for x in issues), issues
+
+    bad_light = {
+        "id": "S02",
+        "locked_still": True,
+        "action": "Keep desk static; soft light breathing and gentle shadows shift across the paper.",
+        "audio": "Quiet room tone only; no music, no speech.",
+    }
+    assert "locked_still_drift_trigger" in {x["code"] for x in lvp.lint_shot_prompt(bad_light, mode="i2v-still")}
+
+    # Negated drift cues + clean dust motes MUST pass
+    clean_locked = {
+        "id": "S03",
+        "architectural_lock": True,
+        "camera": "Locked-off tripod wide shot; zero camera drift.",
+        "action": "Keep dry courtyard static with zero water ripples, zero sunbeams, zero sunset shift; only two tiny faint airborne dust specks drift slowly.",
+        "audio": "Quiet air stillness only; no music, no speech.",
+    }
+    assert lvp.lint_shot_prompt(clean_locked, mode="i2v-still") == []
+
+    # Without architectural_lock / locked_still, natural water shimmer is NOT flagged
+    unlocked = {k: v for k, v in bad_water.items() if k != "architectural_lock"}
+    assert "locked_still_drift_trigger" not in {x["code"] for x in lvp.lint_shot_prompt(unlocked, mode="i2v-still")}
+
+    # Mutation proof: disabling LOCKED_STILL_DRIFT_RE stops catching the defect
+    never = re.compile(r"(?!x)x")
+    with mock.patch.object(lvp, "LOCKED_STILL_DRIFT_RE", never):
+        assert "locked_still_drift_trigger" not in {x["code"] for x in lvp.lint_shot_prompt(bad_water, mode="i2v-still")}
+
+
